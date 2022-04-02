@@ -1,0 +1,8 @@
+/*
+https://zhuanlan.zhihu.com/p/489410215
+base 和 components 可能会影响 Ant Design 的样式，会带来样式问题。
+因此，在 Umi 项目的 global.less 文件中，我们只需引入 utilities 样式。
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

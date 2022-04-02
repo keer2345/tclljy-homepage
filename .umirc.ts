@@ -14,4 +14,5 @@ export default defineConfig({
   // },
   routes: routes,
   fastRefresh: {},
+  extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
 })

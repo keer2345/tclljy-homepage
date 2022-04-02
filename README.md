@@ -1,15 +1,5 @@
 # umi project
 
 ## Getting Started
-
-Install dependencies,
-
-```bash
-$ yarn
-```
-
-Start the dev server,
-
-```bash
-$ yarn start
-```
+## tailwindcss
+- [UmiJS 配置 Tailwind CSS](https://zhuanlan.zhihu.com/p/489410215)

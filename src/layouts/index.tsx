@@ -18,7 +18,7 @@ const BaseLayout = (props: LayoutProps) => {
   return (
     <Layout className="layout">
       <Header>
-        <div className="logo" />
+        <div className={styles.logo} />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
           {new Array(15).fill(null).map((_, index) => {
             const key = index + 1
@@ -26,7 +26,9 @@ const BaseLayout = (props: LayoutProps) => {
           })}
         </Menu>
       </Header>
-      <Content style={{ padding: '0 50px' }}>
+      {/* <Content style={{ padding: '0 50px' }}> */}
+      <Content className="container">
+        <h1>hello</h1>
         <div className="site-layout-content">Content</div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
