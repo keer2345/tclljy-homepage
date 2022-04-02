@@ -1,7 +1,9 @@
 export default [
+  { path: '/', redirect: '/index' },
   {
     // title: 'hello',
     path: '/',
-    component: '@/pages/index',
+    component: '@/layouts',
+    routes: [{ path: '/index', component: '@/pages/index' }],
   },
 ]
