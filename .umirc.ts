@@ -14,5 +14,16 @@ export default defineConfig({
   // },
   routes: routes,
   fastRefresh: {},
+  define: {
+    'process.env.ENV': 'dev',
+    'process.env.API_ROOT': 'http://127.0.0.1:9001',
+  },
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:9001',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
+    },
+  },
   extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
 })
