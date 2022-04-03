@@ -1,13 +1,19 @@
 import KeerCarouselImage from '@/components/KeerCarouselImage'
+import KeerSearch from '@/components/KeerSearch'
 import styles from './index.less'
+import { Row, Col, Card } from 'antd'
 
 export default function IndexPage() {
   return (
-    <div>
-      <h1 className={styles.title}>
-        <KeerCarouselImage />
-        Page index
-      </h1>
-    </div>
+    <>
+      <KeerCarouselImage />
+      <Card size="middle">
+        <Row>
+          <Col span={18} offset={6}>
+            <KeerSearch />
+          </Col>
+        </Row>
+      </Card>
+    </>
   )
 }
