@@ -1,7 +1,6 @@
-/* @import '~antd/dist/antd.css'; */
+@import '~antd/dist/antd.css';
 @import './tailwind.css';
 
-h1{
-  color:red;
-  text-align: center;
+body{
+  background: #f0f2f5;
 }

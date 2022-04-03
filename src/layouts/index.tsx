@@ -16,7 +16,7 @@ const menuData = [
 
 const BaseLayout = (props: LayoutProps) => {
   return (
-    <Layout className="layout">
+    <Layout className={styles.layout}>
       <Header>
         <div className={styles.logo} />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
@@ -26,11 +26,11 @@ const BaseLayout = (props: LayoutProps) => {
           })}
         </Menu>
       </Header>
-      {/* <Content style={{ padding: '0 50px' }}> */}
-      <Content className="container">
-        <h1>hello</h1>
-        <div className="site-layout-content">Content</div>
-      </Content>
+      <div className="container">
+        <Content>
+          <div className={styles.site_layout_content}>{props.children}</div>
+        </Content>
+      </div>
       <Footer style={{ textAlign: 'center' }}>
         Ant Design ©2018 Created by Ant UED
       </Footer>
