@@ -65,11 +65,13 @@ const request = extend({
   timeout: 20000,
   prefix: process.env.ENV !== 'dev' ? process.env.API_ROOT : '/api',
   errorHandler, // 默认错误处理
+  // crossOrigin, //开启CROS跨域
   credentials: 'include', // 默认请求是否带上cookie
 })
 
 // token 拦截器
 request.interceptors.request.use((url, options) => {
+  console.log('request.interceptors.request')
   let newOptions: any = { ...options }
   const token = localStorage.getItem('satoken')
   if (token) {
@@ -80,6 +82,7 @@ request.interceptors.request.use((url, options) => {
 
 request.interceptors.response.use(
   (response) => {
+    console.log('request.interceptors.response')
     let res = response.data
     // if (response.config.responseType === 'blob') {
     //   // 如果是返回的文件

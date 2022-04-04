@@ -1,24 +1,24 @@
 import React from 'react'
-import { Button, Input, Select } from 'antd'
+import { Button, Input, Select, message, Alert } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import styles from './index.less'
+import { getSysParams } from '@/services/welcome'
 
 const { Search } = Input
 const { Option } = Select
 const onSearch = (value) => console.log(value)
-
+const search = async () => {
+  console.log('search...')
+  try {
+    const res = await getSysParams({})
+    console.log('res:', res)
+  } catch (error) {
+    console.log('error:', error.data.msg)
+    message.error(error.data.msg)
+  }
+}
 const KeerSearch = () => {
   return (
-    // <Space direction="vertical">
-    //   <Search
-    //     addonBefore="https://"
-    //     placeholder="input search text"
-    //     allowClear
-    //     enterButton="Search"
-    //     size="large"
-    //     onSearch={onSearch}
-    //   />
-    // </Space>
     <div className="pm-8">
       <Input.Group compact>
         <Select defaultValue="找工作" size="large">
@@ -35,6 +35,7 @@ const KeerSearch = () => {
           type="primary"
           icon={<SearchOutlined style={{ fontSize: '18px' }} />}
           size="large"
+          onClick={search}
         >
           搜　索
         </Button>

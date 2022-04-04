@@ -1,12 +1,18 @@
 import { UmiComponentProps } from '@/common/type'
 import React from 'react'
-import { Layout, Menu } from 'antd'
+import { message, Layout, Menu } from 'antd'
 import { Link } from 'umi'
 import styles from './index.less'
 
 const { Header, Content, Footer } = Layout
 
 interface LayoutProps extends UmiComponentProps {}
+
+// 配置全局 message
+message.config({
+  // duration: 1,
+  maxCount: 1,
+})
 
 const menuData = [
   { route: '/hero', name: '英雄' },
