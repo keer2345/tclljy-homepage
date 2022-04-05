@@ -39,5 +39,8 @@ export default defineConfig({
   ignoreMomentLocale: true,
   webpack5: {},
   autoprefixer: {},
+  dynamicImport: {
+    loading: '@/components/Loading',
+  },
   extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
 })

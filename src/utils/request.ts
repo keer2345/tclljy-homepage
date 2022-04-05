@@ -62,14 +62,17 @@ const errorHandler = (error: { response: Response }): Response => {
 }
 
 const request = extend({
-  timeout: 20000,
+  timeout: 10000,
   prefix: process.env.ENV !== 'dev' ? process.env.API_ROOT : '/api',
   errorHandler, // 默认错误处理
   // crossOrigin, //开启CROS跨域
   credentials: 'include', // 默认请求是否带上cookie
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
-// token 拦截器
+// request拦截器, 改变url 或 options.
 request.interceptors.request.use((url, options) => {
   console.log('request.interceptors.request')
   let newOptions: any = { ...options }
@@ -77,32 +80,13 @@ request.interceptors.request.use((url, options) => {
   if (token) {
     newOptions.headers['satoken'] = token
   }
-  return { url, options: newOptions }
+  return { url, options: { ...newOptions, interceptors: true } }
 })
 
-request.interceptors.response.use(
-  (response) => {
-    console.log('request.interceptors.response')
-    let res = response.data
-    // if (response.config.responseType === 'blob') {
-    //   // 如果是返回的文件
-    //   return res
-    // }
-
-    // 兼容服务端返回的字符串数据
-    // if (typeof res === 'String') {
-    //   res = res ? JSON.parse(res) : res
-    // },
-    // (error) => {
-    //   return Promise.reject(error)
-    // }
-    if (res.success) {
-      return res.data
-    }
-  },
-  (error) => {
-    return Promise.reject(error.response.data.msg)
-  },
-)
+// response拦截器, 处理response
+request.interceptors.response.use((response, options) => {
+  //   const contentType = response.headers.get('Content-Type');
+  return response
+})
 
 export default request
