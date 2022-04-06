@@ -6,3 +6,4 @@
 # 参考
 - [llgtfoo/react-tpl-umi](https://github.com/llgtfoo/react-tpl-umi)
 - [cgxgg11/umi-manage](https://github.com/cgxgg11/umi-manage)
+- [PacktPublishing/Enterprise-React-Development-with-UmiJs](https://github.com/PacktPublishing/Enterprise-React-Development-with-UmiJs)

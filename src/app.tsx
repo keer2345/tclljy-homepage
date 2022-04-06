@@ -13,19 +13,21 @@ export async function getInitialState() {
   const fetchUserInfo = async () => {
     console.log('ddd')
     try {
-      const msg = await queryCurrentUser(null, null)
+      const msg = await queryCurrentUser()
       console.log('aaa')
       return msg.data
     } catch (error) {
       console.log('bbb')
+      console.log('error', error.data)
       history.push(loginPath)
     }
     return undefined
   }
   console.log('ccc')
+  const currentUser = await fetchUserInfo()
   return {
     fetchUserInfo,
-    settings: {},
+    currentUser,
   }
 }
 
