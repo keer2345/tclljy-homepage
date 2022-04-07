@@ -14,7 +14,7 @@ const KeerCarouselImage = () => {
         className={styles.image}
         src="https://636c-cloud-4gloc88m08adcddf-1307495423.tcb.qcloud.la/images/miniapp/logo.png"
       />
-      <img
+      {/* <img
         className={styles.image}
         src="https://636c-cloud-4gloc88m08adcddf-1307495423.tcb.qcloud.la/images/miniapp/logo2.jpg"
       />
@@ -30,7 +30,8 @@ const KeerCarouselImage = () => {
       <img
         className={styles.image}
         src="https://636c-cloud-4gloc88m08adcddf-1307495423.tcb.qcloud.la/images/miniapp/3.png"
-      />
+      /> */}
+
       {/* <Image
         className={styles.image}
         preview={false}
