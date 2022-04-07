@@ -1,40 +1,92 @@
 import { UmiComponentProps } from '@/common/type'
 import React from 'react'
-import { message, Layout, Menu } from 'antd'
+import { message, Layout, Menu, Row, Col } from 'antd'
 import { Link } from 'umi'
-import styles from './index.less'
+import './index.less'
+import classNames from 'classnames'
 
 const { Header, Content, Footer } = Layout
 
 interface LayoutProps extends UmiComponentProps {}
 
-// 配置全局 message
-message.config({
-  // duration: 1,
-  maxCount: 1,
-})
-
 const menuData = [
-  { route: '/hero', name: '英雄' },
-  { route: '/item', name: '局内道具' },
-  { route: '/summoner', name: '召唤师技能' },
+  { route: '/', name: '首页', click: true },
+  { route: '/gz', name: '找工作', click: false },
+  { route: '/jl', name: '招人才', click: false },
+  { route: '/gs', name: '找企业', click: false },
+  // { route: '/login', name: '登录', click: false },
+  // { route: '/register', name: '注册', click: false },
 ]
 
 const BaseLayout = (props: LayoutProps) => {
   return (
-    <Layout className={styles.layout}>
-      <Header>
-        <div className={styles.logo} />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-          {new Array(15).fill(null).map((_, index) => {
-            const key = index + 1
-            return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>
-          })}
-        </Menu>
+    <Layout className="layout">
+      <Header className="header">
+        <Link to="/">
+          <div className="logo" />
+        </Link>
+        <Row>
+          <Col span={14}>
+            <Menu
+              className="menu"
+              theme="light"
+              // onSelect={()=>console.log("vovo")}
+              mode="horizontal"
+              defaultSelectedKeys={['1']}
+            >
+              {menuData.map((menu) => (
+                <Menu.Item key={`/${menu.route}`}>
+                  <Link to={menu.route} className="menu-item">
+                    {menu.click ? (
+                      <strong>{menu.name}</strong>
+                    ) : (
+                      <span>{menu.name}</span>
+                    )}
+                  </Link>
+                </Menu.Item>
+              ))}
+            </Menu>
+          </Col>
+          <Col span={9}>
+            {localStorage.getItem('satoken') &&
+            localStorage.getItem('currentUser') ? (
+              <Row justify="end">
+                <Col span={19}></Col>
+                <Col span={2}>
+                  <Link to="/login" className="menu-item">
+                    <span>登录</span>
+                  </Link>
+                </Col>
+                <Col span={1}></Col>
+                <Col span={2}>
+                  <Link to="/register" className="menu-item">
+                    <span>退出</span>
+                  </Link>
+                </Col>
+              </Row>
+            ) : (
+              <Row justify="end">
+                <Col span={19}></Col>
+                <Col span={2}>
+                  <Link to="/login" className="menu-item">
+                    <span>登录</span>
+                  </Link>
+                </Col>
+                <Col span={1}></Col>
+                <Col span={2}>
+                  <Link to="/register" className="menu-item">
+                    <span>注册</span>
+                  </Link>
+                </Col>
+              </Row>
+            )}
+          </Col>
+          <Col span={1}></Col>
+        </Row>
       </Header>
       <div className="container">
         <Content>
-          <div className={styles.site_layout_content}>{props.children}</div>
+          <div className="site_layout_content">{props.children}</div>
         </Content>
       </div>
       <Footer style={{ textAlign: 'center' }}>

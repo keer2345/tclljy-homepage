@@ -1,5 +1,6 @@
 import { PageLoading } from '@ant-design/pro-layout'
 import { history } from 'umi'
+import { message } from 'antd'
 import { currentUser as queryCurrentUser } from './services/login'
 
 const loginPath = '/login'
@@ -8,25 +9,25 @@ const loginPath = '/login'
 //   loading: <PageLoading />,
 // }
 
+// 配置全局 message
+message.config({
+  // duration: 1,
+  maxCount: 1,
+})
+
 export async function getInitialState() {
-  console.log('app.ts')
   const fetchUserInfo = async () => {
-    console.log('ddd')
-    try {
-      const msg = await queryCurrentUser()
-      console.log('aaa')
-      return msg.data
-    } catch (error) {
-      console.log('bbb')
-      console.log('error', error.data)
-      history.push(loginPath)
-    }
+    // try {
+    //   const msg = await queryCurrentUser()
+    //   return msg.data
+    // } catch (error) {
+    //   message.error(error.data.msg)
+    //   history.push(loginPath)
+    // }
     return undefined
   }
-  console.log('ccc')
   const currentUser = await fetchUserInfo()
   return {
-    fetchUserInfo,
     currentUser,
   }
 }

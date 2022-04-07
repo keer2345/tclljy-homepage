@@ -1,3 +1,9 @@
+.header {
+  background: #3986c8;
+  // background: #0081ff;
+  // background: #fff;
+  padding: 0;
+}
 .site_layout_content {
   min-height: 280px;
   // padding: 16px;
@@ -5,10 +11,12 @@
 }
 .logo {
   float: left;
-  width: 120px;
-  height: 31px;
-  margin: 16px 24px 16px 0;
-  background: rgba(36, 235, 10, 0.3);
+  width: 160px;
+  height: 64px;
+  // margin: 16px 24px 16px 0;
+  margin: 0;
+  // background: rgba(36, 235, 10, 0.3);
+  background: url('../assets/images/logo.png');
 }
 .ant-row-rtl .logo {
   float: right;
@@ -16,4 +24,24 @@
 }
 [data-theme='dark'] .site-layout-content {
   background: #141414;
+}
+.menu {
+  background: #3986c8;
+  // background: #0081ff;
+  // background: #fff;
+  border-bottom: 0;
+}
+.menu-item span,
+strong {
+  color: #fff;
+}
+.menu-item:hover span,
+strong {
+  font-weight: bold;
+  color: #fff;
+}
+.menu-item:active span,
+strong {
+  font-weight: bold;
+  color: #fff;
 }
