@@ -7,7 +7,7 @@ const carouselStyle = {
   height: '380px',
 }
 
-const KeerCarouselImage = () => {
+const KrCarouselImage = () => {
   return (
     <Carousel autoplay style={carouselStyle}>
       <img
@@ -59,4 +59,4 @@ const KeerCarouselImage = () => {
   )
 }
 
-export default KeerCarouselImage
+export default KrCarouselImage

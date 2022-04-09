@@ -1,12 +1,13 @@
-import KeerCarouselImage from '@/components/KeerCarouselImage'
+import KrCarouselImage from '@/components/KrCarouselImage'
+import KrLoginForm from '@/components/KrLoginForm'
 import React from 'react'
 
 const Login = () => {
   return (
-    <div>
-      <KeerCarouselImage />
-      Login
-    </div>
+    <>
+      <KrCarouselImage />
+      <KrLoginForm />
+    </>
   )
 }
 

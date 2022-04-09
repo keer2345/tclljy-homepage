@@ -17,7 +17,7 @@ const search = async () => {
     message.error(error.data.msg)
   }
 }
-const KeerSearch = () => {
+const KrSearch = () => {
   return (
     <div className="pm-8">
       <Input.Group compact>
@@ -44,4 +44,4 @@ const KeerSearch = () => {
   )
 }
 
-export default KeerSearch
+export default KrSearch
