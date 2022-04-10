@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { message, Tabs, Space } from 'antd'
+import { message, Tabs, Space, Alert } from 'antd'
 import {
   MobileOutlined,
   AlipayCircleOutlined,
@@ -13,9 +13,32 @@ import {
   ProFormCheckbox,
 } from '@ant-design/pro-form'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { login } from '@/services/login'
+
+const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
+  <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
+)
 
 const KrLoginForm = () => {
+  const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
+
+  const handleSubmit = async (values: User.LoginParams) => {
+    try {
+      values['from'] = 'web'
+      values['type'] = type
+      console.log('login')
+      console.log(values)
+
+      const res = await login({ ...values })
+    } catch (error) {
+      console.log('error:', error.data)
+      setUserLoginState(error.data)
+      message.error(error.data.msg)
+    }
+  }
+
+  const { success, msg } = userLoginState
 
   return (
     <div>
@@ -23,6 +46,7 @@ const KrLoginForm = () => {
         logo=""
         title="登录蓝领家园"
         subTitle=" "
+        initialValues={{ autoLogin: false }}
         actions={
           <Space
           // style={{
@@ -35,12 +59,18 @@ const KrLoginForm = () => {
             </a>
           </Space>
         }
+        onFinish={async (values) => {
+          await handleSubmit(values as User.LoginParams)
+        }}
       >
         <Tabs activeKey={type} onChange={setType}>
           <Tabs.TabPane key={'account'} tab={'密码登录'} />
           <Tabs.TabPane key={'mobile'} tab={'短信登录'} />
           <Tabs.TabPane key={'wx'} tab={'微信登录'} />
         </Tabs>
+
+        {!success && msg && <LoginMessage content={msg || '登录失败'} />}
+
         {type === 'account' && (
           <>
             <ProFormText

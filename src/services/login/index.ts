@@ -1,4 +1,3 @@
-import { RespResult } from '@/types/RespResult'
 import { request } from 'umi'
 
 // export async function currentUser(data,options){
@@ -8,5 +7,19 @@ import { request } from 'umi'
 // }
 
 export function currentUser() {
-  return request<RespResult>('/api/account/userinfo', { method: 'GET' })
+  return request<API.RespResult>('/api/account/userinfo', { method: 'GET' })
+}
+
+export async function login(
+  body: User.LoginParams,
+  options?: { [key: string]: any },
+) {
+  const res = request<API.RespResult>('/api/account/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: body,
+    ...(options || {}),
+  })
+  console.log('res::', res)
+  return res
 }
