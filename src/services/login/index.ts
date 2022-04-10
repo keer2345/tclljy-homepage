@@ -6,8 +6,11 @@ import { request } from 'umi'
 //   })
 // }
 
-export function currentUser() {
-  return request<API.RespResult>('/api/account/userinfo', { method: 'GET' })
+export async function currentUser(options?: { [key: string]: any }) {
+  return request<API.RespResult>('/api/account/userinfo', {
+    method: 'GET',
+    ...(options || {}),
+  })
 }
 
 export async function login(

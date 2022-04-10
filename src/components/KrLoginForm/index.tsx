@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { history, useModel } from 'umi'
 import { message, Tabs, Space, Alert } from 'antd'
 import {
   MobileOutlined,
@@ -22,19 +23,45 @@ const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
 const KrLoginForm = () => {
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
+  // const { initialState, setInitialState } = useModel('@@initialState')
+
+  // const fetchUserInfo = async () => {
+  //   const userInfo = await initialState?.fetchUserInfo?.()
+  //   if (userInfo) {
+  //     await setInitialState((s) => ({
+  //       ...s,
+  //       currentUser: userInfo,
+  //     }))
+  //   }
+  // }
 
   const handleSubmit = async (values: User.LoginParams) => {
     try {
       values['from'] = 'web'
       values['type'] = type
+
       console.log('login')
       console.log(values)
 
       const res = await login({ ...values })
+      if (res.success && res.data) {
+        localStorage.setItem(res.data.tokenName, res.data.tokenValue)
+        localStorage.setItem('userid', res.data.loginId)
+        message.success('登录成功!')
+
+        await fetchUserInfo()
+
+        if (!history) return
+        const { query } = history.location
+        const { redirect } = query as { redirect: string }
+        history.push(redirect || '/')
+        return
+      }
     } catch (error) {
       console.log('error:', error.data)
       setUserLoginState(error.data)
       message.error(error.data.msg)
+      setUserLoginState('')
     }
   }
 
