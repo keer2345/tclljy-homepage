@@ -49,10 +49,10 @@ const BaseLayout = (props: LayoutProps) => {
           </Col>
           <Col span={9}>
             {localStorage.getItem('satoken') &&
-            localStorage.getItem('currentUser') ? (
+            localStorage.getItem('userInfo') ? (
               <Row justify="end">
-                <Col span={19}></Col>
-                <Col span={2}>
+                <Col span={10}></Col>
+                <Col span={11}>
                   <Link to="/user/login" className="menu-item">
                     <span>登录</span>
                   </Link>

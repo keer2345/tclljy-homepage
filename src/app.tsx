@@ -18,20 +18,20 @@ message.config({
 
 export async function getInitialState(): Promise<{
   // settings?: Partial<LayoutSettings>
-  userInfo?: User.UserInfo
-  loading?: boolean
-  fetchUserInfo?: () => Promise<User.UserInfo | undefined>
+  // userInfo?: User.UserInfo
+  // loading?: boolean
+  // fetchUserInfo?: () => Promise<User.UserInfo | undefined>
 }> {
   const fetchUserInfo = async () => {
-    try {
-      const msg = await getUserInfo()
-      console.log('msg.data:', msg.data)
-      return msg.data
-    } catch (error) {
-      console.log(error.data.msg)
-      // message.error(error.data.msg)
-      // history.push(loginPath)
-    }
+    // try {
+    //   const msg = await getUserInfo()
+    //   console.log('msg.data:', msg.data)
+    //   return msg.data
+    // } catch (error) {
+    //   console.log(error.data.msg)
+    // message.error(error.data.msg)
+    // history.push(loginPath)
+    // }
     return undefined
   }
   const userInfo = await fetchUserInfo()

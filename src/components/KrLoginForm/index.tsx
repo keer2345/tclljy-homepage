@@ -14,7 +14,7 @@ import {
   ProFormCheckbox,
 } from '@ant-design/pro-form'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { login } from '@/services/login'
+import { getUserInfo, login } from '@/services/login'
 
 const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
   <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
@@ -23,17 +23,17 @@ const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
 const KrLoginForm = () => {
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
-  const { initialState, setInitialState } = useModel('@@initialState')
+  // const { initialState, setInitialState } = useModel('@@initialState')
 
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.()
-    if (userInfo) {
-      await setInitialState((s) => ({
-        ...s,
-        currentUser: userInfo,
-      }))
-    }
-  }
+  // const fetchUserInfo = async () => {
+  //   const userInfo = await initialState?.fetchUserInfo?.()
+  //   if (userInfo) {
+  //     await setInitialState((s) => ({
+  //       ...s,
+  //       currentUser: userInfo,
+  //     }))
+  //   }
+  // }
 
   const handleSubmit = async (values: User.LoginParams) => {
     try {
@@ -47,7 +47,16 @@ const KrLoginForm = () => {
         message.success('登录成功!')
 
         setUserLoginState({})
-        await fetchUserInfo()
+
+        // await fetchUserInfo()
+
+        const resp = await getUserInfo()
+        const userInfo: User.UserInfo = resp.data
+        localStorage.setItem('userInfo', JSON.stringify(userInfo))
+        // const vovo: User.UserInfo = JSON.parse(
+        //   localStorage.getItem('userInfo') || '{}',
+        // )
+        // console.log('vovo', vovo.username)
 
         if (!history) return
         const { query } = history.location
