@@ -1,9 +1,10 @@
 import { PageLoading } from '@ant-design/pro-layout'
 import { history } from 'umi'
 import { message } from 'antd'
-import { currentUser as queryCurrentUser } from './services/login'
+import { getUserInfo } from './services/login'
+import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 
-const loginPath = '/login'
+const loginPath = '/user/login'
 
 // export const initialStateConfig = {
 //   loading: <PageLoading />,
@@ -15,20 +16,27 @@ message.config({
   maxCount: 1,
 })
 
-export async function getInitialState() {
+export async function getInitialState(): Promise<{
+  // settings?: Partial<LayoutSettings>
+  userInfo?: User.UserInfo
+  loading?: boolean
+  fetchUserInfo?: () => Promise<User.UserInfo | undefined>
+}> {
   const fetchUserInfo = async () => {
-    // try {
-    //   const msg = await queryCurrentUser()
-    //   return msg.data
-    // } catch (error) {
-    //   message.error(error.data.msg)
-    //   history.push(loginPath)
-    // }
+    try {
+      const msg = await getUserInfo()
+      console.log('msg.data:', msg.data)
+      return msg.data
+    } catch (error) {
+      console.log(error.data.msg)
+      // message.error(error.data.msg)
+      // history.push(loginPath)
+    }
     return undefined
   }
-  const currentUser = await fetchUserInfo()
+  const userInfo = await fetchUserInfo()
   return {
-    currentUser,
+    userInfo,
   }
 }
 

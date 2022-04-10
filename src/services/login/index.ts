@@ -6,7 +6,7 @@ import { request } from 'umi'
 //   })
 // }
 
-export async function currentUser(options?: { [key: string]: any }) {
+export async function getUserInfo(options?: { [key: string]: any }) {
   return request<API.RespResult>('/api/account/userinfo', {
     method: 'GET',
     ...(options || {}),
