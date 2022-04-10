@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { history, useModel } from 'umi'
-import { message, Tabs, Space, Alert } from 'antd'
+import { message, Tabs, Space, Alert, Input } from 'antd'
 import {
   MobileOutlined,
   AlipayCircleOutlined,
   TaobaoCircleOutlined,
   WeiboCircleOutlined,
 } from '@ant-design/icons'
-import {
+import ProForm, {
   LoginForm,
   ProFormText,
   ProFormCaptcha,
   ProFormCheckbox,
 } from '@ant-design/pro-form'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import {
+  UserOutlined,
+  LockOutlined,
+  SafetyCertificateOutlined,
+} from '@ant-design/icons'
 import { getCaptchaCode, getUserInfo, login } from '@/services/login'
 
 const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
@@ -25,6 +29,7 @@ const KrLoginForm = () => {
   const [captchaImage, setCaptchaImage] = useState<string>('')
   const [captchaCode, setCaptchaCode] = useState<string>('')
   const [captchaCodeChange, setCaptchaCodeChange] = useState<number>(0)
+
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
   // const { initialState, setInitialState } = useModel('@@initialState')
@@ -40,20 +45,32 @@ const KrLoginForm = () => {
   // }
 
   const getCaptcha = async () => {
-    const res = await getCaptchaCode()
-    console.log('res', res.data)
-    setCaptchaUid(res.data.uid)
-    setCaptchaImage(res.data.image)
+    try {
+      const res = await getCaptchaCode()
+      console.log('res', res.data)
+      // setCaptchaUid(res.data.uid)
+      // setCaptchaImage(res.data.image)
+      if (res.success) {
+        return res.data
+      }
+    } catch (error) {
+      message.error('服务器有误：获取验证码失败')
+      return {}
+    }
   }
 
   useEffect(() => {
-    getCaptcha()
+    getCaptcha().then((res: User.CaptchaCode) => {
+      setCaptchaUid(res.uid)
+      setCaptchaImage(res.image)
+    })
   }, [captchaCodeChange])
 
   const handleSubmit = async (values: User.LoginParams) => {
     try {
       values['from'] = 'web'
       values['type'] = type
+      console.log('values:', values)
 
       const res = await login({ ...values })
       if (res.success && res.data) {
@@ -131,7 +148,7 @@ const KrLoginForm = () => {
               rules={[
                 {
                   required: true,
-                  message: '请输入账号、手机号、或邮箱!',
+                  message: '请输入账号、手机号、或邮箱！',
                 },
               ]}
             />
@@ -149,15 +166,47 @@ const KrLoginForm = () => {
                 },
               ]}
             />
-            <ProFormCaptcha
+
+            {/* 添加验证码功能
+                https://www.jb51.net/article/213114.htm */}
+            <ProForm.Group>
+              <ProFormText
+                name="captchaCode"
+                width={180}
+                fieldProps={{
+                  size: 'large',
+                  prefix: (
+                    <SafetyCertificateOutlined className={'prefixIcon'} />
+                  ),
+                }}
+                placeholder="验证码"
+                rules={[
+                  {
+                    required: true,
+                    message: '请输入验证码！',
+                  },
+                ]}
+              />
+              <img
+                style={{
+                  width: '100%',
+                  height: '35px',
+                  verticalAlign: 'middle',
+                  padding: '0px 0px 0px 0px',
+                }}
+                src={captchaImage}
+              />
+            </ProForm.Group>
+
+            {/* <ProFormCaptcha
               fieldProps={{
                 size: 'large',
-                prefix: <LockOutlined className={'prefixIcon'} />,
+                prefix: <SafetyCertificateOutlined className={'prefixIcon'} />,
               }}
               captchaProps={{
                 size: 'large',
               }}
-              placeholder={'请输入验证码'}
+              placeholder={'验证码'}
               captchaTextRender={(timing, count) => {
                 if (timing) {
                   return `${count} ${'获取验证码'}`
@@ -174,7 +223,7 @@ const KrLoginForm = () => {
               onGetCaptcha={async () => {
                 message.success('获取验证码成功！验证码为：1234')
               }}
-            />
+            /> */}
           </>
         )}
         {type === 'mobile' && (
@@ -200,7 +249,7 @@ const KrLoginForm = () => {
             <ProFormCaptcha
               fieldProps={{
                 size: 'large',
-                prefix: <LockOutlined className={'prefixIcon'} />,
+                prefix: <SafetyCertificateOutlined className={'prefixIcon'} />,
               }}
               captchaProps={{
                 size: 'large',

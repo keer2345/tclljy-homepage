@@ -23,4 +23,9 @@ declare namespace User {
     from?: string
     type?: string
   }
+
+  type CaptchaCode = {
+    uid: string
+    image: string
+  }
 }
