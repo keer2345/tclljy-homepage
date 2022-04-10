@@ -1,6 +1,6 @@
 import { UmiComponentProps } from '@/common/type'
-import React from 'react'
-import { message, Layout, Menu, Row, Col } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { message, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
 import { Link } from 'umi'
 import './index.less'
 import classNames from 'classnames'
@@ -19,6 +19,12 @@ const menuData = [
 ]
 
 const BaseLayout = (props: LayoutProps) => {
+  const [userInfo, setUserInfo] = useState<User.UserInfo>({})
+  useEffect(() => {
+    if (localStorage.getItem('userInfo')) {
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
+    }
+  }, [])
   return (
     <Layout className="layout">
       <Header className="header">
@@ -51,18 +57,27 @@ const BaseLayout = (props: LayoutProps) => {
             {localStorage.getItem('satoken') &&
             localStorage.getItem('userInfo') ? (
               <Row justify="end">
-                <Col span={10}></Col>
-                <Col span={11}>
-                  <Link to="/user/login" className="menu-item">
-                    <span>登录</span>
-                  </Link>
+                <Col span={24}>
+                  <Row justify="end">
+                    <Link to="/user/account" className="menu-item">
+                      <span>
+                        <Avatar
+                          // shape="square"
+                          src={
+                            <Image src={userInfo.avatarWx} preview={false} />
+                          }
+                        />
+                        　{userInfo.nicknameWx}（{userInfo.username}）
+                      </span>
+                    </Link>
+                  </Row>
                 </Col>
-                <Col span={1}></Col>
+                {/* <Col span={1}></Col>
                 <Col span={2}>
                   <Link to="/user/logout" className="menu-item">
                     <span>退出</span>
                   </Link>
-                </Col>
+                </Col> */}
               </Row>
             ) : (
               <Row justify="end">

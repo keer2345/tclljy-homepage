@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { history, useModel } from 'umi'
 import { message, Tabs, Space, Alert } from 'antd'
 import {
@@ -14,13 +14,17 @@ import {
   ProFormCheckbox,
 } from '@ant-design/pro-form'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { getUserInfo, login } from '@/services/login'
+import { getCaptchaCode, getUserInfo, login } from '@/services/login'
 
 const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
   <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
 )
 
 const KrLoginForm = () => {
+  const [captchaUid, setCaptchaUid] = useState<string>('')
+  const [captchaImage, setCaptchaImage] = useState<string>('')
+  const [captchaCode, setCaptchaCode] = useState<string>('')
+  const [captchaCodeChange, setCaptchaCodeChange] = useState<number>(0)
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
   // const { initialState, setInitialState } = useModel('@@initialState')
@@ -34,6 +38,17 @@ const KrLoginForm = () => {
   //     }))
   //   }
   // }
+
+  const getCaptcha = async () => {
+    const res = await getCaptchaCode()
+    console.log('res', res.data)
+    setCaptchaUid(res.data.uid)
+    setCaptchaImage(res.data.image)
+  }
+
+  useEffect(() => {
+    getCaptcha()
+  }, [captchaCodeChange])
 
   const handleSubmit = async (values: User.LoginParams) => {
     try {
@@ -77,7 +92,7 @@ const KrLoginForm = () => {
     <div>
       <LoginForm
         logo=""
-        title="登录蓝领家园"
+        title="登　录"
         subTitle=" "
         initialValues={{ autoLogin: false }}
         actions={
@@ -133,6 +148,32 @@ const KrLoginForm = () => {
                   message: '请输入密码！',
                 },
               ]}
+            />
+            <ProFormCaptcha
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined className={'prefixIcon'} />,
+              }}
+              captchaProps={{
+                size: 'large',
+              }}
+              placeholder={'请输入验证码'}
+              captchaTextRender={(timing, count) => {
+                if (timing) {
+                  return `${count} ${'获取验证码'}`
+                }
+                return '获取验证码'
+              }}
+              name="captcha"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入验证码！',
+                },
+              ]}
+              onGetCaptcha={async () => {
+                message.success('获取验证码成功！验证码为：1234')
+              }}
             />
           </>
         )}
