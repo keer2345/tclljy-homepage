@@ -4,7 +4,7 @@ import { Carousel, Image, Row, Col } from 'antd'
 import styles from './index.less'
 
 const carouselStyle = {
-  height: '380px',
+  height: '320px',
 }
 
 const KrCarouselImage = () => {

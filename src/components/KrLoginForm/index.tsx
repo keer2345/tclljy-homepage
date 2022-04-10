@@ -38,7 +38,7 @@ const KrLoginForm = () => {
       >
         <Tabs activeKey={type} onChange={setType}>
           <Tabs.TabPane key={'account'} tab={'密码登录'} />
-          <Tabs.TabPane key={'phone'} tab={'短信登录'} />
+          <Tabs.TabPane key={'mobile'} tab={'短信登录'} />
           <Tabs.TabPane key={'wx'} tab={'微信登录'} />
         </Tabs>
         {type === 'account' && (
@@ -73,7 +73,7 @@ const KrLoginForm = () => {
             />
           </>
         )}
-        {type === 'phone' && (
+        {type === 'mobile' && (
           <>
             <ProFormText
               fieldProps={{

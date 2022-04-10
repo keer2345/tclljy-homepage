@@ -53,13 +53,13 @@ const BaseLayout = (props: LayoutProps) => {
               <Row justify="end">
                 <Col span={19}></Col>
                 <Col span={2}>
-                  <Link to="/login" className="menu-item">
+                  <Link to="/user/login" className="menu-item">
                     <span>登录</span>
                   </Link>
                 </Col>
                 <Col span={1}></Col>
                 <Col span={2}>
-                  <Link to="/register" className="menu-item">
+                  <Link to="/user/logout" className="menu-item">
                     <span>退出</span>
                   </Link>
                 </Col>
@@ -68,13 +68,13 @@ const BaseLayout = (props: LayoutProps) => {
               <Row justify="end">
                 <Col span={19}></Col>
                 <Col span={2}>
-                  <Link to="/login" className="menu-item">
+                  <Link to="/user/login" className="menu-item">
                     <span>登录</span>
                   </Link>
                 </Col>
                 <Col span={1}></Col>
                 <Col span={2}>
-                  <Link to="/register" className="menu-item">
+                  <Link to="/user/register" className="menu-item">
                     <span>注册</span>
                   </Link>
                 </Col>
