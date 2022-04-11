@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { history } from 'umi'
 import { message } from 'antd'
+import KrCarouselImage from '@/components/KrCarouselImage'
 
 const Register = () => {
   useEffect(() => {
@@ -12,7 +13,12 @@ const Register = () => {
       history.push(redirect || '/')
     }
   }, [])
-  return <div>Register</div>
+  return (
+    <>
+      <KrCarouselImage />
+      register
+    </>
+  )
 }
 
 export default Register

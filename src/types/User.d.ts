@@ -20,6 +20,7 @@ declare namespace User {
     username?: string
     password?: string
     autoLogin?: boolean
+    uid?: string
     from?: string
     type?: string
   }

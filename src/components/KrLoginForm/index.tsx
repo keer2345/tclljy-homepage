@@ -73,6 +73,7 @@ const KrLoginForm = () => {
     try {
       values['from'] = 'web'
       values['type'] = type
+      values['uid'] = captchaUid
       console.log('values:', values)
 
       const res = await login({ ...values })
