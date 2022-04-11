@@ -134,11 +134,13 @@ const KrLoginForm = () => {
       >
         <Tabs activeKey={type} onChange={setType}>
           <Tabs.TabPane key={'account'} tab={'密码登录'} />
-          <Tabs.TabPane key={'mobile'} tab={'短信登录'} />
-          <Tabs.TabPane key={'wx'} tab={'微信登录'} />
+          {/* <Tabs.TabPane key={'mobile'} tab={'短信登录'} /> */}
+          {/* <Tabs.TabPane key={'wx'} tab={'微信登录'} /> */}
         </Tabs>
 
-        {!success && msg && <LoginMessage content={msg || '登录失败'} />}
+        {!success && type === 'account' && msg && (
+          <LoginMessage content={msg || '登录失败'} />
+        )}
 
         {type === 'account' && (
           <>
@@ -148,7 +150,8 @@ const KrLoginForm = () => {
                 size: 'large',
                 prefix: <UserOutlined className={'prefixIcon'} />,
               }}
-              placeholder={'账号 / 手机号 / 邮箱'}
+              placeholder={'账号'}
+              // placeholder={'账号 / 手机号 / 邮箱'}
               rules={[
                 {
                   required: true,
