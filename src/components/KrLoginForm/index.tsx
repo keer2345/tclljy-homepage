@@ -47,7 +47,6 @@ const KrLoginForm = () => {
   const getCaptcha = async () => {
     try {
       const res = await getCaptchaCode()
-      console.log('res', res.data)
       // setCaptchaUid(res.data.uid)
       // setCaptchaImage(res.data.image)
       if (res.success) {
@@ -65,6 +64,10 @@ const KrLoginForm = () => {
       setCaptchaImage(res.image)
     })
   }, [captchaCodeChange])
+
+  const captchaToggle = () => {
+    setCaptchaCodeChange(captchaCodeChange + 1)
+  }
 
   const handleSubmit = async (values: User.LoginParams) => {
     try {
@@ -195,35 +198,9 @@ const KrLoginForm = () => {
                   padding: '0px 0px 0px 0px',
                 }}
                 src={captchaImage}
+                onClick={captchaToggle}
               />
             </ProForm.Group>
-
-            {/* <ProFormCaptcha
-              fieldProps={{
-                size: 'large',
-                prefix: <SafetyCertificateOutlined className={'prefixIcon'} />,
-              }}
-              captchaProps={{
-                size: 'large',
-              }}
-              placeholder={'验证码'}
-              captchaTextRender={(timing, count) => {
-                if (timing) {
-                  return `${count} ${'获取验证码'}`
-                }
-                return '获取验证码'
-              }}
-              name="captcha"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入验证码！',
-                },
-              ]}
-              onGetCaptcha={async () => {
-                message.success('获取验证码成功！验证码为：1234')
-              }}
-            /> */}
           </>
         )}
         {type === 'mobile' && (

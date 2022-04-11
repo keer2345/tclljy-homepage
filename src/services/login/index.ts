@@ -26,7 +26,6 @@ export async function login(
 }
 
 export async function getCaptchaCode() {
-  const res = request<API.RespResult>('/api/captcha', { method: 'GET' })
-  console.log('captcha:', res)
-  return res
+  // return request<API.RespResult>('/api/captcha/arti', { method: 'GET' })
+  return request<API.RespResult>('/api/captcha/spec', { method: 'GET' })
 }
