@@ -18,7 +18,7 @@ import {
   LockOutlined,
   SafetyCertificateOutlined,
 } from '@ant-design/icons'
-import { getCaptchaCode, getUserInfo, login } from '@/services/login'
+import { getCaptchaCode, getUserInfo, login } from '@/services/user'
 
 const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
   <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />

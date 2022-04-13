@@ -1,7 +1,7 @@
 import { PageLoading } from '@ant-design/pro-layout'
 import { history } from 'umi'
 import { message } from 'antd'
-import { getUserInfo } from './services/login'
+import { getUserInfo } from './services/user'
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 
 const loginPath = '/user/login'

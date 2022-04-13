@@ -13,6 +13,18 @@ export async function getUserInfo(options?: { [key: string]: any }) {
   })
 }
 
+export async function register(
+  body: User.LoginParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.RespResult>('/api/account/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: body,
+    ...(options || {}),
+  })
+}
+
 export async function login(
   body: User.LoginParams,
   options?: { [key: string]: any },
