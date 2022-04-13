@@ -4,6 +4,7 @@ import { message, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
 import { Link } from 'umi'
 import './index.less'
 import classNames from 'classnames'
+import { UserOutlined } from '@ant-design/icons'
 
 const { Header, Content, Footer } = Layout
 
@@ -11,9 +12,9 @@ interface LayoutProps extends UmiComponentProps {}
 
 const menuData = [
   { route: '/', name: '首页', click: true },
-  { route: '/gz', name: '找工作', click: false },
-  { route: '/jl', name: '招人才', click: false },
-  { route: '/gs', name: '找企业', click: false },
+  { route: '/job', name: '找工作', click: false },
+  { route: '/resume', name: '招人才', click: false },
+  { route: '/company', name: '找企业', click: false },
   // { route: '/login', name: '登录', click: false },
   // { route: '/register', name: '注册', click: false },
 ]
@@ -61,13 +62,24 @@ const BaseLayout = (props: LayoutProps) => {
                   <Row justify="end">
                     <Link to="/user/account" className="menu-item">
                       <span>
-                        <Avatar
-                          // shape="square"
-                          src={
-                            <Image src={userInfo.avatarWx} preview={false} />
-                          }
-                        />
-                        　{userInfo.nicknameWx}（{userInfo.username}）
+                        {userInfo.avatar || userInfo.avatarWx ? (
+                          <Avatar
+                            src={
+                              <Image
+                                src={userInfo.avatar || userInfo.avatarWx}
+                                preview={false}
+                              />
+                            }
+                          />
+                        ) : (
+                          <Avatar icon={<UserOutlined />} />
+                        )}
+                        　{userInfo.username}
+                        {userInfo.nickname || userInfo.nicknameWx
+                          ? '（' +
+                            (userInfo.nickname || userInfo.nicknameWx || '') +
+                            '）'
+                          : ''}
                       </span>
                     </Link>
                   </Row>

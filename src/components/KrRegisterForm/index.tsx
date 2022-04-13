@@ -38,7 +38,6 @@ const KrRegisterForm = () => {
 
   const [captchaUid, setCaptchaUid] = useState<string>('')
   const [captchaImage, setCaptchaImage] = useState<string>('')
-  const [captchaCode, setCaptchaCode] = useState<string>('')
   const [captchaCodeChange, setCaptchaCodeChange] = useState<number>(0)
 
   const [registerState, setRegisterState] = useState<API.RespResult>({})
@@ -91,7 +90,7 @@ const KrRegisterForm = () => {
         if (!history) return
         const { query } = history.location
         const { redirect } = query as { redirect: string }
-        history.push(redirect || '/')
+        history.push(redirect || '/user/account')
         return
       }
     } catch (error) {

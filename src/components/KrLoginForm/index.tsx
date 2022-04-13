@@ -27,7 +27,6 @@ const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
 const KrLoginForm = () => {
   const [captchaUid, setCaptchaUid] = useState<string>('')
   const [captchaImage, setCaptchaImage] = useState<string>('')
-  const [captchaCode, setCaptchaCode] = useState<string>('')
   const [captchaCodeChange, setCaptchaCodeChange] = useState<number>(0)
 
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
