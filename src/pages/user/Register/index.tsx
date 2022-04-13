@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { history } from 'umi'
 import { message } from 'antd'
 import KrCarouselImage from '@/components/KrCarouselImage'
+import KrRegisterForm from '@/components/KrRegisterForm'
 
 const Register = () => {
   useEffect(() => {
@@ -16,7 +17,7 @@ const Register = () => {
   return (
     <>
       <KrCarouselImage />
-      register
+      <KrRegisterForm />
     </>
   )
 }

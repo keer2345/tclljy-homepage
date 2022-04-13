@@ -74,7 +74,6 @@ const KrLoginForm = () => {
       values['from'] = 'web'
       values['type'] = type
       values['uid'] = captchaUid
-      console.log('values:', values)
 
       const res = await login({ ...values })
       if (res.success && res.data) {
@@ -138,9 +137,7 @@ const KrLoginForm = () => {
           {/* <Tabs.TabPane key={'wx'} tab={'微信登录'} /> */}
         </Tabs>
 
-        {!success && type === 'account' && msg && (
-          <LoginMessage content={msg || '登录失败'} />
-        )}
+        {!success && msg && <LoginMessage content={msg || '登录失败'} />}
 
         {type === 'account' && (
           <>

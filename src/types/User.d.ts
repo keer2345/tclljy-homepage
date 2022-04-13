@@ -16,11 +16,21 @@ declare namespace User {
     actor?: number // 级别：1-个人，2-企业，3-管理员
   }
 
+  type RegisterParams = {
+    username?: string
+    password?: string
+    uid?: string
+    captchaCode?: string
+    from?: string
+    type?: string
+  }
+
   type LoginParams = {
     username?: string
     password?: string
     autoLogin?: boolean
     uid?: string
+    captchaCode?: string
     from?: string
     type?: string
   }
