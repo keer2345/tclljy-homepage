@@ -1,10 +1,10 @@
 import { UmiComponentProps } from '@/common/type'
 import React, { useEffect, useState } from 'react'
-import { message, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
+import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
 import { Link } from 'umi'
 import './index.less'
 import classNames from 'classnames'
-import { UserOutlined } from '@ant-design/icons'
+import { DownOutlined, UserOutlined } from '@ant-design/icons'
 
 const { Header, Content, Footer } = Layout
 
@@ -74,22 +74,11 @@ const BaseLayout = (props: LayoutProps) => {
                         ) : (
                           <Avatar icon={<UserOutlined />} />
                         )}
-                        　{userInfo.username}
-                        {userInfo.nickname || userInfo.nicknameWx
-                          ? '（' +
-                            (userInfo.nickname || userInfo.nicknameWx || '') +
-                            '）'
-                          : ''}
+                        　{userInfo.username} <strong>　控制台</strong>
                       </span>
                     </Link>
                   </Row>
                 </Col>
-                {/* <Col span={1}></Col>
-                <Col span={2}>
-                  <Link to="/user/logout" className="menu-item">
-                    <span>退出</span>
-                  </Link>
-                </Col> */}
               </Row>
             ) : (
               <Row justify="end">
