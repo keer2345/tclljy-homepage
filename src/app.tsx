@@ -24,13 +24,9 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     // try {
-    //   const msg = await getUserInfo()
-    //   console.log('msg.data:', msg.data)
-    //   return msg.data
+    //   const res = await getUserInfo()
     // } catch (error) {
-    //   console.log(error.data.msg)
-    // message.error(error.data.msg)
-    // history.push(loginPath)
+    //   localStorage.clear()
     // }
     return undefined
   }

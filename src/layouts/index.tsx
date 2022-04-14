@@ -11,7 +11,9 @@ import {
   ProfileOutlined,
   PoweroffOutlined,
   UserOutlined,
+  ColumnHeightOutlined,
 } from '@ant-design/icons'
+import { getUserInfo, logout } from '@/services/user'
 
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
@@ -23,36 +25,93 @@ const menuData = [
   { route: '/job', name: '找工作', click: false },
   { route: '/resume', name: '招人才', click: false },
   { route: '/company', name: '找企业', click: false },
-  // { route: '/login', name: '登录', click: false },
-  // { route: '/register', name: '注册', click: false },
 ]
 
 const BaseLayout = (props: LayoutProps) => {
   const [userInfo, setUserInfo] = useState<User.UserInfo>({})
-  useEffect(() => {
-    if (localStorage.getItem('userInfo')) {
-      setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
+  const [refresh, setRefresh] = useState(0)
+
+  const getUser = async () => {
+    try {
+      const res = await getUserInfo()
+      if (res.success) {
+        const userInfo: User.UserInfo = res.data
+        localStorage.setItem('userInfo', JSON.stringify(userInfo))
+        setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
+        localStorage.setItem('userid', userInfo.id || '')
+      } else {
+        localStorage.clear()
+      }
+    } catch (error) {
+      localStorage.clear()
     }
+  }
+
+  const getCookie = (name: string) => {
+    //获取指定名称的cookie的值
+    var arrstr = document.cookie.split('; ')
+    for (var i = 0; i < arrstr.length; i++) {
+      var temp = arrstr[i].split('=')
+      if (temp[0] == name) return unescape(temp[1])
+    }
+  }
+
+  useEffect(() => {
+    setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
   }, [])
+
+  useEffect(() => {
+    const cookie = getCookie('satoken')
+    if (cookie) {
+      if (!localStorage.getItem('userInfo')) {
+        localStorage.setItem('satoken', cookie)
+        getUser()
+      } else {
+        setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
+      }
+    } else {
+      localStorage.clear()
+    }
+  }, [refresh])
+
+  const exit = async () => {
+    try {
+      const res = await logout()
+
+      if (res.success) {
+        message.success('已退出登录！')
+        localStorage.clear()
+        setRefresh(refresh + 1)
+      }
+    } catch (error) {
+      console.log(error.data)
+    }
+  }
 
   const menu = (
     <Menu>
       <Menu.ItemGroup title="企业发布">
-        <Menu.Item icon={<CloudOutlined />}>我的企业</Menu.Item>
-        <Menu.Item icon={<AppstoreOutlined />}>我的职位</Menu.Item>
+        <Menu.Item key={'firm'} icon={<CloudOutlined />}>
+          我的企业
+        </Menu.Item>
+        <Menu.Item key={'job'} icon={<AppstoreOutlined />}>
+          我的职位
+        </Menu.Item>
       </Menu.ItemGroup>
       <Menu.Divider />
       <Menu.ItemGroup title="求职者">
-        <Menu.Item icon={<ProfileOutlined />}>我的简历</Menu.Item>
+        <Menu.Item key={'resume'} icon={<ProfileOutlined />}>
+          我的简历
+        </Menu.Item>
       </Menu.ItemGroup>
       <Menu.Divider />
-      <Menu.Item icon={<SettingOutlined />}>
+      <Menu.Item key={'profile'} icon={<SettingOutlined />}>
         <a rel="noopener noreferrer" href="https://www.antgroup.com">
           账户设置
         </a>
       </Menu.Item>
-      <Menu.Item icon={<PoweroffOutlined />}>
-        <a rel="noopener noreferrer" href="https://www.antgroup.com">
+      <Menu.Item key={'exit'} icon={<PoweroffOutlined />}>
+        <a rel="noopener noreferrer" onClick={exit}>
           退出
         </a>
       </Menu.Item>
@@ -88,28 +147,10 @@ const BaseLayout = (props: LayoutProps) => {
             </Menu>
           </Col>
           <Col span={9}>
-            {localStorage.getItem('satoken') &&
-            localStorage.getItem('userInfo') ? (
+            {localStorage.getItem('userInfo') ? (
               <Row justify="end">
                 <Col span={24}>
                   <Row justify="end">
-                    {/* <Link to="/user/account" className="menu-item">
-                      <span>
-                        {userInfo.avatar || userInfo.avatarWx ? (
-                          <Avatar
-                            src={
-                              <Image
-                                src={userInfo.avatar || userInfo.avatarWx}
-                                preview={false}
-                              />
-                            }
-                          />
-                        ) : (
-                          <Avatar icon={<UserOutlined />} />
-                        )}
-                        　{userInfo.username} <strong>　控制台</strong>
-                      </span>
-                    </Link> */}
                     <Dropdown overlay={menu}>
                       <a
                         className="ant-dropdown-link"

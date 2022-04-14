@@ -1,6 +1,6 @@
 declare namespace User {
   type UserInfo = {
-    id?: number
+    id?: string
     username?: string
     openid?: string
     mobile?: string

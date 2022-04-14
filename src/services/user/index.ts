@@ -37,6 +37,10 @@ export async function login(
   })
 }
 
+export async function logout() {
+  return request<API.RespResult>('/api/account/logout', { method: 'GET' })
+}
+
 export async function getCaptchaCode() {
   // return request<API.RespResult>('/api/captcha/arti', { method: 'GET' })
   return request<API.RespResult>('/api/captcha/spec', { method: 'GET' })
