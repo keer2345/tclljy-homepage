@@ -4,9 +4,17 @@ import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
 import { Link } from 'umi'
 import './index.less'
 import classNames from 'classnames'
-import { DownOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  AppstoreOutlined,
+  CloudOutlined,
+  SettingOutlined,
+  ProfileOutlined,
+  PoweroffOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 
 const { Header, Content, Footer } = Layout
+const { SubMenu } = Menu
 
 interface LayoutProps extends UmiComponentProps {}
 
@@ -26,6 +34,31 @@ const BaseLayout = (props: LayoutProps) => {
       setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
     }
   }, [])
+
+  const menu = (
+    <Menu>
+      <Menu.ItemGroup title="企业发布">
+        <Menu.Item icon={<CloudOutlined />}>我的企业</Menu.Item>
+        <Menu.Item icon={<AppstoreOutlined />}>我的职位</Menu.Item>
+      </Menu.ItemGroup>
+      <Menu.Divider />
+      <Menu.ItemGroup title="求职者">
+        <Menu.Item icon={<ProfileOutlined />}>我的简历</Menu.Item>
+      </Menu.ItemGroup>
+      <Menu.Divider />
+      <Menu.Item icon={<SettingOutlined />}>
+        <a rel="noopener noreferrer" href="https://www.antgroup.com">
+          账户设置
+        </a>
+      </Menu.Item>
+      <Menu.Item icon={<PoweroffOutlined />}>
+        <a rel="noopener noreferrer" href="https://www.antgroup.com">
+          退出
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
+
   return (
     <Layout className="layout">
       <Header className="header">
@@ -60,7 +93,7 @@ const BaseLayout = (props: LayoutProps) => {
               <Row justify="end">
                 <Col span={24}>
                   <Row justify="end">
-                    <Link to="/user/account" className="menu-item">
+                    {/* <Link to="/user/account" className="menu-item">
                       <span>
                         {userInfo.avatar || userInfo.avatarWx ? (
                           <Avatar
@@ -76,7 +109,29 @@ const BaseLayout = (props: LayoutProps) => {
                         )}
                         　{userInfo.username} <strong>　控制台</strong>
                       </span>
-                    </Link>
+                    </Link> */}
+                    <Dropdown overlay={menu}>
+                      <a
+                        className="ant-dropdown-link"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <span style={{ color: '#fff' }}>
+                          {userInfo.avatar || userInfo.avatarWx ? (
+                            <Avatar
+                              src={
+                                <Image
+                                  src={userInfo.avatar || userInfo.avatarWx}
+                                  preview={false}
+                                />
+                              }
+                            />
+                          ) : (
+                            <Avatar icon={<UserOutlined />} />
+                          )}
+                          　{userInfo.username} <strong>　控制台</strong>
+                        </span>
+                      </a>
+                    </Dropdown>
                   </Row>
                 </Col>
               </Row>
