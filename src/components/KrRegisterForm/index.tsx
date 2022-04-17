@@ -90,7 +90,7 @@ const KrRegisterForm = () => {
         if (!history) return
         const { query } = history.location
         const { redirect } = query as { redirect: string }
-        history.push(redirect || '/user/account')
+        history.push(redirect || '/user/setting')
         return
       }
     } catch (error) {
@@ -250,7 +250,7 @@ const KrRegisterForm = () => {
           {...tailFormItemLayout}
         >
           <Checkbox>
-            同意本网站的 <a href="">协议</a>
+            同意本网站的 <a href="#">协议</a>
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>

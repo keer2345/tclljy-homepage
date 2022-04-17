@@ -5,6 +5,7 @@ import { Link } from 'umi'
 import './index.less'
 import classNames from 'classnames'
 import {
+  HomeOutlined,
   AppstoreOutlined,
   CloudOutlined,
   SettingOutlined,
@@ -90,7 +91,13 @@ const BaseLayout = (props: LayoutProps) => {
 
   const menu = (
     <Menu>
-      <Menu.ItemGroup title="企业发布">
+      <Menu.Item key={'profile'} icon={<HomeOutlined />}>
+        <a rel="noopener noreferrer" href="/user/account">
+          我的主页
+        </a>
+      </Menu.Item>
+      <Menu.Divider />
+      {/* <Menu.ItemGroup title="企业发布">
         <Menu.Item key={'firm'} icon={<CloudOutlined />}>
           我的企业
         </Menu.Item>
@@ -104,9 +111,9 @@ const BaseLayout = (props: LayoutProps) => {
           我的简历
         </Menu.Item>
       </Menu.ItemGroup>
-      <Menu.Divider />
+      <Menu.Divider /> */}
       <Menu.Item key={'profile'} icon={<SettingOutlined />}>
-        <a rel="noopener noreferrer" href="https://www.antgroup.com">
+        <a rel="noopener noreferrer" href="/user/setting">
           账户设置
         </a>
       </Menu.Item>
@@ -128,7 +135,7 @@ const BaseLayout = (props: LayoutProps) => {
           <Col span={14}>
             <Menu
               className="menu"
-              theme="light"
+              // theme="light"
               // onSelect={()=>console.log("vovo")}
               mode="horizontal"
               defaultSelectedKeys={['1']}
