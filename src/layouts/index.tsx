@@ -1,7 +1,7 @@
 import { UmiComponentProps } from '@/common/type'
 import React, { useEffect, useState } from 'react'
 import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
-import { Link } from 'umi'
+import { Link, history } from 'umi'
 import './index.less'
 import classNames from 'classnames'
 import {
@@ -83,6 +83,7 @@ const BaseLayout = (props: LayoutProps) => {
         message.success('已退出登录！')
         localStorage.clear()
         setRefresh(refresh + 1)
+        history.push('/')
       }
     } catch (error) {
       console.log(error.data)
