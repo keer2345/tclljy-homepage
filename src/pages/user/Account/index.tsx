@@ -2,7 +2,7 @@ import KrCarouselImage from '@/components/KrCarouselImage'
 import React, { useEffect, useState } from 'react'
 import ProCard from '@ant-design/pro-card'
 import { Avatar, Image } from 'antd'
-import { history } from 'umi'
+import { Link, history } from 'umi'
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -28,9 +28,16 @@ const Account = () => {
       return
     }
   }, [])
+
   useEffect(() => {
     setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
   }, [])
+
+  const cardClick = (route: string) => {
+    console.log('vvvooo')
+    history.push(route)
+  }
+
   return (
     <>
       <KrCarouselImage />
@@ -122,7 +129,12 @@ const Account = () => {
               <ProCard layout="center" bordered hoverable>
                 意见反馈
               </ProCard>
-              <ProCard layout="center" bordered hoverable>
+              <ProCard
+                layout="center"
+                bordered
+                hoverable
+                onClick={() => cardClick('/user/setting')}
+              >
                 账号设置
               </ProCard>
               <ProCard layout="center" bordered hoverable>
