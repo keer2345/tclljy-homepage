@@ -45,3 +45,14 @@ export async function getCaptchaCode() {
   // return request<API.RespResult>('/api/captcha/arti', { method: 'GET' })
   return request<API.RespResult>('/api/captcha/spec', { method: 'GET' })
 }
+
+export async function updateUser(
+  body: User.UserInfo,
+  options?: { [key: string]: any },
+) {
+  return request<API.RespResult>('/api/user', {
+    method: 'PUT',
+    data: body,
+    ...(options || {}),
+  })
+}

@@ -94,7 +94,6 @@ const KrRegisterForm = () => {
         return
       }
     } catch (error) {
-      console.log('RES', error.data)
       message.error(error.data.msg)
       setRegisterState(error.data)
     }
