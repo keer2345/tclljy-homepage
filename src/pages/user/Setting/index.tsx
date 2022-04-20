@@ -6,15 +6,19 @@ import { Link, history } from 'umi'
 import SettingLeft from './SettingLeft'
 import { updateUser } from '@/services/user'
 import UpdateUserInfo from './UpdateUserInfo'
+import ModifyPassword from './ModifyPassword'
 
 const Setting = () => {
   const [userInfo, setUserInfo] = useState(0)
   const [updateState, setUpdateState] = useState<API.RespResult>({})
+  const [component, setComponent] = useState('UpdateUserInfo')
+
+  const changeComponent = (component: string) => {
+    setComponent(component)
+  }
 
   useEffect(() => {
-    console.log('aaa')
     if (!localStorage.getItem('userInfo')) {
-      console.log('bbb')
       if (!history) return
       const { query } = history.location
       const { redirect } = query as { redirect: string }
@@ -27,7 +31,7 @@ const Setting = () => {
     setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
   }, [])
 
-  const handleSubmit = async (values: User.UserInfo) => {
+  const updateUserInfo = async (values: User.UserInfo) => {
     try {
       const userInfoNew = { ...userInfo, ...values }
       const res = await updateUser({ ...userInfoNew })
@@ -41,10 +45,14 @@ const Setting = () => {
         return
       }
     } catch (error) {
-      console.log('error:', error)
       setUpdateState(error.data)
       message.error(error.data.msg)
     }
+  }
+  const modifyPassword = async () => {
+    console.log('modify passwd...')
+    try {
+    } catch (error) {}
   }
 
   return (
@@ -57,15 +65,23 @@ const Setting = () => {
       </ProCard>
       <ProCard split="vertical">
         <ProCard title="账号设置" colSpan="25%">
-          <SettingLeft userInfo={userInfo} />
+          <SettingLeft userInfo={userInfo} changeComponent={changeComponent} />
         </ProCard>
 
-        {/* Update UserInfo */}
-        <UpdateUserInfo
-          userInfo={userInfo}
-          updateState={updateState}
-          handleSubmit={handleSubmit}
-        />
+        {component === 'UpdateUserInfo' && (
+          <UpdateUserInfo
+            userInfo={userInfo}
+            updateState={updateState}
+            handleSubmit={updateUserInfo}
+          />
+        )}
+
+        {component === 'ModifyPassword' && (
+          <ModifyPassword
+            updateState={updateState}
+            handleSubmit={modifyPassword}
+          />
+        )}
       </ProCard>
     </>
   )

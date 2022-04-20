@@ -1,5 +1,4 @@
 import React from 'react'
-
 import ProCard from '@ant-design/pro-card'
 import { Row, Col, Space } from 'antd'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
@@ -41,6 +40,7 @@ const UpdateUserInfo = ({ userInfo, updateState, handleSubmit }) => {
           }}
         >
           {!success && msg && <FormMessage content={msg || '修改失败'} />}
+
           <ProFormText
             width="md"
             name="username"

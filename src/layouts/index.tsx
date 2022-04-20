@@ -92,7 +92,7 @@ const BaseLayout = (props: LayoutProps) => {
 
   const menu = (
     <Menu>
-      <Menu.Item key={'profile'} icon={<HomeOutlined />}>
+      <Menu.Item key={'account'} icon={<HomeOutlined />}>
         <a rel="noopener noreferrer" href="/user/account">
           我的主页
         </a>
@@ -113,7 +113,7 @@ const BaseLayout = (props: LayoutProps) => {
         </Menu.Item>
       </Menu.ItemGroup>
       <Menu.Divider /> */}
-      <Menu.Item key={'profile'} icon={<SettingOutlined />}>
+      <Menu.Item key={'setting'} icon={<SettingOutlined />}>
         <a rel="noopener noreferrer" href="/user/setting">
           账户设置
         </a>

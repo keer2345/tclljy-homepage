@@ -1,20 +1,9 @@
 import React from 'react'
 import ProCard from '@ant-design/pro-card'
-import { Avatar, Image, Button, Breadcrumb } from 'antd'
-import { Link, history } from 'umi'
-import {
-  HomeOutlined,
-  AppstoreOutlined,
-  CloudOutlined,
-  SettingOutlined,
-  ProfileOutlined,
-  PoweroffOutlined,
-  UserOutlined,
-  ColumnHeightOutlined,
-  LeftOutlined,
-} from '@ant-design/icons'
+import { Avatar, Image } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
-const SettingLeft = ({ userInfo }) => {
+const SettingLeft = ({ userInfo, changeComponent }) => {
   return (
     <>
       <ProCard layout="center">
@@ -35,17 +24,27 @@ const SettingLeft = ({ userInfo }) => {
           />
         )}
       </ProCard>
-      <ProCard layout="center" bordered hoverable>
+      <ProCard
+        layout="center"
+        bordered
+        hoverable
+        onClick={() => changeComponent('UpdateUserInfo')}
+      >
         个人资料
       </ProCard>
-      <ProCard layout="center" bordered hoverable>
-        更换头像
+      <ProCard
+        layout="center"
+        bordered
+        hoverable
+        onClick={() => changeComponent('ModifyPassword')}
+      >
+        修改密码
       </ProCard>
       <ProCard layout="center" bordered hoverable>
         账号绑定
       </ProCard>
       <ProCard layout="center" bordered hoverable>
-        修改密码
+        更换头像
       </ProCard>
     </>
   )
