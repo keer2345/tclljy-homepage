@@ -4,7 +4,7 @@ import ProCard from '@ant-design/pro-card'
 import { message } from 'antd'
 import { Link, history } from 'umi'
 import SettingLeft from './SettingLeft'
-import { updateUser } from '@/services/user'
+import { updatePwd, updateUser } from '@/services/user'
 import UpdateUserInfo from './UpdateUserInfo'
 import ModifyPassword from './ModifyPassword'
 
@@ -12,6 +12,11 @@ const Setting = () => {
   const [userInfo, setUserInfo] = useState(0)
   const [updateState, setUpdateState] = useState<API.RespResult>({})
   const [component, setComponent] = useState('UpdateUserInfo')
+
+  const formItemLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 14 },
+  }
 
   const changeComponent = (component: string) => {
     setComponent(component)
@@ -49,10 +54,23 @@ const Setting = () => {
       message.error(error.data.msg)
     }
   }
-  const modifyPassword = async () => {
-    console.log('modify passwd...')
+  const modifyPassword = async (values) => {
     try {
-    } catch (error) {}
+      values['userId'] = userInfo.id
+      values['channel'] = 'web'
+      values['reset'] = false
+
+      const res = await updatePwd({ ...values })
+
+      if (res.success && res.data) {
+        setUpdateState({ success: true })
+        message.success('密码修改成功！')
+        return
+      }
+    } catch (error) {
+      setUpdateState(error.data)
+      message.error(error.data.msg)
+    }
   }
 
   return (
@@ -72,6 +90,7 @@ const Setting = () => {
           <UpdateUserInfo
             userInfo={userInfo}
             updateState={updateState}
+            formItemLayout={formItemLayout}
             handleSubmit={updateUserInfo}
           />
         )}
@@ -79,6 +98,7 @@ const Setting = () => {
         {component === 'ModifyPassword' && (
           <ModifyPassword
             updateState={updateState}
+            formItemLayout={formItemLayout}
             handleSubmit={modifyPassword}
           />
         )}

@@ -1,4 +1,9 @@
 declare namespace User {
+  type CaptchaCode = {
+    uid: string
+    image: string
+  }
+
   type UserInfo = {
     id?: string
     username?: string
@@ -36,8 +41,12 @@ declare namespace User {
     type?: string
   }
 
-  type CaptchaCode = {
-    uid: string
-    image: string
+  type UpdatePwd = {
+    userId?: number
+    channel?: string
+    reset?: boolean
+    passwordOld?: string
+    passwordNew?: string
+    passwordNew2?: string
   }
 }

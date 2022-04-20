@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ProCard from '@ant-design/pro-card'
 import { Row, Col, Space, Form, Input } from 'antd'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import FormMessage from '@/components/common/FormMessage'
 
-const ModifyPassword = (updateState, handleSubmit) => {
+const ModifyPassword = ({ updateState, formItemLayout, handleSubmit }) => {
   const { success, msg } = updateState
+  const formRef = useRef()
 
-  const formItemLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 },
+  const resetForm = () => {
+    formRef.current.resetFields()
   }
 
   return (
@@ -20,9 +20,15 @@ const ModifyPassword = (updateState, handleSubmit) => {
         }}
       >
         <ProForm
+          formRef={formRef}
           // labelWidth="auto"
           layout={'horizontal'}
           size={'large'}
+          initialValues={{
+            passwordOld: '',
+            passwordNew: '',
+            passwordNew2: '',
+          }}
           {...formItemLayout}
           submitter={{
             render: (props, doms) => {
@@ -39,6 +45,7 @@ const ModifyPassword = (updateState, handleSubmit) => {
             await handleSubmit(values)
           }}
         >
+          {success && resetForm()}
           {!success && msg && <FormMessage content={msg || '修改失败'} />}
           <Form.Item
             name="passwordOld"
@@ -53,9 +60,8 @@ const ModifyPassword = (updateState, handleSubmit) => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password placeholder="请输入原密码" />
           </Form.Item>
-
           <Form.Item
             name="passwordNew"
             label="新密码"
@@ -69,9 +75,8 @@ const ModifyPassword = (updateState, handleSubmit) => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password placeholder="请输入新密码" />
           </Form.Item>
-
           <Form.Item
             name="passwordNew2"
             label="确认密码"
@@ -92,7 +97,7 @@ const ModifyPassword = (updateState, handleSubmit) => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password placeholder="请输入确认密码" />
           </Form.Item>
         </ProForm>
       </div>

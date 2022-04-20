@@ -4,13 +4,13 @@ import { Row, Col, Space } from 'antd'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import FormMessage from '@/components/common/FormMessage'
 
-const UpdateUserInfo = ({ userInfo, updateState, handleSubmit }) => {
+const UpdateUserInfo = ({
+  userInfo,
+  updateState,
+  formItemLayout,
+  handleSubmit,
+}) => {
   const { success, msg } = updateState
-
-  const formItemLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 },
-  }
 
   return (
     <ProCard title="个人资料" headerBordered>
