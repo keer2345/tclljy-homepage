@@ -52,6 +52,15 @@ const UpdateUserInfo = ({
           />
           <ProFormText
             width="md"
+            name="nicknameWx"
+            label="微信昵称"
+            tooltip="小程序绑定微信后自动同步"
+            placeholder={userInfo.nicknameWx}
+            value={userInfo.nicknameWx}
+            disabled
+          />
+          <ProFormText
+            width="md"
             name="realname"
             label="姓名"
             tooltip="可输入您的真实姓名"

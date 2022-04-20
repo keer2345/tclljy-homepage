@@ -40,12 +40,12 @@ const SettingLeft = ({ userInfo, changeComponent }) => {
       >
         修改密码
       </ProCard>
-      <ProCard layout="center" bordered hoverable>
+      {/* <ProCard layout="center" bordered hoverable>
         账号绑定
       </ProCard>
       <ProCard layout="center" bordered hoverable>
         更换头像
-      </ProCard>
+      </ProCard> */}
     </>
   )
 }
