@@ -37,14 +37,16 @@ const JobCategory = () => {
 
   return (
     <div>
-      <Divider orientation="left">职位分类</Divider>
-      <Tag size="large" color={colors[parseInt(Math.random() * colors.length)]}>
+      <Divider orientation="left">
+        <span className="divider">职位分类</span>
+      </Divider>
+      <Tag size="large" color="blue">
         最新职位
       </Tag>
 
       {jobCategoryList}
 
-      <Tag size="large" color={colors[parseInt(Math.random() * colors.length)]}>
+      <Tag size="large" color="orange">
         更多......
       </Tag>
     </div>
