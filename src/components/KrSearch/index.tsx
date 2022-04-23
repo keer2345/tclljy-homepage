@@ -19,28 +19,32 @@ const search = async () => {
 }
 const KrSearch = () => {
   return (
-    <div className="pm-8">
-      <Input.Group compact>
-        <Select defaultValue="找工作" size="large">
-          <Option value="job">找工作</Option>
-          <Option value="resume">招人才</Option>
-          <Option value="firm">找企业</Option>
-        </Select>
-        <Input
-          size="large"
-          style={{ width: '50%' }}
-          placeholder="工作 / 人才 / 企业"
-        />
-        <Button
-          type="primary"
-          icon={<SearchOutlined style={{ fontSize: '18px' }} />}
-          size="large"
-          onClick={search}
-        >
-          搜　索
-        </Button>
-      </Input.Group>
-    </div>
+    <>
+      {/* <div className="pm-8"> */}
+      <div className="pm-8">
+        <Input.Group compact>
+          <Select defaultValue="找工作" size="large">
+            <Option value="job">找工作</Option>
+            <Option value="resume">招人才</Option>
+            <Option value="firm">找企业</Option>
+          </Select>
+          <Input
+            size="large"
+            style={{ width: '50%' }}
+            placeholder="工作 / 人才 / 企业"
+          />
+          <Button
+            type="primary"
+            icon={<SearchOutlined style={{ fontSize: '18px' }} />}
+            size="large"
+            onClick={search}
+          >
+            搜　索
+          </Button>
+        </Input.Group>
+      </div>
+      <div></div>
+    </>
   )
 }
 
