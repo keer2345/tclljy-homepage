@@ -1,9 +1,10 @@
 import KrCarouselImage from '@/components/KrCarouselImage'
 import KrSearch from '@/components/KrSearch'
 import styles from './index.less'
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, Divider } from 'antd'
 import KrLoginNav from '@/components/KrLoginNav'
 import JobCategory from '@/components/job/JobCategory'
+import JobIndexTop from '@/components/job/JobIndexTop'
 
 export default function IndexPage() {
   return (
@@ -20,9 +21,14 @@ export default function IndexPage() {
             </Row>
           </Col>
         </Row>
-        {/* <Row>　</Row> */}
+        <Row>　</Row>
         <Row>
           <JobCategory />
+        </Row>
+        <Row>　</Row>
+        <Row>最新职位</Row>
+        <Row>
+          <JobIndexTop />
         </Row>
       </Card>
     </>

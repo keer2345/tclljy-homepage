@@ -37,12 +37,9 @@ const JobCategory = () => {
 
   return (
     <div>
-      <Divider orientation="left">
+      {/* <Divider orientation="left">
         <span className="divider">职位分类</span>
-      </Divider>
-      <Tag size="large" color="blue">
-        最新职位
-      </Tag>
+      </Divider> */}
 
       {jobCategoryList}
 
