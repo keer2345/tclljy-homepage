@@ -1,6 +1,6 @@
 import { getJobTop } from '@/services/job'
 import React, { useEffect, useState } from 'react'
-import { Tag, Divider } from 'antd'
+import { Card, Row, Col } from 'antd'
 
 const JobIndexTop = () => {
   const [jobList, setJobList] = useState([])
@@ -21,10 +21,25 @@ const JobIndexTop = () => {
   }
 
   const jobIndexTop = jobList.map((item) => (
-    <Tag key={item.id}>{item.name}</Tag>
+    <Col span={4}>
+      <Card
+        size="small"
+        title={item.name}
+        extra={item.mianyi ? '待遇面议' : item.minSalary + '~' + item.maxSalary}
+        style={{ width: 300 }}
+      >
+        <p>Card content</p>
+        <p>Card content</p>
+        <p>Card content</p>
+      </Card>
+    </Col>
   ))
 
-  return <div>{jobIndexTop}</div>
+  return (
+    <div>
+      <Row justify="space-between">{jobIndexTop}</Row>
+    </div>
+  )
 }
 
 export default JobIndexTop

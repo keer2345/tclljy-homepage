@@ -26,7 +26,7 @@ export default function IndexPage() {
           <JobCategory />
         </Row>
         <Row>　</Row>
-        <Row>最新职位</Row>
+        {/* <Row>最新职位</Row> */}
         <Row>
           <JobIndexTop />
         </Row>
