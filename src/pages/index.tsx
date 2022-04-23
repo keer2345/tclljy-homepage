@@ -3,6 +3,7 @@ import KrSearch from '@/components/KrSearch'
 import styles from './index.less'
 import { Row, Col, Card } from 'antd'
 import KrLoginNav from '@/components/KrLoginNav'
+import JobCategory from '@/components/job/JobCategory'
 
 export default function IndexPage() {
   return (
@@ -18,6 +19,10 @@ export default function IndexPage() {
               <KrLoginNav />
             </Row>
           </Col>
+        </Row>
+        {/* <Row>　</Row> */}
+        <Row>
+          <JobCategory />
         </Row>
       </Card>
     </>

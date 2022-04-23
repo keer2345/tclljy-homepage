@@ -5,9 +5,7 @@ import { Button } from 'antd'
 const KrLoginNav = () => {
   const [login, setLogin] = useState(false)
   useEffect(() => {
-    console.log('aa')
     if (localStorage.getItem('userInfo')) {
-      console.log('bb')
       setLogin(true)
     }
   }, [])

@@ -18,9 +18,7 @@ const Account = () => {
   const [userInfo, setUserInfo] = useState(0)
 
   useEffect(() => {
-    console.log('aaa')
     if (!localStorage.getItem('userInfo')) {
-      console.log('bbb')
       if (!history) return
       const { query } = history.location
       const { redirect } = query as { redirect: string }
@@ -34,7 +32,6 @@ const Account = () => {
   }, [])
 
   const cardClick = (route: string) => {
-    console.log('vvvooo')
     history.push(route)
   }
 
