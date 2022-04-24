@@ -10,7 +10,7 @@ export default function IndexPage() {
   return (
     <>
       <KrCarouselImage />
-      <Card size="middle">
+      <Card size="middle" bordered={false}>
         <Row>
           <Col span={14} offset={4}>
             <KrSearch />
@@ -27,9 +27,8 @@ export default function IndexPage() {
         </Row>
         <Row>　</Row>
         {/* <Row>最新职位</Row> */}
-        <Row>
-          <JobIndexTop />
-        </Row>
+
+        <JobIndexTop />
       </Card>
     </>
   )

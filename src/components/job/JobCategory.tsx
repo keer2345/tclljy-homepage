@@ -8,6 +8,7 @@ const JobCategory = () => {
 
   const colors = [
     'magenta',
+    'coral',
     'red',
     'volcano',
     'orange',
@@ -18,6 +19,8 @@ const JobCategory = () => {
     'blue',
     'geekblue',
     'purple',
+    'peru',
+    'tomato',
   ]
 
   useEffect(() => {

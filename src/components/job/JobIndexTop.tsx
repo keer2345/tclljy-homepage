@@ -21,23 +21,28 @@ const JobIndexTop = () => {
   }
 
   const jobIndexTop = jobList.map((item) => (
-    <Col span={4}>
+    <Col span={8}>
       <Card
         size="small"
         title={item.name}
-        extra={item.mianyi ? '待遇面议' : item.minSalary + '~' + item.maxSalary}
-        style={{ width: 300 }}
+        // extra={item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}
+        extra={<span className="extra">sfdjif</span>}
+        headStyle={{
+          color: '#0081ff',
+        }}
+        hoverable={true}
       >
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
+        Card content
       </Card>
     </Col>
   ))
 
   return (
     <div>
-      <Row justify="space-between">{jobIndexTop}</Row>
+      {/* <Row justify="space-between">{jobIndexTop}</Row> */}
+      <div className="site-card-wrapper">
+        <Row gutter={16}>{jobIndexTop}</Row>
+      </div>
     </div>
   )
 }
