@@ -1,6 +1,6 @@
 import KrCarouselImage from '@/components/KrCarouselImage'
 import KrSearch from '@/components/KrSearch'
-import styles from './index.less'
+import './index.less'
 import { Row, Col, Card, Divider } from 'antd'
 import KrLoginNav from '@/components/KrLoginNav'
 import JobCategory from '@/components/job/JobCategory'
@@ -10,7 +10,7 @@ export default function IndexPage() {
   return (
     <>
       <KrCarouselImage />
-      <Card size="middle" bordered={false}>
+      <Card size="middle" bordered={false} className="card">
         <Row>
           <Col span={14} offset={4}>
             <KrSearch />
@@ -25,11 +25,9 @@ export default function IndexPage() {
         <Row>
           <JobCategory />
         </Row>
-        <Row>　</Row>
-        {/* <Row>最新职位</Row> */}
-
-        <JobIndexTop />
       </Card>
+
+      <JobIndexTop />
     </>
   )
 }
