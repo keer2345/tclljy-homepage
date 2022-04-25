@@ -8,8 +8,6 @@ const JobCard = ({ item }) => {
       <Card
         size="small"
         title={item.name}
-        // extra={item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}
-        // extra={<span className="extra">sfdjif</span>}
         extra={
           <span className="extra">
             {item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}

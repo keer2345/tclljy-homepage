@@ -27,7 +27,23 @@ const JobIndexTop = () => {
   return (
     <div className="site-card-border-less-wrapper">
       <div className="site-card-wrapper">
-        <Row gutter={16}>{jobIndexTop}</Row>
+        <Row gutter={16}>
+          {jobIndexTop}
+          <Col span={8} className="site-col-border-less-wrapper">
+            <Card
+              size="small"
+              title="item.name"
+              extra={<span className="extra">待遇面议</span>}
+              headStyle={{
+                color: '#0081ff',
+              }}
+              hoverable={true}
+              bordered={false}
+            >
+              Card content
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   )
