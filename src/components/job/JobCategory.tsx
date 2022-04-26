@@ -33,7 +33,11 @@ const JobCategory = () => {
   }
 
   const jobCategoryList = jobCategory.map((item) => (
-    <Tag key={item.id} color={colors[parseInt(Math.random() * colors.length)]}>
+    <Tag
+      key={item.id}
+      color={colors[parseInt(Math.random() * colors.length)]}
+      className="tag"
+    >
       {item.name}
     </Tag>
   ))
@@ -46,7 +50,7 @@ const JobCategory = () => {
 
       {jobCategoryList}
 
-      <Tag size="large" color="orange">
+      <Tag size="large" color="orange" className="tag">
         更多......
       </Tag>
     </div>

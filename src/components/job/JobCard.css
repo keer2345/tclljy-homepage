@@ -5,3 +5,12 @@
 .extra{
   color:tomato;
 }
+.row-bottom{
+  margin-bottom: 3px;
+}
+.card-row{
+  color:#8492A6;
+}
+.actions{
+  font-size: 12px;
+}
