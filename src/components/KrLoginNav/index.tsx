@@ -25,11 +25,18 @@ const KrLoginNav = () => {
       ) : (
         <div>
           <Button type="link">
-            <Link to="/user/login">发布职位</Link>
+            <Link to="/user/login">
+              <Button type="primary" shape="round">
+                发布职位
+              </Button>
+            </Link>
           </Button>
-          或
           <Button type="link">
-            <Link to="/user/register">发布简历</Link>
+            <Link to="/user/register">
+              <Button type="primary" shape="round">
+                发布简历
+              </Button>
+            </Link>
           </Button>
         </div>
       )}
