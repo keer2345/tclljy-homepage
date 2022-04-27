@@ -17,6 +17,7 @@ const JobCard = ({ item }) => {
           color: '#0081ff',
         }}
         hoverable={true}
+        // style={{height:250}}
         bordered={false}
         actions={[
           <Row className="actions">
@@ -40,7 +41,7 @@ const JobCard = ({ item }) => {
                     item.firm.city.forShort + '·' + item.firm.region.forShort}
                   {!item.firm.region &&
                     item.firm.province.forShort + '·' + item.firm.city.forShort}
-                  &nbsp;
+                  &nbsp; &nbsp;
                 </Col>
               </Row>
             </Col>
@@ -77,7 +78,9 @@ const JobCard = ({ item }) => {
           <Row className="row-bottom card-row">
             <Col span={24}>
               <Tag color="purple">福利</Tag>
-              {item.weal}
+              {item.weal.length >= 20
+                ? item.weal.substr(0, 19) + '...'
+                : item.weal}
             </Col>
           </Row>
         )}
@@ -85,7 +88,9 @@ const JobCard = ({ item }) => {
           <Row className="row-bottom card-row">
             <Col span={24}>
               <Tag color="purple">吃住</Tag>
-              {item.chizhu}
+              {item.chizhu.length >= 20
+                ? item.chizhu.substr(0, 19) + '...'
+                : item.chizhu}
             </Col>
           </Row>
         )}
@@ -93,8 +98,25 @@ const JobCard = ({ item }) => {
           <Row className="row-bottom card-row">
             <Col span={24}>
               <Tag color="purple">亮点</Tag>
-              {item.zwld}
+              {item.zwld.length >= 20
+                ? item.zwld.substr(0, 19) + '...'
+                : item.zwld}
             </Col>
+          </Row>
+        )}
+        {!item.weal && (
+          <Row className="row-bottom card-row">
+            <Col>&nbsp;</Col>
+          </Row>
+        )}
+        {!item.chizhu && (
+          <Row className="row-bottom card-row">
+            <Col>&nbsp;</Col>
+          </Row>
+        )}
+        {!item.zwld && (
+          <Row className="row-bottom card-row">
+            <Col>&nbsp;</Col>
           </Row>
         )}
       </Card>
