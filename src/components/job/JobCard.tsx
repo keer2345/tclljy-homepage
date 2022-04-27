@@ -1,13 +1,14 @@
 import React from 'react'
 import { Tag, Card, Row, Col } from 'antd'
 import './JobCard.css'
+import { Link } from 'umi'
 
 const JobCard = ({ item }) => {
   return (
     <Col span={8} className="site-col-border-less-wrapper">
       <Card
         size="small"
-        title={item.name}
+        title={<Link to="#">{item.name}</Link>}
         extra={
           <span className="extra">
             {item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}
@@ -84,16 +85,6 @@ const JobCard = ({ item }) => {
             </Col>
           </Row>
         )}
-        {item.chizhu && (
-          <Row className="row-bottom card-row">
-            <Col span={24}>
-              <Tag color="purple">吃住</Tag>
-              {item.chizhu.length >= 20
-                ? item.chizhu.substr(0, 19) + '...'
-                : item.chizhu}
-            </Col>
-          </Row>
-        )}
         {item.zwld && (
           <Row className="row-bottom card-row">
             <Col span={24}>
@@ -104,17 +95,27 @@ const JobCard = ({ item }) => {
             </Col>
           </Row>
         )}
+        {item.chizhu && (
+          <Row className="row-bottom card-row">
+            <Col span={24}>
+              <Tag color="purple">吃住</Tag>
+              {item.chizhu.length >= 20
+                ? item.chizhu.substr(0, 19) + '...'
+                : item.chizhu}
+            </Col>
+          </Row>
+        )}
         {!item.weal && (
           <Row className="row-bottom card-row">
             <Col>&nbsp;</Col>
           </Row>
         )}
-        {!item.chizhu && (
+        {!item.zwld && (
           <Row className="row-bottom card-row">
             <Col>&nbsp;</Col>
           </Row>
         )}
-        {!item.zwld && (
+        {!item.chizhu && (
           <Row className="row-bottom card-row">
             <Col>&nbsp;</Col>
           </Row>
