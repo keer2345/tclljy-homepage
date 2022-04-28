@@ -1,0 +1,23 @@
+
+.site-col-border-less-wrapper {
+  padding-bottom: 16px;
+}
+.extra{
+  color:tomato;
+}
+.row-bottom{
+  margin-bottom: 3px;
+}
+.card-row{
+  color:#8492A6;
+  font-size: 13xpx;
+}
+.actions{
+  font-size: 12px;
+}
+.male{
+  color:'#0081ff';
+}
+.female{
+  color:'#cccccc';
+}

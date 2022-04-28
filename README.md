@@ -7,3 +7,12 @@
 - [llgtfoo/react-tpl-umi](https://github.com/llgtfoo/react-tpl-umi)
 - [cgxgg11/umi-manage](https://github.com/cgxgg11/umi-manage)
 - [PacktPublishing/Enterprise-React-Development-with-UmiJs](https://github.com/PacktPublishing/Enterprise-React-Development-with-UmiJs)
+
+## Deploy
+```sh
+rm -rf dist dist.tar.gz
+
+yarn build
+tar -zcf dist.tar.gz dist
+scp dist.tar.gz tclljy@175.24.126.5:/home/tclljy/tclljy-homepage
+```

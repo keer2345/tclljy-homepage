@@ -5,6 +5,7 @@ import { Row, Col, Card, Typography } from 'antd'
 import KrLoginNav from '@/components/KrLoginNav'
 import JobCategory from '@/components/job/JobCategory'
 import JobIndexTop from '@/components/job/JobIndexTop'
+import ResumemIndexTop from '@/components/resume/ResumemIndexTop'
 
 const { Text, Link } = Typography
 
@@ -30,7 +31,6 @@ export default function IndexPage() {
       </Card>
 
       <Row>　</Row>
-      {/* <Row justify="space-between"> */}
       <Row justify="start">
         <Col>
           <Link href="#" className="title-link">
@@ -46,6 +46,22 @@ export default function IndexPage() {
       </Row>
 
       <JobIndexTop />
+
+      <Row justify="start">
+        <Col>
+          <Link href="#" className="title-link">
+            &nbsp;最新简历
+          </Link>
+        </Col>
+        <Col>　</Col>
+        <Col>
+          <Link href="#" className="title-link">
+            更多简历...&nbsp;
+          </Link>
+        </Col>
+      </Row>
+
+      <ResumemIndexTop />
     </>
   )
 }
