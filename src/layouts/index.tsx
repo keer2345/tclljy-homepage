@@ -98,21 +98,6 @@ const BaseLayout = (props: LayoutProps) => {
         </a>
       </Menu.Item>
       <Menu.Divider />
-      {/* <Menu.ItemGroup title="企业发布">
-        <Menu.Item key={'firm'} icon={<CloudOutlined />}>
-          我的企业
-        </Menu.Item>
-        <Menu.Item key={'job'} icon={<AppstoreOutlined />}>
-          我的职位
-        </Menu.Item>
-      </Menu.ItemGroup>
-      <Menu.Divider />
-      <Menu.ItemGroup title="求职者">
-        <Menu.Item key={'resume'} icon={<ProfileOutlined />}>
-          我的简历
-        </Menu.Item>
-      </Menu.ItemGroup>
-      <Menu.Divider /> */}
       <Menu.Item key={'setting'} icon={<SettingOutlined />}>
         <a rel="noopener noreferrer" href="/user/setting">
           账户设置
@@ -137,7 +122,6 @@ const BaseLayout = (props: LayoutProps) => {
             <Menu
               className="menu"
               // theme="light"
-              // onSelect={()=>console.log("vovo")}
               mode="horizontal"
               defaultSelectedKeys={['1']}
             >
@@ -210,7 +194,7 @@ const BaseLayout = (props: LayoutProps) => {
         </Content>
       </div>
       <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2018 Created by Ant UED
+        Ant Design ©2022 Created by Ant UED
       </Footer>
     </Layout>
   )

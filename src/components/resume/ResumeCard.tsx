@@ -19,9 +19,6 @@ const ResumeCard = ({ item }) => {
           </Link>
         }
         extra={<span className="extra">{item.age}岁</span>}
-        // headStyle={{
-        //   color: '#0081ff',
-        // }}
         hoverable={true}
         bordered={false}
       >
@@ -43,10 +40,7 @@ const ResumeCard = ({ item }) => {
           <Col span={24}>
             <Tag color="blue">期望职位</Tag>
             {item.categories.length != 0
-              ? // ? item.categories.map((category) => (
-                //     <span>{category.name}、</span>
-                //   ))
-                item.categories.map((category, i, item) => {
+              ? item.categories.map((category, i, item) => {
                   if (i + 1 === item.length) {
                     return <span>{category.name}</span>
                   } else {

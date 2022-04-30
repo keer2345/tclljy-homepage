@@ -16,7 +16,7 @@ export default function IndexPage() {
       <Card size="middle" bordered={false} className="card">
         <Row>
           <Col span={14} offset={4}>
-            <KrSearch />
+            {/* <KrSearch /> */}
           </Col>
           <Col span={6} offset={0}>
             <Row justify="end">
