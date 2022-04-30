@@ -5,7 +5,12 @@ import './ResumeCard.css'
 
 const ResumeCard = ({ item }) => {
   return (
-    <Col span={8} className="site-col-border-less-wrapper">
+    <Col
+      className="site-col-border-less-wrapper"
+      xs={{ span: 24 }}
+      sm={{ span: 12 }}
+      md={{ span: 8 }}
+    >
       <Card
         size="small"
         title={

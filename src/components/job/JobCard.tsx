@@ -5,7 +5,12 @@ import { Link } from 'umi'
 
 const JobCard = ({ item }) => {
   return (
-    <Col span={8} className="site-col-border-less-wrapper">
+    <Col
+      className="site-col-border-less-wrapper"
+      xs={{ span: 24 }}
+      sm={{ span: 12 }}
+      md={{ span: 8 }}
+    >
       <Card
         size="small"
         title={<Link to="#">{item.name}</Link>}
@@ -18,7 +23,6 @@ const JobCard = ({ item }) => {
           color: '#0081ff',
         }}
         hoverable={true}
-        // style={{height:250}}
         bordered={false}
         actions={[
           <Row className="actions">
@@ -36,8 +40,6 @@ const JobCard = ({ item }) => {
             <Col span={7}>
               <Row justify="end">
                 <Col>
-                  {/* <EnvironmentTwoTone twoToneColor="goldenrod" />
-                  &nbsp; */}
                   {item.firm.region &&
                     item.firm.city.forShort + '·' + item.firm.region.forShort}
                   {!item.firm.region &&

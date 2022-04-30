@@ -42,7 +42,7 @@ const ResumemIndexTop = () => {
   return (
     <div className="site-card-border-less-wrapper">
       <div className="site-card-wrapper">
-        <Row gutter={16}>{resumeIndexTop}</Row>
+        <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 20 }}>{resumeIndexTop}</Row>
       </div>
     </div>
   )
