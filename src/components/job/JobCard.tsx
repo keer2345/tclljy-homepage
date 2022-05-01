@@ -7,9 +7,16 @@ const JobCard = ({ item }) => {
   return (
     <Col
       className="site-col-border-less-wrapper"
+      // xs={{ span: 24 }}
+      // sm={{ span: 12 }}
+      // md={{ span: 8 }}
+
       xs={{ span: 24 }}
       sm={{ span: 12 }}
-      md={{ span: 8 }}
+      md={{ span: 12 }}
+      lg={{ span: 8 }}
+      xl={{ span: 8 }}
+      xxl={{ span: 6 }}
     >
       <Card
         size="small"
