@@ -15,7 +15,7 @@ const JobList = ({ from }: any) => {
       params['enable'] = 1
       params['audit'] = 1
     } else if (from === 'list') {
-      params['pageSize'] = 18
+      params['pageSize'] = 2
       params['enable'] = 1
       params['audit'] = 1
     }
