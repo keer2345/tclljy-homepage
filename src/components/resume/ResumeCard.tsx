@@ -12,7 +12,7 @@ const ResumeCard = ({ item }) => {
       md={{ span: 12 }}
       lg={{ span: 8 }}
       xl={{ span: 8 }}
-      xxl={{ span: 6 }}
+      xxl={{ span: 8 }}
     >
       <Card
         size="small"

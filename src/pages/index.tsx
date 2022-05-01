@@ -4,8 +4,8 @@ import './index.less'
 import { Row, Col, Card, Typography } from 'antd'
 import KrLoginNav from '@/components/KrLoginNav'
 import JobCategory from '@/components/job/JobCategory'
-import JobIndexTop from '@/components/job/JobIndexTop'
-import ResumemIndexTop from '@/components/resume/ResumemIndexTop'
+import JobList from '@/components/job/JobList'
+import ResumeList from '@/components/resume/ResumeList'
 
 const { Text, Link } = Typography
 
@@ -45,7 +45,7 @@ export default function IndexPage() {
         </Col>
       </Row>
 
-      <JobIndexTop />
+      <JobList from="top" />
 
       <Row justify="start">
         <Col>
@@ -61,7 +61,7 @@ export default function IndexPage() {
         </Col>
       </Row>
 
-      <ResumemIndexTop />
+      <ResumeList from="top" />
     </>
   )
 }

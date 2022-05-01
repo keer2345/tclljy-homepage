@@ -2,6 +2,7 @@ import JobCategory from '@/components/job/JobCategory'
 import KrSearch from '@/components/KrSearch'
 import React from 'react'
 import { Row, Col } from 'antd'
+import JobList from '@/components/job/JobList'
 
 const All = () => {
   return (
@@ -14,6 +15,8 @@ const All = () => {
           <JobCategory />
         </Col>
       </Row>
+
+      <JobList from="list" />
     </>
   )
 }

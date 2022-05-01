@@ -8,10 +8,10 @@ export async function getJobCategoryEnable(options?: { [key: string]: any }) {
   })
 }
 
-// 获取职位(top12)
-export async function getJobTop(options?: { [key: string]: any }) {
-  return request<API.RespResult>('/api/job?enable=1&audit=1&pageSize=12', {
+// 获取职位列表
+export async function fetchJobList(params?: { [key: string]: any }) {
+  return request<API.RespResult>('/api/job', {
     method: 'GET',
-    ...(options || {}),
+    params,
   })
 }

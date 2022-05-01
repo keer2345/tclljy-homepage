@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, message } from 'antd'
-import { getResumeTop } from '@/services/resume'
+import { fetchResumeList } from '@/services/resume'
 import ResumeCard from './ResumeCard'
 
-const ResumemIndexTop = () => {
+const ResumeList = ({ from }: any) => {
   const [resumeList, setResumeList] = useState([])
 
   useEffect(() => {
-    getResumeList()
+    let params: { [key: string]: any } = {}
+
+    if (from === 'top') {
+      params['pageSize'] = 12
+      params['enable'] = 1
+      params['audit'] = 1
+    }
+
+    getResumeList(params)
   }, [])
 
-  const getResumeList = async () => {
+  const getResumeList = async (params: { [key: string]: any }) => {
     try {
-      const res = await getResumeTop()
+      const res = await fetchResumeList(params)
       if (res.success) {
         let contents = res.data.contents
         for (var index in contents) {
           contents[index]['categories'] = contents[index].categories.sort(
-            (a, b) => a.sort - b.sort,
+            (a: any, b: any) => a.sort - b.sort,
           )
           if (contents[index].otherJob) {
             contents[index]['categories'].find(
-              (item) => item.name == '其他',
+              (item: any) => item.name == '其他',
             ).name = '其他 (' + contents[index].otherJob + ')'
             console.log('aaa')
           }
@@ -48,4 +56,4 @@ const ResumemIndexTop = () => {
   )
 }
 
-export default ResumemIndexTop
+export default ResumeList
