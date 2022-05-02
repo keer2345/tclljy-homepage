@@ -1,10 +1,13 @@
 import { fetchJobList } from '@/services/job'
 import React, { useEffect, useState } from 'react'
-import { Row, message, Pagination } from 'antd'
+import { Row, message, Pagination, Card, Col } from 'antd'
 import './JobList.css'
 import JobCard from './JobCard'
 
-const JobList = ({ from, search }: any) => {
+const { Meta } = Card
+
+const JobList = ({ from, search, categoryId }: any) => {
+  const [loading, setLoading] = useState(true)
   const [jobList, setJobList] = useState([])
   const [params, setParams] = useState<{ [key: string]: any }>()
   const [pageSize, setPageSize] = useState(20)
@@ -23,16 +26,26 @@ const JobList = ({ from, search }: any) => {
   }
 
   useEffect(() => {
+    let pageSize = 20
     if (from === 'top') {
-      setParams({ ...params, pageSize: 12, enable: 1, audit: 1, name: search })
+      pageSize = 12
     } else if (from === 'list') {
-      setParams({ ...params, pageSize: 18, enable: 1, audit: 1, name: search })
+      pageSize = 18
     }
-    console.log('search:::', search)
-  }, [search])
+
+    setParams({
+      ...params,
+      pageSize: pageSize,
+      enable: 1,
+      audit: 1,
+      name: search,
+      categoryId: categoryId,
+    })
+  }, [search, categoryId])
 
   useEffect(() => {
     if (params) {
+      setLoading(true)
       setPageSize(params.pageSize)
       getJobList(params)
     }
@@ -46,6 +59,7 @@ const JobList = ({ from, search }: any) => {
     try {
       const res = await fetchJobList(params)
       if (res.success) {
+        setLoading(false)
         setJobList(res.data.contents)
         setCurrentPage(res.data.currentPage + 1)
         setTotalPages(res.data.totalPages)
@@ -56,7 +70,23 @@ const JobList = ({ from, search }: any) => {
     }
   }
 
-  const jobIndexTop = jobList.map((item) => <JobCard item={item} />)
+  const jobLists =
+    jobList.length > 0 ? (
+      jobList.map((item) => <JobCard item={item} />)
+    ) : (
+      <Col
+        xs={{ span: 24 }}
+        sm={{ span: 12 }}
+        md={{ span: 12 }}
+        lg={{ span: 8 }}
+        xl={{ span: 8 }}
+        xxl={{ span: 8 }}
+      >
+        <Card style={{ width: 300, marginTop: 16 }} loading={loading}>
+          <Meta title="暂无职位" description="未查询到符合条件的职位" />
+        </Card>
+      </Col>
+    )
 
   return (
     <div className="site-card-border-less-wrapper">
@@ -67,7 +97,7 @@ const JobList = ({ from, search }: any) => {
             { xs: 3, sm: 3 },
           ]}
         >
-          {jobIndexTop}
+          {jobLists}
         </Row>
         {from != 'top' && (
           <>

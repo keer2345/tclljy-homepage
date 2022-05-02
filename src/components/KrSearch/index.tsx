@@ -7,12 +7,15 @@ import { getSysParams } from '@/services/welcome'
 const { Search } = Input
 const { Option } = Select
 
-const KrSearch = ({ search, changeSearchValue }) => {
-  const [searchValue, setSearchValue] = useState('')
+const KrSearch = ({ search, value, changeSearchValue }) => {
+  const [searchValue, setSearchValue] = useState(value)
 
   const onSearch = (e) => {
     changeSearchValue(searchValue)
   }
+  useEffect(() => {
+    setSearchValue(value)
+  }, [value])
 
   return (
     <>
@@ -37,6 +40,7 @@ const KrSearch = ({ search, changeSearchValue }) => {
               size="large"
               style={{ width: '70%' }}
               placeholder="找工作"
+              value={searchValue}
               onChange={(e) => setSearchValue(e.target.value.trim())}
               onPressEnter={(e) => onSearch(e)}
             />

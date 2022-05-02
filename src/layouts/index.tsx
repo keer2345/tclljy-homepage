@@ -57,6 +57,11 @@ const BaseLayout = (props: LayoutProps) => {
     }
   }
 
+  const year = () => {
+    var date = new Date()
+    return date.getFullYear()
+  }
+
   useEffect(() => {
     setUserInfo(JSON.parse(localStorage.getItem('userInfo') || '{}'))
   }, [])
@@ -194,7 +199,12 @@ const BaseLayout = (props: LayoutProps) => {
         </Content>
       </div>
       <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2022 Created by Ant UED
+        <Row justify="center">
+          <Col>同城蓝领家园 ©{year()} 柳州同城人力资源有限公司</Col>
+        </Row>
+        <Row justify="center">
+          <Col>dd</Col>
+        </Row>
       </Footer>
     </Layout>
   )

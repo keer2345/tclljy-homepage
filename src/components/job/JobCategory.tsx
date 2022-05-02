@@ -3,29 +3,43 @@ import React, { useEffect, useState } from 'react'
 import { Tag, Divider } from 'antd'
 import './JobCategory.css'
 
-const JobCategory = ({ from }) => {
+const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
   const [jobCategory, setJobCategory] = useState([])
+  const [jobCategoryId, setJobCategoryId] = useState('')
 
-  const colors = [
-    'magenta',
-    'coral',
-    'red',
-    'volcano',
-    'orange',
-    'gold',
-    'lime',
-    'green',
-    'cyan',
-    'blue',
-    'geekblue',
-    'purple',
-    'peru',
-    'tomato',
-  ]
+  const colors =
+    from === 'top'
+      ? [
+          'magenta',
+          'coral',
+          'red',
+          'volcano',
+          'orange',
+          'gold',
+          'lime',
+          'green',
+          'cyan',
+          'blue',
+          'geekblue',
+          'purple',
+          'peru',
+          'tomato',
+        ]
+      : ['blue']
 
   useEffect(() => {
     getJobCategory()
   }, [])
+
+  const onClickTag = (jobCategoryId) => {
+    setJobCategoryId(jobCategoryId)
+    changeCategoryId(jobCategoryId)
+    if (jobCategoryId != '') {
+      changeCategoryName(
+        jobCategory.find((item) => item.id === jobCategoryId).name,
+      )
+    }
+  }
 
   const getJobCategory = async () => {
     const jobCategoryRes = await getJobCategoryEnable()
@@ -35,22 +49,22 @@ const JobCategory = ({ from }) => {
   const jobCategoryList = jobCategory.map((item) => (
     <Tag
       key={item.id}
-      color={colors[parseInt(Math.random() * colors.length)]}
+      color={
+        item.id === jobCategoryId
+          ? 'orangered'
+          : colors[parseInt(Math.random() * colors.length)]
+      }
       className="tag"
     >
-      {item.name}
+      <button onClick={() => onClickTag(item.id)}>{item.name}</button>
     </Tag>
   ))
 
   return (
     <div>
-      {/* <Divider orientation="left">
-        <span className="divider">职位分类</span>
-      </Divider> */}
-
       {from == 'list' && (
         <Tag size="large" color="orange" className="tag">
-          全部职位
+          <button onClick={() => onClickTag('')}>全部职位</button>
         </Tag>
       )}
 
