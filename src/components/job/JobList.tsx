@@ -6,6 +6,7 @@ import JobCard from './JobCard'
 
 const JobList = ({ from }: any) => {
   const [jobList, setJobList] = useState([])
+  const [params, setParams] = useState<{ [key: string]: any }>()
   const [pageSize, setPageSize] = useState(20)
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
@@ -22,29 +23,29 @@ const JobList = ({ from }: any) => {
   }
 
   useEffect(() => {
-    let params: { [key: string]: any } = {}
-
     if (from === 'top') {
-      setPageSize(12)
-      params['pageSize'] = pageSize
-      params['enable'] = 1
-      params['audit'] = 1
+      setParams({ ...params, pageSize: 12, enable: 1, audit: 1 })
     } else if (from === 'list') {
-      setPageSize(2)
-      params['pageSize'] = pageSize
-      params['enable'] = 1
-      params['audit'] = 1
+      setParams({ ...params, pageSize: 18, enable: 1, audit: 1 })
     }
-
-    getJobList(params)
   }, [])
+
+  useEffect(() => {
+    if (params) {
+      setPageSize(params.pageSize)
+      getJobList(params)
+    }
+  }, [params])
+
+  const loadDataPagination = (page: number) => {
+    setParams({ ...params, currentPage: page - 1 })
+  }
 
   const getJobList = async (params: { [key: string]: any }) => {
     try {
       const res = await fetchJobList(params)
       if (res.success) {
         setJobList(res.data.contents)
-        console.log('popo:', res.data)
         setCurrentPage(res.data.currentPage + 1)
         setTotalPages(res.data.totalPages)
         setTotalItems(res.data.totalItems)
@@ -73,11 +74,13 @@ const JobList = ({ from }: any) => {
             <Row justify="center">
               <Pagination
                 defaultCurrent={1}
-                pageSize={2}
+                current={currentPage}
+                pageSize={pageSize}
                 total={totalItems}
-                // hideOnSinglePage
+                hideOnSinglePage
                 showSizeChanger={false}
                 itemRender={itemRender}
+                onChange={loadDataPagination}
               />
             </Row>
           </>
