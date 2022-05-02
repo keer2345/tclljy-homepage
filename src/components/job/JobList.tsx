@@ -4,7 +4,7 @@ import { Row, message, Pagination } from 'antd'
 import './JobList.css'
 import JobCard from './JobCard'
 
-const JobList = ({ from }: any) => {
+const JobList = ({ from, search }: any) => {
   const [jobList, setJobList] = useState([])
   const [params, setParams] = useState<{ [key: string]: any }>()
   const [pageSize, setPageSize] = useState(20)
@@ -24,11 +24,12 @@ const JobList = ({ from }: any) => {
 
   useEffect(() => {
     if (from === 'top') {
-      setParams({ ...params, pageSize: 12, enable: 1, audit: 1 })
+      setParams({ ...params, pageSize: 12, enable: 1, audit: 1, name: search })
     } else if (from === 'list') {
-      setParams({ ...params, pageSize: 18, enable: 1, audit: 1 })
+      setParams({ ...params, pageSize: 18, enable: 1, audit: 1, name: search })
     }
-  }, [])
+    console.log('search:::', search)
+  }, [search])
 
   useEffect(() => {
     if (params) {

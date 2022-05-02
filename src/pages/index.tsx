@@ -26,7 +26,7 @@ export default function IndexPage() {
         </Row>
         <Row>　</Row>
         <Row>
-          <JobCategory />
+          <JobCategory from="top" />
         </Row>
       </Card>
 

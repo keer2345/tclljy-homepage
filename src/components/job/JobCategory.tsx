@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Tag, Divider } from 'antd'
 import './JobCategory.css'
 
-const JobCategory = () => {
+const JobCategory = ({ from }) => {
   const [jobCategory, setJobCategory] = useState([])
 
   const colors = [
@@ -48,11 +48,19 @@ const JobCategory = () => {
         <span className="divider">职位分类</span>
       </Divider> */}
 
+      {from == 'list' && (
+        <Tag size="large" color="orange" className="tag">
+          全部职位
+        </Tag>
+      )}
+
       {jobCategoryList}
 
-      <Tag size="large" color="orange" className="tag">
-        更多......
-      </Tag>
+      {from == 'top' && (
+        <Tag size="large" color="orange" className="tag">
+          更多......
+        </Tag>
+      )}
     </div>
   )
 }

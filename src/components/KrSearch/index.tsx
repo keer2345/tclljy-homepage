@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Input, Select, message, Alert } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import styles from './index.less'
@@ -6,21 +6,16 @@ import { getSysParams } from '@/services/welcome'
 
 const { Search } = Input
 const { Option } = Select
-const onSearch = (value) => console.log(value)
-const search = async () => {
-  console.log('search...')
-  try {
-    const res = await getSysParams({})
-    console.log('res:', res)
-  } catch (error) {
-    console.log('error:', error.data.msg)
-    message.error(error.data.msg)
+
+const KrSearch = ({ search, changeSearchValue }) => {
+  const [searchValue, setSearchValue] = useState('')
+
+  const onSearch = (e) => {
+    changeSearchValue(searchValue)
   }
-}
-const KrSearch = ({ search }) => {
+
   return (
     <>
-      {/* <div className="pm-8"> */}
       <div className="pm-8">
         <Input.Group compact>
           {search === 'all' && (
@@ -33,24 +28,29 @@ const KrSearch = ({ search }) => {
           {search === 'all' && (
             <Input
               size="large"
-              style={{ width: '50%' }}
+              style={{ width: '60%' }}
               placeholder="工作 / 人才 / 企业"
             />
           )}
           {search === 'job' && (
-            <Input size="large" style={{ width: '50%' }} placeholder="找工作" />
+            <Input
+              size="large"
+              style={{ width: '70%' }}
+              placeholder="找工作"
+              onChange={(e) => setSearchValue(e.target.value.trim())}
+              onPressEnter={(e) => onSearch(e)}
+            />
           )}
           <Button
             type="primary"
             icon={<SearchOutlined style={{ fontSize: '18px' }} />}
             size="large"
-            onClick={search}
+            onClick={(e) => onSearch(e)}
           >
             搜　索
           </Button>
         </Input.Group>
       </div>
-      <div></div>
     </>
   )
 }
