@@ -6,6 +6,7 @@ import KrLoginNav from '@/components/KrLoginNav'
 import JobCategory from '@/components/job/JobCategory'
 import JobList from '@/components/job/JobList'
 import ResumeList from '@/components/resume/ResumeList'
+import { useState } from 'react'
 
 const { Text, Link } = Typography
 

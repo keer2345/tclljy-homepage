@@ -2,6 +2,7 @@ import { getJobCategoryEnable } from '@/services/job'
 import React, { useEffect, useState } from 'react'
 import { Tag, Divider } from 'antd'
 import './JobCategory.css'
+import { history } from 'umi'
 
 const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
   const [jobCategory, setJobCategory] = useState([])
@@ -56,7 +57,18 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
       }
       className="tag"
     >
-      <button onClick={() => onClickTag(item.id)}>{item.name}</button>
+      {from === 'list' && (
+        <button onClick={() => onClickTag(item.id)}>{item.name}</button>
+      )}
+      {from === 'top' && (
+        <button
+          onClick={() => {
+            history.push('/job')
+          }}
+        >
+          {item.name}
+        </button>
+      )}
     </Tag>
   ))
 
@@ -72,7 +84,7 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
 
       {from == 'top' && (
         <Tag size="large" color="orange" className="tag">
-          更多......
+          <button onClick={() => history.push('/job')}>更多......</button>
         </Tag>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { history, useModel } from 'umi'
+import { history } from 'umi'
 import { message, Tabs, Space, Alert, Input } from 'antd'
 import {
   MobileOutlined,
@@ -31,23 +31,10 @@ const KrLoginForm = () => {
 
   const [userLoginState, setUserLoginState] = useState<API.RespResult>({})
   const [type, setType] = useState<string>('account')
-  // const { initialState, setInitialState } = useModel('@@initialState')
-
-  // const fetchUserInfo = async () => {
-  //   const userInfo = await initialState?.fetchUserInfo?.()
-  //   if (userInfo) {
-  //     await setInitialState((s) => ({
-  //       ...s,
-  //       currentUser: userInfo,
-  //     }))
-  //   }
-  // }
 
   const getCaptcha = async () => {
     try {
       const res = await getCaptchaCode()
-      // setCaptchaUid(res.data.uid)
-      // setCaptchaImage(res.data.image)
       if (res.success) {
         return res.data
       }

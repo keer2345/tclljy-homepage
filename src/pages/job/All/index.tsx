@@ -10,6 +10,9 @@ const All = () => {
   const [categoryId, setCategoryId] = useState('')
   const [categoryName, setCategoryName] = useState('')
 
+  //   // 后取地址栏传过来的 cid
+  //   const cid = window.location.search.split('=')[1]
+
   useEffect(() => {
     if (categoryId === '') {
       setSearchValue('')
@@ -31,7 +34,7 @@ const All = () => {
         </Col>
         <Col span={3}></Col>
       </Row>
-      <Row justify="center">
+      <Row justify="start">
         <Col>
           <JobCategory
             from="list"
