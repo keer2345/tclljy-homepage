@@ -72,7 +72,6 @@ const KrRegisterForm = () => {
       values['from'] = 'web'
       values['type'] = 'account'
       values['uid'] = captchaUid
-      console.log('values:', values)
 
       const res = await register({ ...values })
 

@@ -31,7 +31,6 @@ const ResumeList = ({ from }: any) => {
             contents[index]['categories'].find(
               (item: any) => item.name == '其他',
             ).name = '其他 (' + contents[index].otherJob + ')'
-            console.log('aaa')
           }
           contents[index].age =
             new Date().getFullYear() -

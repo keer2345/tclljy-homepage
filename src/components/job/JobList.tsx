@@ -66,7 +66,7 @@ const JobList = ({ from, search, categoryId }: any) => {
         setTotalItems(res.data.totalItems)
       }
     } catch (error) {
-      message.error('加载职位信息失败，服务器连接错误')
+      message.error('加载职位信息失败，服务器连接异常')
     }
   }
 

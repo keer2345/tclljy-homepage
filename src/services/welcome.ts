@@ -4,7 +4,6 @@ import { request } from 'umi'
  * 获取系统参数
  */
 export async function getSysParams(params: { [key: string]: any }) {
-  console.log('GET /api/param')
   let url = '/api/param'
   params = { ...params, currentPage: 0, sort: 'id,asc' }
 

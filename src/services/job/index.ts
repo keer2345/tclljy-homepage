@@ -15,3 +15,11 @@ export async function fetchJobList(params?: { [key: string]: any }) {
     params,
   })
 }
+
+// 获取指定职位
+export async function fetchJob(id: string, params?: { [key: string]: any }) {
+  return request<API.RespResult>('/api/job/' + id, {
+    method: 'GET',
+    params,
+  })
+}

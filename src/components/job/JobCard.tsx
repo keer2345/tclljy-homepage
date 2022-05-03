@@ -4,6 +4,7 @@ import './JobCard.css'
 import { Link } from 'umi'
 
 const JobCard = ({ item }) => {
+  const url = '/job/info/' + item.id
   return (
     <Col
       className="site-col-border-less-wrapper"
@@ -20,7 +21,7 @@ const JobCard = ({ item }) => {
     >
       <Card
         size="small"
-        title={<Link to="#">{item.name}</Link>}
+        title={<Link to={url}>{item.name}</Link>}
         extra={
           <span className="extra">
             {item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}

@@ -41,7 +41,6 @@ type mapCode =
  */
 const errorHandler = (error: { response: Response }): Response => {
   const { response } = error
-  console.log(response)
   if (response && response.status) {
     const errorText =
       codeMessage[response.status as mapCode] || response.statusText
@@ -74,7 +73,6 @@ const request = extend({
 
 // request拦截器, 改变url 或 options.
 request.interceptors.request.use((url, options) => {
-  console.log('request.interceptors.request')
   let newOptions: any = { ...options }
   const token = localStorage.getItem('satoken')
   if (token) {

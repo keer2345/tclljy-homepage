@@ -77,7 +77,6 @@ const KrLoginForm = () => {
         // const vovo: User.UserInfo = JSON.parse(
         //   localStorage.getItem('userInfo') || '{}',
         // )
-        // console.log('vovo', vovo.username)
 
         if (!history) return
         const { query } = history.location
