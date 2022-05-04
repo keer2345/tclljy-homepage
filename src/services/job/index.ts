@@ -54,3 +54,15 @@ export async function resumeFavJob(
     { method: 'POST' },
   )
 }
+//投递职位
+export async function resumeSendJob(
+  body: Job.SendMessage,
+  params?: { [key: string]: any },
+) {
+  return request<API.RespResult>('/api/send', {
+    method: 'POST',
+    // headers: { 'Content-Type': 'application/json' },
+    data: body,
+    params,
+  })
+}

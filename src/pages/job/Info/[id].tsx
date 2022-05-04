@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { message, Tag, Card, Row, Col, Typography } from 'antd'
+import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
 import {
   fetchJob,
   fetchResumeFavJob,
   fetchResumeSendJob,
   resumeFavJob,
+  resumeSendJob,
 } from '@/services/job'
 import './index.css'
 
@@ -21,6 +22,8 @@ const Info = ({ match }) => {
   const [send, setSend] = useState(false)
   const [favLoading, setFavLoading] = useState(true)
   const [sendLoading, setSendLoading] = useState(true)
+  const [sendModal, setSendModal] = useState(false)
+  const [sendMsg, setSendMsg] = useState('')
 
   const [error, setError] = useState()
 
@@ -109,8 +112,81 @@ const Info = ({ match }) => {
     }
   }
   const sendJob = () => {
-    console.log('send job')
+    if (userinfo.id) {
+      if (send) {
+        const msg = '您已投递过该职位！'
+        message.warn(msg)
+        return false
+      }
+      // if (!send && job.firm.id == userinfo.firm) {
+      //   message.warn('这是你的企业发布的职位，无需投递！')
+      //   return false
+      // }
+      // if (!userinfo.resume || userinfo.resume == '0') {
+      //   setError('您还没有发布简历，投递失败！')
+      //   message.warn('您还没有发布简历，投递失败！')
+      //   return false
+      // }
+      setSendLoading(true)
+      setSendModal(true)
+    } else {
+      const error = '只有登录后才能投递，请先登录吧！'
+      setError(error)
+      message.error(error)
+    }
   }
+  const sendJobMethod = async () => {
+    let sendMessage: Job.SendMessage = {}
+    sendMessage['job'] = { id: jobId }
+    sendMessage['resume'] = { id: userinfo.resume }
+    sendMessage['content'] = sendMsg
+    sendMessage['readed'] = false
+    sendMessage['readHide'] = false
+
+    try {
+      const res = await resumeSendJob(sendMessage)
+      if (res.success) {
+        setSendLoading(false)
+        setSendModal(false)
+        message.success('投递成功！')
+        setSend(!send)
+      }
+    } catch (error) {
+      setSendLoading(false)
+      message.error(error.data.msg)
+      setError(error.data.msg)
+    }
+  }
+
+  const handleModalOk = () => {
+    sendJobMethod()
+  }
+
+  const handleModalCancel = () => {
+    message.warn('您取消了投递！')
+    setSendLoading(false)
+    setSendModal(false)
+  }
+
+  const sendModalComponent = () => (
+    <Modal
+      title="投递职位"
+      visible={sendModal}
+      onOk={handleModalOk}
+      onCancel={handleModalCancel}
+    >
+      <p>可输入简单的投递说明：</p>
+      <p>&nbsp;</p>
+      <p>
+        <Input
+          value={sendMsg}
+          onChange={(e) => {
+            setSendMsg(e.target.value.trim())
+          }}
+        />
+      </p>
+    </Modal>
+  )
 
   return (
     <>
@@ -151,6 +227,7 @@ const Info = ({ match }) => {
             <Col span={24}>cc</Col>
           </Row>
         </Col>
+        {sendModalComponent()}
       </Row>
     </>
   )
