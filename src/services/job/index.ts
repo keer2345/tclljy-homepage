@@ -43,3 +43,14 @@ export async function fetchResumeSendJob(jobid: string, resumeid: string) {
     },
   )
 }
+
+//收藏职位，取消收藏职位
+export async function resumeFavJob(
+  fav: boolean, //原状态
+  jobid: string,
+) {
+  return request<API.RespResult>(
+    '/api/fav/job/' + (fav ? 'off' : 'on') + '/' + jobid,
+    { method: 'POST' },
+  )
+}

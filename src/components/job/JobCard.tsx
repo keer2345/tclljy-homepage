@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tag, Card, Row, Col } from 'antd'
 import './JobCard.css'
-import { Link } from 'umi'
+import { history, Link } from 'umi'
 
 const JobCard = ({ item }) => {
   const url = '/job/info/' + item.id
@@ -58,6 +58,7 @@ const JobCard = ({ item }) => {
             </Col>
           </Row>,
         ]}
+        onClick={() => history.push(url)}
       >
         <Row>
           {item.jobType.name === '正式工' && (

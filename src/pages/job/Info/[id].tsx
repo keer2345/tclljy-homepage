@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { message, Tag, Card, Row, Col, Typography } from 'antd'
-import { fetchJob, fetchResumeFavJob, fetchResumeSendJob } from '@/services/job'
+import {
+  fetchJob,
+  fetchResumeFavJob,
+  fetchResumeSendJob,
+  resumeFavJob,
+} from '@/services/job'
 import './index.css'
 
 import JobInfo from '@/components/job/JobInfo'
@@ -17,6 +22,8 @@ const Info = ({ match }) => {
   const [favLoading, setFavLoading] = useState(true)
   const [sendLoading, setSendLoading] = useState(true)
 
+  const [error, setError] = useState()
+
   useEffect(() => {
     const id = match.params.id
     setJobId(id)
@@ -30,10 +37,12 @@ const Info = ({ match }) => {
         //判断用户是否合法
         if (userInfoStorage.id == res.id) {
           userid = res.id
+          getJob(id, { userid: userid, channel: 'web' })
           getFavStatus(id, userInfoStorage.resume)
           getSendStatus(id, userInfoStorage.resume)
+        } else {
+          getJob(id, { userid: userid, channel: 'web' })
         }
-        getJob(id, { userid: userid, channel: 'web' })
       })
     } else {
       setFavLoading(false)
@@ -75,22 +84,63 @@ const Info = ({ match }) => {
     } catch (error) {}
   }
 
+  const favJob = () => {
+    if (userinfo.id) {
+      setFavLoading(true)
+      favJobMethod(fav, jobId)
+    } else {
+      const error = '只有登录后才能收藏，请先登录吧！'
+      setError(error)
+      message.error(error)
+    }
+  }
+  const favJobMethod = async (fav, jobId) => {
+    try {
+      const res = await resumeFavJob(fav, jobId)
+      if (res.success) {
+        setFavLoading(false)
+        message.success(fav ? '取消收藏成功' : '收藏成功')
+        setFav(!fav)
+      }
+    } catch (error) {
+      setFavLoading(false)
+      message.error(error.data.msg)
+      setError(error.data.msg)
+    }
+  }
+  const sendJob = () => {
+    console.log('send job')
+  }
+
   return (
     <>
       {/* <KrCarouselImage /> */}
       <Row>&nbsp;</Row>
+      <Row>
+        <Col span={24}>
+          <Typography>
+            <Typography.Title level={3}>职位详情</Typography.Title>
+          </Typography>
+        </Col>
+      </Row>
       <Row gutter={[12, 12]}>
         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 16 }}>
           <Row gutter={[12, 12]}>
             <Col span={24}>
-              <Typography>
-                <Typography.Title level={3}>职位详情</Typography.Title>
-              </Typography>
-            </Col>
-            <Col span={24}>
               {jobLoading && <Card loading={jobLoading}></Card>}
               {!jobLoading && (
-                <JobInfo job={job} userinfo={userinfo} from={'list'} />
+                <JobInfo
+                  job={job}
+                  userinfo={userinfo}
+                  from={'list'}
+                  fav={fav}
+                  send={send}
+                  favLoading={favLoading}
+                  sendLoading={sendLoading}
+                  favJob={favJob}
+                  sendJob={sendJob}
+                  error={error}
+                />
               )}
             </Col>
           </Row>

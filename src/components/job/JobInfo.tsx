@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react'
 import { message, Tag, Card, Row, Col, Button } from 'antd'
 import { SendOutlined, StarOutlined } from '@ant-design/icons'
+import FormMessage from '../common/FormMessage'
+import { history } from 'umi'
 
 const JobInfo = ({
   job,
   userinfo,
   from = 'list',
-  send = false, //是否被你投递
   fav = false, //是否被你收藏
+  send = false, //是否被你投递
+  favLoading = true,
+  sendLoading = true,
+  favJob,
+  sendJob,
+  error,
 }) => {
   useEffect(() => {
     const desc = job.description.replace(/\n/g, '<br />')
@@ -18,6 +25,33 @@ const JobInfo = ({
   const favAndSend = () => (
     <Card size="small" bordered={false} type="inner">
       <Row justify="end" gutter={[6, 6]}>
+        {error && (
+          <Col>
+            <FormMessage content={error || '操作失败'} />
+          </Col>
+        )}
+        {error && !userinfo.id && (
+          <Col>
+            <Button type="link" onClick={() => history.push('/user/login')}>
+              登录
+            </Button>
+            或
+            <Button type="link" onClick={() => history.push('/user/register')}>
+              注册
+            </Button>
+          </Col>
+        )}
+        {/* 有错误信息、已登录、未发布简历、不是自己企业发布的职位 */}
+        {error &&
+          userinfo.id &&
+          (!userinfo.resume || userinfo.resume == '0') &&
+          userinfo.firm != job.firm.id && (
+            <Col>
+              <Button type="link" onClick={() => history.push('/resume/add')}>
+                发布简历
+              </Button>
+            </Col>
+          )}
         <Col>
           <Button
             type="primary"
@@ -29,6 +63,8 @@ const JobInfo = ({
                 ? { backgroundColor: '#ef5b9c', borderColor: '#ef5b9c' }
                 : { backgroundColor: '#f47920', borderColor: '#f47920' }
             }
+            loading={favLoading}
+            onClick={favJob}
           >
             {fav ? '　已收藏' : '收藏职位'}
           </Button>
@@ -43,6 +79,8 @@ const JobInfo = ({
             style={
               send ? { backgroundColor: '#ed1941', borderColor: '#ed1941' } : {}
             }
+            loading={sendLoading}
+            onClick={sendJob}
           >
             {send ? '　已投递' : '投递职位'}
           </Button>
@@ -154,7 +192,12 @@ const JobInfo = ({
               )}
               {!send && userinfo.firm != job.firm.id && from != 'audit' && (
                 <Col>
-                  <Button type="link" size="small" icon={<SendOutlined />}>
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<SendOutlined />}
+                    onClick={sendJob}
+                  >
                     投递后可查看
                   </Button>
                 </Col>
