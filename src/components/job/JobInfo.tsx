@@ -1,12 +1,56 @@
 import React, { useEffect } from 'react'
-import { message, Tag, Card, Row, Col } from 'antd'
+import { message, Tag, Card, Row, Col, Button } from 'antd'
+import { SendOutlined, StarOutlined } from '@ant-design/icons'
 
-const JobInfo = ({ job, userinfo, from }) => {
+const JobInfo = ({
+  job,
+  userinfo,
+  from = 'list',
+  send = false, //是否被你投递
+  fav = false, //是否被你收藏
+}) => {
   useEffect(() => {
     const desc = job.description.replace(/\n/g, '<br />')
     const span = document.querySelector('#description')
     span.innerHTML = desc
   }, [])
+
+  const favAndSend = () => (
+    <Card size="small" bordered={false} type="inner">
+      <Row justify="end" gutter={[6, 6]}>
+        <Col>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<StarOutlined />}
+            size="middle"
+            style={
+              fav
+                ? { backgroundColor: '#ef5b9c', borderColor: '#ef5b9c' }
+                : { backgroundColor: '#f47920', borderColor: '#f47920' }
+            }
+          >
+            {fav ? '　已收藏' : '收藏职位'}
+          </Button>
+        </Col>
+        <Col></Col>
+        <Col>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<SendOutlined />}
+            size="middle"
+            style={
+              send ? { backgroundColor: '#ed1941', borderColor: '#ed1941' } : {}
+            }
+          >
+            {send ? '　已投递' : '投递职位'}
+          </Button>
+        </Col>
+      </Row>
+    </Card>
+  )
+
   return (
     <Card
       size="default"
@@ -23,6 +67,7 @@ const JobInfo = ({ job, userinfo, from }) => {
       }}
       bordered={false}
     >
+      {favAndSend()}
       <Card size="small" bordered={false} title="所属公司" type="inner">
         {job.firm.name}
       </Card>
@@ -87,6 +132,7 @@ const JobInfo = ({ job, userinfo, from }) => {
       <Card size="small" bordered={false} title="职位描述" type="inner">
         <span id="description"></span>
       </Card>
+
       <Card size="small" bordered={false} title="联系方式" type="inner">
         <Row gutter={[6, 6]}>
           <Col span={24}>（投递职位后，可查看联系方式）</Col>
@@ -103,7 +149,16 @@ const JobInfo = ({ job, userinfo, from }) => {
               <Col>
                 <Tag color="blue">联系电话</Tag>
               </Col>
-              <Col>{job.firm.contactTel}</Col>
+              {(send || userinfo.firm == job.firm.id || from == 'audit') && (
+                <Col>{job.firm.contactTel}</Col>
+              )}
+              {!send && userinfo.firm != job.firm.id && from != 'audit' && (
+                <Col>
+                  <Button type="link" size="small" icon={<SendOutlined />}>
+                    投递后可查看
+                  </Button>
+                </Col>
+              )}
             </Row>
           </Col>
           <Col span={24}>
@@ -134,6 +189,7 @@ const JobInfo = ({ job, userinfo, from }) => {
           </Col>
         </Row>
       </Card>
+
       <Card size="small" bordered={false} title="职位要求" type="inner">
         <Row gutter={[6, 6]}>
           <Col xs={{ span: 24 }} sm={{ span: 12 }}>
@@ -254,6 +310,8 @@ const JobInfo = ({ job, userinfo, from }) => {
           </Col>
         </Row>
       </Card>
+
+      {favAndSend()}
     </Card>
   )
 }

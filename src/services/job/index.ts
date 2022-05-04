@@ -23,3 +23,23 @@ export async function fetchJob(id: string, params?: { [key: string]: any }) {
     params,
   })
 }
+
+//判断收藏
+export async function fetchResumeFavJob(jobid: string, resumeid: string) {
+  return request<API.RespResult>(
+    '/api/fav/job/status/' + jobid + '/' + resumeid,
+    {
+      method: 'GET',
+    },
+  )
+}
+
+//判断投递
+export async function fetchResumeSendJob(jobid: string, resumeid: string) {
+  return request<API.RespResult>(
+    '/api/send/job/status/' + jobid + '/' + resumeid,
+    {
+      method: 'GET',
+    },
+  )
+}
