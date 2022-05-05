@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
 import {
   fetchJob,
+  fetchJobList,
   fetchResumeFavJob,
   fetchResumeSendJob,
   resumeFavJob,
@@ -21,6 +22,7 @@ const Info = ({ match }) => {
   const [job, setJob] = useState({})
   const [jobLoading, setJobLoading] = useState(true)
   const [firmJobsLoading, setFirmJobsLoading] = useState(true)
+  const [firmJobsList, setFirmJobsList] = useState([])
 
   const [fav, setFav] = useState(false)
   const [send, setSend] = useState(false)
@@ -57,6 +59,17 @@ const Info = ({ match }) => {
       getJob(id, { userid: userid, channel: 'web' })
     }
   }, [])
+  useEffect(() => {
+    if (!jobLoading) {
+      const params = {
+        enable: '1',
+        audit: '1',
+        firmId: job.firm.id,
+        pageSize: '10',
+      }
+      getFirmJobs(params)
+    }
+  }, [jobLoading])
 
   //获取职位
   const getJob = async (id: string, params: { [key: string]: any }) => {
@@ -122,15 +135,15 @@ const Info = ({ match }) => {
         message.warn(msg)
         return false
       }
-      // if (!send && job.firm.id == userinfo.firm) {
-      //   message.warn('这是你的企业发布的职位，无需投递！')
-      //   return false
-      // }
-      // if (!userinfo.resume || userinfo.resume == '0') {
-      //   setError('您还没有发布简历，投递失败！')
-      //   message.warn('您还没有发布简历，投递失败！')
-      //   return false
-      // }
+      if (!send && job.firm.id == userinfo.firm) {
+        message.warn('这是你的企业发布的职位，无需投递！')
+        return false
+      }
+      if (!userinfo.resume || userinfo.resume == '0') {
+        setError('您还没有发布简历，投递失败！')
+        message.warn('您还没有发布简历，投递失败！')
+        return false
+      }
       setSendLoading(true)
       setSendModal(true)
     } else {
@@ -197,6 +210,19 @@ const Info = ({ match }) => {
     </Modal>
   )
 
+  const getFirmJobs = async (params: { [key: string]: any }) => {
+    try {
+      const res = await fetchJobList(params)
+      if (res.success) {
+        console.log('list::', res.data.contents)
+        setFirmJobsLoading(false)
+        setFirmJobsList(res.data.contents)
+      }
+    } catch (error) {
+      setFirmJobsLoading(false)
+    }
+  }
+
   return (
     <>
       {/* <KrCarouselImage /> */}
@@ -243,7 +269,7 @@ const Info = ({ match }) => {
             </Col>
             <Col span={24}>
               {firmJobsLoading && (
-                <Card title="该企业其他职位" loading={firmJobsLoading}></Card>
+                <Card title="该企业的职位" loading={firmJobsLoading}></Card>
               )}
               {!firmJobsLoading && <FirmJobs />}
             </Col>

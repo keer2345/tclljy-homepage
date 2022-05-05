@@ -3,7 +3,7 @@ import { message, Tag, Card, Row, Col, Button } from 'antd'
 
 const FirmInfo = ({ job }) => {
   return (
-    <Card title="企业信息">
+    <Card title="企业信息" style={{ color: '#999999' }}>
       <Row justify="start">
         <Col>
           <Button type="link">{job.firm.name}</Button>
