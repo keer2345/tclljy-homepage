@@ -12,12 +12,15 @@ import './index.css'
 import JobInfo from '@/components/job/JobInfo'
 import { getUser } from '@/components/common/Common'
 import { history } from 'umi'
+import FirmInfo from '@/components/job/FirmInfo'
+import FirmJobs from '@/components/job/FirmJobs'
 
 const Info = ({ match }) => {
   const [jobId, setJobId] = useState('')
   const [userinfo, setUserinfo] = useState({})
   const [job, setJob] = useState({})
   const [jobLoading, setJobLoading] = useState(true)
+  const [firmJobsLoading, setFirmJobsLoading] = useState(true)
 
   const [fav, setFav] = useState(false)
   const [send, setSend] = useState(false)
@@ -209,7 +212,9 @@ const Info = ({ match }) => {
         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 16 }}>
           <Row gutter={[12, 12]}>
             <Col span={24}>
-              {jobLoading && <Card loading={jobLoading}></Card>}
+              {jobLoading && (
+                <Card title="职位详情" loading={jobLoading}></Card>
+              )}
               {!jobLoading && (
                 <JobInfo
                   job={job}
@@ -230,8 +235,18 @@ const Info = ({ match }) => {
         </Col>
         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 8 }}>
           <Row gutter={[12, 12]}>
-            <Col span={24}>bb</Col>
-            <Col span={24}>cc</Col>
+            <Col span={24}>
+              {jobLoading && (
+                <Card title="企业信息" loading={jobLoading}></Card>
+              )}
+              {!jobLoading && <FirmInfo job={job} />}
+            </Col>
+            <Col span={24}>
+              {firmJobsLoading && (
+                <Card title="该企业其他职位" loading={firmJobsLoading}></Card>
+              )}
+              {!firmJobsLoading && <FirmJobs />}
+            </Col>
           </Row>
         </Col>
         {sendModalComponent()}

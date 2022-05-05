@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { message, Tag, Card, Row, Col, Button } from 'antd'
-import { SendOutlined, StarOutlined } from '@ant-design/icons'
+import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
 import FormMessage from '../common/FormMessage'
 import { history } from 'umi'
 
@@ -112,8 +112,13 @@ const JobInfo = ({
       bordered={false}
     >
       {favAndSend()}
-      <Card size="small" bordered={false} title="所属公司" type="inner">
-        {job.firm.name}
+      <Card size="small" bordered={false} title="所属企业" type="inner">
+        <Button size="large" type="link">
+          {job.firm.name}
+        </Button>
+        <Tag color="green" icon={<CrownOutlined />}>
+          已认证
+        </Tag>
       </Card>
       {(userinfo.firm == job.firm.id || from == 'audit') && (
         <Card size="small" bordered={false} title="审核信息" type="inner">
