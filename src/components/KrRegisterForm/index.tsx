@@ -89,6 +89,15 @@ const KrRegisterForm = () => {
         if (!history) return
         const { query } = history.location
         const { redirect } = query as { redirect: string }
+
+        // const jumpPath = localStorage.getItem('jumpPath')
+        // localStorage.removeItem('jumpPath')
+        // if (jumpPath) {
+        //   history.push(jumpPath)
+        // } else {
+        //   history.push(redirect || '/')
+        // }
+
         history.push(redirect || '/user/setting')
         return
       }

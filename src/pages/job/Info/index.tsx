@@ -11,6 +11,7 @@ import './index.css'
 
 import JobInfo from '@/components/job/JobInfo'
 import { getUser } from '@/components/common/Common'
+import { history } from 'umi'
 
 const Info = ({ match }) => {
   const [jobId, setJobId] = useState('')
@@ -168,6 +169,11 @@ const Info = ({ match }) => {
     setSendModal(false)
   }
 
+  const goLogin = () => {
+    localStorage.setItem('jumpPath', history.location.pathname)
+    history.push('/user/login')
+  }
+
   const sendModalComponent = () => (
     <Modal
       title="投递职位"
@@ -216,6 +222,7 @@ const Info = ({ match }) => {
                   favJob={favJob}
                   sendJob={sendJob}
                   error={error}
+                  goLogin={goLogin}
                 />
               )}
             </Col>

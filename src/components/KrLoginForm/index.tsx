@@ -81,7 +81,13 @@ const KrLoginForm = () => {
         if (!history) return
         const { query } = history.location
         const { redirect } = query as { redirect: string }
-        history.push(redirect || '/')
+        const jumpPath = localStorage.getItem('jumpPath')
+        localStorage.removeItem('jumpPath')
+        if (jumpPath) {
+          history.push(jumpPath)
+        } else {
+          history.push(redirect || '/')
+        }
         return
       }
     } catch (error) {

@@ -177,13 +177,31 @@ const BaseLayout = (props: LayoutProps) => {
               <Row justify="end">
                 <Col span={19}></Col>
                 <Col span={2}>
-                  <Link to="/user/login" className="menu-item">
+                  <Link
+                    to="/user/login"
+                    className="menu-item"
+                    onClick={() =>
+                      localStorage.setItem(
+                        'jumpPath',
+                        history.location.pathname,
+                      )
+                    }
+                  >
                     <span>登录</span>
                   </Link>
                 </Col>
                 <Col span={1}></Col>
                 <Col span={2}>
-                  <Link to="/user/register" className="menu-item">
+                  <Link
+                    to="/user/register"
+                    className="menu-item"
+                    // onClick={() =>
+                    //   localStorage.setItem(
+                    //     'jumpPath',
+                    //     history.location.pathname,
+                    //   )
+                    // }
+                  >
                     <span>注册</span>
                   </Link>
                 </Col>

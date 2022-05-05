@@ -15,6 +15,7 @@ const JobInfo = ({
   favJob,
   sendJob,
   error,
+  goLogin,
 }) => {
   useEffect(() => {
     const desc = job.description.replace(/\n/g, '<br />')
@@ -32,7 +33,7 @@ const JobInfo = ({
         )}
         {error && !userinfo.id && (
           <Col>
-            <Button type="link" onClick={() => history.push('/user/login')}>
+            <Button type="link" onClick={goLogin}>
               登录
             </Button>
             或
@@ -47,7 +48,12 @@ const JobInfo = ({
           (!userinfo.resume || userinfo.resume == '0') &&
           userinfo.firm != job.firm.id && (
             <Col>
-              <Button type="link" onClick={() => history.push('/resume/add')}>
+              <Button
+                type="link"
+                onClick={() => {
+                  history.push('/resume/add')
+                }}
+              >
                 发布简历
               </Button>
             </Col>
