@@ -1,6 +1,6 @@
 import { fetchJobList } from '@/services/job'
 import React, { useEffect, useState } from 'react'
-import { Row, message, Pagination, Card, Col } from 'antd'
+import { Button, Row, message, Pagination, Card, Col } from 'antd'
 import './JobList.css'
 import JobCard from './JobCard'
 
@@ -71,7 +71,7 @@ const JobList = ({ from, search, categoryId }: any) => {
   }
 
   const jobLists =
-    jobList.length > 0 ? (
+    totalItems > 0 ? (
       jobList.map((item) => <JobCard item={item} />)
     ) : (
       <Col
@@ -91,6 +91,16 @@ const JobList = ({ from, search, categoryId }: any) => {
   return (
     <div className="site-card-border-less-wrapper">
       <div className="site-card-wrapper">
+        {loading && (
+          <>
+            <Row justify="center">
+              <Button type="primary" loading={loading}>
+                加载中...
+              </Button>
+            </Row>
+            <Row>　</Row>
+          </>
+        )}
         <Row
           gutter={[
             { xs: 8, sm: 12, md: 16, lg: 20 },

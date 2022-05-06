@@ -211,11 +211,37 @@ const BaseLayout = (props: LayoutProps) => {
           <Col span={1}></Col>
         </Row>
       </Header>
-      <div className="container">
-        <Content>
-          <div className="site_layout_content">{props.children}</div>
-        </Content>
-      </div>
+      <Row>
+        <Col
+          xs={{ span: 0 }}
+          sm={{ span: 0 }}
+          md={{ span: 1 }}
+          lg={{ span: 2 }}
+          xl={{ span: 2 }}
+          xxl={{ span: 4 }}
+        ></Col>
+        <Col
+          xs={{ span: 24 }}
+          sm={{ span: 24 }}
+          md={{ span: 22 }}
+          lg={{ span: 20 }}
+          xl={{ span: 20 }}
+          xxl={{ span: 16 }}
+        >
+          <Content>
+            <div className="site_layout_content">{props.children}</div>
+          </Content>
+        </Col>
+        <Col
+          xs={{ span: 0 }}
+          sm={{ span: 0 }}
+          md={{ span: 1 }}
+          lg={{ span: 2 }}
+          xl={{ span: 2 }}
+          xxl={{ span: 4 }}
+        ></Col>
+      </Row>
+
       <Footer style={{ textAlign: 'center' }}>
         <Row justify="center">
           <Col>同城蓝领家园 ©{year()} 柳州同城人力资源有限公司</Col>

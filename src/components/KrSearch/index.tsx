@@ -35,11 +35,17 @@ const KrSearch = ({ search, value, changeSearchValue }) => {
               placeholder="工作 / 人才 / 企业"
             />
           )}
-          {search === 'job' && (
+          {search != 'all' && (
             <Input
               size="large"
               style={{ width: '70%' }}
-              placeholder="找工作"
+              placeholder={
+                search === 'job'
+                  ? '找工作'
+                  : search === 'resume'
+                  ? '简历名称'
+                  : '企业名称'
+              }
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value.trim())}
               onPressEnter={(e) => onSearch(e)}

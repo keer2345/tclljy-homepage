@@ -14,6 +14,8 @@ export default [
 
       { path: '/job', component: '@/pages/job/All' },
       { path: '/job/info/:id', component: '@/pages/job/Info/index' },
+
+      { path: '/resume', component: '@/pages/resume/All' },
     ],
   },
   {
