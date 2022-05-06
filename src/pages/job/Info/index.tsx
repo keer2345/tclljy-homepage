@@ -60,6 +60,7 @@ const Info = ({ match }) => {
       getJob(id, { userid: userid, channel: 'web' })
     }
   }, [])
+
   useEffect(() => {
     if (!jobLoading) {
       const params = {

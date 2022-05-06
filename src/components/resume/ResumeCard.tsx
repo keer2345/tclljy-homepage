@@ -1,9 +1,10 @@
 import React from 'react'
 import { Tag, Card, Row, Col } from 'antd'
-import { Link } from 'umi'
+import { Link, history } from 'umi'
 import './ResumeCard.css'
 
 const ResumeCard = ({ item }) => {
+  const url = '/resume/info/' + item.id
   return (
     <Col
       className="site-col-border-less-wrapper"
@@ -17,7 +18,7 @@ const ResumeCard = ({ item }) => {
       <Card
         size="small"
         title={
-          <Link to="#">
+          <Link to={url}>
             {item.gender != '2' && (
               <span style={{ color: '#0081ff' }}>{item.name} 先生</span>
             )}
@@ -29,6 +30,7 @@ const ResumeCard = ({ item }) => {
         extra={<span className="extra">{item.age}岁</span>}
         hoverable={true}
         bordered={false}
+        onClick={() => history.push(url)}
       >
         <Row>
           <Tag color="cyan" className="row-bottom">

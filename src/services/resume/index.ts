@@ -7,3 +7,11 @@ export async function fetchResumeList(params?: { [key: string]: any }) {
     params,
   })
 }
+
+// 获取指定简历
+export async function fetchResume(userid: string, resumeid: string) {
+  return request<API.RespResult>(
+    '/api/resume/info/' + userid + '/' + resumeid,
+    { method: 'GET' },
+  )
+}
