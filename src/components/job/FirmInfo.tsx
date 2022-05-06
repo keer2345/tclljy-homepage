@@ -1,5 +1,5 @@
 import React from 'react'
-import { message, Tag, Card, Row, Col, Button } from 'antd'
+import { List, Tag, Card, Row, Col, Button } from 'antd'
 
 const FirmInfo = ({ job }) => {
   return (

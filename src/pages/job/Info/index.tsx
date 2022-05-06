@@ -23,6 +23,7 @@ const Info = ({ match }) => {
   const [jobLoading, setJobLoading] = useState(true)
   const [firmJobsLoading, setFirmJobsLoading] = useState(true)
   const [firmJobsList, setFirmJobsList] = useState([])
+  const [firmJobsCount, setFirmJobsCount] = useState('0')
 
   const [fav, setFav] = useState(false)
   const [send, setSend] = useState(false)
@@ -214,9 +215,9 @@ const Info = ({ match }) => {
     try {
       const res = await fetchJobList(params)
       if (res.success) {
-        console.log('list::', res.data.contents)
         setFirmJobsLoading(false)
         setFirmJobsList(res.data.contents)
+        setFirmJobsCount(res.data.totalItems)
       }
     } catch (error) {
       setFirmJobsLoading(false)
@@ -269,9 +270,14 @@ const Info = ({ match }) => {
             </Col>
             <Col span={24}>
               {firmJobsLoading && (
-                <Card title="该企业的职位" loading={firmJobsLoading}></Card>
+                <Card title="企业职位" loading={firmJobsLoading}></Card>
               )}
-              {!firmJobsLoading && <FirmJobs />}
+              {!firmJobsLoading && (
+                <FirmJobs
+                  firmJobsList={firmJobsList}
+                  firmJobsCount={firmJobsCount}
+                />
+              )}
             </Col>
           </Row>
         </Col>
