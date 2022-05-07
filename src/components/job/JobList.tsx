@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Row, message, Pagination, Card, Col } from 'antd'
 import './JobList.css'
 import JobCard from './JobCard'
-import Loading from '../common/Loading'
+import KrLoading from '../common/KrLoading'
 
 const { Meta } = Card
 
@@ -95,7 +95,7 @@ const JobList = ({ from, search, categoryId }: any) => {
         {loading && (
           <>
             <Row justify="center">
-              <Loading loading={loading} />
+              <KrLoading loading={loading} />
             </Row>
             <Row>　</Row>
           </>

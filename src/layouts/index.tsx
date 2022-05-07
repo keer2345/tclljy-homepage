@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
 import { Link, history } from 'umi'
 import './index.less'
-import classNames from 'classnames'
 import {
   HomeOutlined,
   AppstoreOutlined,

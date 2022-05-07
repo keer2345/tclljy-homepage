@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, message, Pagination, Button } from 'antd'
 import { fetchResumeList } from '@/services/resume'
 import ResumeCard from './ResumeCard'
-import Loading from '../common/Loading'
+import KrLoading from '../common/KrLoading'
 
 const { Meta } = Card
 
@@ -117,7 +117,7 @@ const ResumeList = ({
         {loading && (
           <>
             <Row justify="center">
-              <Loading loading={loading} />
+              <KrLoading loading={loading} />
             </Row>
             <Row>　</Row>
           </>

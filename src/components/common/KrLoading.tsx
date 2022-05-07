@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'antd'
 
-const Loading = ({ loading, content = '加载中...' }) => {
+const KrLoading = ({ loading, content = '加载中...' }) => {
   return (
     <Button type="primary" loading={loading}>
       {content}
@@ -9,4 +9,4 @@ const Loading = ({ loading, content = '加载中...' }) => {
   )
 }
 
-export default Loading
+export default KrLoading
