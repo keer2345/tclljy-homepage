@@ -42,5 +42,4 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/components/Loading',
   },
-  extraPostCSSPlugins: [require('tailwindcss'), require('autoprefixer')],
 })

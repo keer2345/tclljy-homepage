@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, message, Pagination, Button } from 'antd'
 import { fetchResumeList } from '@/services/resume'
 import ResumeCard from './ResumeCard'
+import Loading from '../common/Loading'
 
 const { Meta } = Card
 
@@ -116,9 +117,7 @@ const ResumeList = ({
         {loading && (
           <>
             <Row justify="center">
-              <Button type="primary" loading={loading}>
-                加载中...
-              </Button>
+              <Loading loading={loading} />
             </Row>
             <Row>　</Row>
           </>

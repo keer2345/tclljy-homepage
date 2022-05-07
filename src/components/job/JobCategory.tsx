@@ -1,6 +1,6 @@
 import { getJobCategoryEnable } from '@/services/job'
 import React, { useEffect, useState } from 'react'
-import { Tag, Divider } from 'antd'
+import { Tag, Divider, Button } from 'antd'
 import './JobCategory.css'
 import { history } from 'umi'
 
@@ -52,22 +52,26 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
       key={item.id}
       color={
         item.id === jobCategoryId
-          ? 'orangered'
+          ? '#FF8C69'
           : colors[parseInt(Math.random() * colors.length)]
       }
       className="tag"
     >
       {from === 'list' && (
-        <button onClick={() => onClickTag(item.id)}>{item.name}</button>
+        <Button size="small" type="link" onClick={() => onClickTag(item.id)}>
+          {item.name}
+        </Button>
       )}
       {from === 'top' && (
-        <button
+        <Button
+          size="small"
+          type="link"
           onClick={() => {
             history.push('/job')
           }}
         >
           {item.name}
-        </button>
+        </Button>
       )}
     </Tag>
   ))
@@ -76,7 +80,9 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
     <div>
       {from == 'list' && (
         <Tag size="large" color="orange" className="tag">
-          <button onClick={() => onClickTag('')}>全部职位</button>
+          <Button size="small" type="link" onClick={() => onClickTag('')}>
+            全部职位
+          </Button>
         </Tag>
       )}
 
@@ -84,7 +90,9 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
 
       {from == 'top' && (
         <Tag size="large" color="orange" className="tag">
-          <button onClick={() => history.push('/job')}>更多......</button>
+          <Button type="link" size="small" onClick={() => history.push('/job')}>
+            更多......
+          </Button>
         </Tag>
       )}
     </div>
