@@ -1,9 +1,30 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi'
 
-const UserModel = {
-  namespace: 'userinfo',
+export interface UserModelState {
+  userinfo: { [key: string]: any }
+  // name: string
+}
+
+export interface UserModelType {
+  namespace: 'user'
+  state: UserModelState
+  effects: {
+    query: Effect
+  }
+  reducers: {
+    // save: Reducer<UserModelState>
+    // 启用 immer 之后
+    save: ImmerReducer<UserModelState>
+  }
+  subscriptions: { setup: Subscription }
+}
+
+const UserModel: UserModelType = {
+  namespace: 'user',
+
   state: {
-    name: '',
+    userinfo: { a: 'aoao' },
+    // name: 'aaa',
   },
 
   effects: {
@@ -11,23 +32,10 @@ const UserModel = {
   },
   reducers: {
     save(state, action) {
-      const data = [
-        {
-          key: '1',
-          name: 'Aaa',
-          age: 32,
-          address: 'aaa add',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Bbb',
-          age: 54,
-          address: 'Bbb add',
-          tags: ['loser'],
-        },
-      ]
-      return data
+      return {
+        ...state,
+        ...action.payload,
+      }
     },
     // 启用 immer 之后
     // save(state, action) {
@@ -47,4 +55,4 @@ const UserModel = {
   },
 }
 
-// export default UserModel
+export default UserModel

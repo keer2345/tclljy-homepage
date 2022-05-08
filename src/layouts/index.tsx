@@ -1,8 +1,16 @@
 import { UmiComponentProps } from '@/common/type'
 import React, { useEffect, useState } from 'react'
 import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
-import { Link, history } from 'umi'
+import {
+  Link,
+  history,
+  UserModelState,
+  ConnectProps,
+  Loading,
+  connect,
+} from 'umi'
 import './index.less'
+
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -16,7 +24,8 @@ import {
 import { getUserInfo, logout } from '@/services/user'
 
 const { Header, Content, Footer } = Layout
-const { SubMenu } = Menu
+
+// const { SubMenu } = Menu
 
 interface LayoutProps extends UmiComponentProps {}
 
@@ -28,6 +37,10 @@ const menuData = [
 ]
 
 const BaseLayout = (props: LayoutProps) => {
+  console.log('props:', props)
+  const { userinfo } = props.user
+  console.log('name:', userinfo)
+
   const [userInfo, setUserInfo] = useState<User.UserInfo>({})
   const [refresh, setRefresh] = useState(0)
 
@@ -253,4 +266,10 @@ const BaseLayout = (props: LayoutProps) => {
   )
 }
 
-export default BaseLayout
+// export default BaseLayout
+export default connect(
+  ({ user, loading }: { user: UserModelState; loading: Loading }) => ({
+    user,
+    loading: loading.models.user,
+  }),
+)(BaseLayout)

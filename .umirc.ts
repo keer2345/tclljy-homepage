@@ -9,6 +9,7 @@ export default defineConfig({
   title: '同城蓝领家园',
   history: { type: 'browser' },
   dva: {
+    // immer:true,
     hmr: true,
     lazyLoad: true,
   },
