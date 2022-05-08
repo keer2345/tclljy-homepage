@@ -1,6 +1,16 @@
 import { UmiComponentProps } from '@/common/type'
 import React, { useEffect, useState } from 'react'
-import { message, Dropdown, Layout, Menu, Row, Col, Avatar, Image } from 'antd'
+import {
+  message,
+  Dropdown,
+  Layout,
+  Menu,
+  Row,
+  Col,
+  Avatar,
+  Image,
+  Button,
+} from 'antd'
 import {
   Link,
   history,

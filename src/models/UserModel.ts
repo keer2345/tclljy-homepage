@@ -31,16 +31,18 @@ const UserModel: UserModelType = {
     *query({ payload }, { call, put }) {},
   },
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        ...action.payload,
-      }
-    },
-    // 启用 immer 之后
     // save(state, action) {
-    //   state.name = action.payload;
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   }
     // },
+
+    // 启用 immer 之后
+    save(state, action) {
+      // state.name = action.payload
+      state.userinfo = { bbb: 'bbbccc' }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
