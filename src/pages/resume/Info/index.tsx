@@ -34,6 +34,7 @@ const Info = ({ match }) => {
         //判断用户是否合法
         if (userInfoStorage.id == res.id) {
           userid = res.id
+          getResume(userid, id)
           if (res.firm > 0) {
             getFavStatus(id, res.firm)
             getSendStatus(res.firm, id)
@@ -46,8 +47,8 @@ const Info = ({ match }) => {
     } else {
       setFavLoading(false)
       setSendLoading(false)
+      getResume(userid, id)
     }
-    getResume(userid, id)
   }, [])
 
   const favResume = () => {

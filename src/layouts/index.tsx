@@ -278,7 +278,7 @@ const BaseLayout = (props: LayoutProps) => {
           <Col>同城蓝领家园 ©{year()} 柳州同城人力资源有限公司</Col>
         </Row>
         <Row justify="center">
-          <Col>dd</Col>
+          <Col>桂ICP备2021008076号</Col>
         </Row>
       </Footer>
     </Layout>
