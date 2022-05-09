@@ -47,9 +47,9 @@ const menuData = [
 ]
 
 const BaseLayout = (props: LayoutProps) => {
-  console.log('props:', props)
-  const { userinfo } = props.user
-  console.log('name:', userinfo)
+  // console.log('props:', props)
+  // const { userinfo } = props.user
+  // console.log('name:', userinfo)
 
   const [userInfo, setUserInfo] = useState<User.UserInfo>({})
   const [refresh, setRefresh] = useState(0)
@@ -137,6 +137,15 @@ const BaseLayout = (props: LayoutProps) => {
       </Menu.Item>
     </Menu>
   )
+
+  // 解决跳转新页面滚动条不在顶部的问题
+  useEffect(() => {
+    if (document && history.location.pathname != '/') {
+      if (document?.documentElement || document?.body) {
+        document.documentElement.scrollTop = document.body.scrollTop = 0
+      }
+    }
+  }, [history.location.pathname])
 
   return (
     <Layout className="layout">

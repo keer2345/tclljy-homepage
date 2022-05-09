@@ -11,3 +11,9 @@ export const getUser = async () => {
     message.error(error.data.msg)
   }
 }
+
+export const replaceEnter = (str: string, innerId) => {
+  const desc = str.replace(/\n/g, '<br />')
+  const span = document.querySelector(innerId)
+  span.innerHTML = desc
+}

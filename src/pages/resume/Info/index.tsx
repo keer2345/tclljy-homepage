@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
-import { fetchResume } from '@/services/resume'
+import { fetchFirmFavJob, fetchResume, firmFavJob } from '@/services/resume'
 
 import { getUser } from '@/components/common/Common'
 import { history } from 'umi'
@@ -12,6 +12,10 @@ const Info = ({ match }) => {
   const [userinfo, setUserinfo] = useState({})
   const [resume, setResume] = useState({})
   const [resumeLoading, setResumeLoading] = useState(true)
+  const [error, setError] = useState()
+
+  const [fav, setFav] = useState(false)
+  const [favLoading, setFavLoading] = useState(true)
 
   useEffect(() => {
     const id = match.params.id
@@ -24,18 +28,80 @@ const Info = ({ match }) => {
         //判断用户是否合法
         if (userInfoStorage.id == res.id) {
           userid = res.id
+          if (res.firm > 0) {
+            getFavStatus(id, res.firm)
+          } else {
+            setFavLoading(false)
+          }
         }
-        getResume(userid, id)
       })
+    } else {
+      setFavLoading(false)
     }
+    getResume(userid, id)
   }, [])
+
+  const favResume = () => {
+    if (userinfo.id) {
+      setFavLoading(true)
+      favResumeMethod(fav, resumeId)
+    } else {
+      const error = '只有登录后才能收藏，请先登录吧！'
+      setError(error)
+      message.error(error)
+    }
+  }
+
+  const favResumeMethod = async (fav: boolean, resumeId: string) => {
+    try {
+      const res = await firmFavJob(fav, resumeId)
+      if (res.success) {
+        setFavLoading(false)
+        message.success(fav ? '取消收藏成功' : '收藏成功')
+        setFav(!fav)
+      }
+    } catch (error) {
+      setFavLoading(false)
+      message.error(error.data.msg)
+      setError(error.data.msg)
+    }
+  }
+
+  //判断是否被企业收藏
+  const getFavStatus = async (resumeid: string, firmid: string) => {
+    try {
+      const res = await fetchFirmFavJob(resumeid, firmid)
+      if (res.success) {
+        setFav(res.data)
+        setFavLoading(false)
+      }
+    } catch (error) {
+      setFavLoading(false)
+    }
+  }
+
+  const goLogin = () => {
+    localStorage.setItem('jumpPath', history.location.pathname)
+    history.push('/user/login')
+  }
 
   //获取简历
   const getResume = async (userid: string, resumeid: string) => {
     try {
       const res = await fetchResume(userid, resumeid)
       if (res.success) {
-        setResume(res.data)
+        const result = res.data
+        result['categories'] = result.categories.sort(
+          (a: any, b: any) => a.sort - b.sort,
+        )
+        if (result.otherJob) {
+          result['categories'].find((item: any) => item.name == '其他').name =
+            '其他 (' + result.otherJob + ')'
+        }
+        result['strongs'] = result.strongs.sort(
+          (a: any, b: any) => a.sort - b.sort,
+        )
+        setResume(result)
         setResumeLoading(false)
       }
     } catch (error) {
@@ -66,7 +132,16 @@ const Info = ({ match }) => {
                 <Card title="简历详情" loading={resumeLoading}></Card>
               )}
               {!resumeLoading && (
-                <ResumeInfo resume={resume} userinfo={userinfo} from={'list'} />
+                <ResumeInfo
+                  resume={resume}
+                  userinfo={userinfo}
+                  from={'list'}
+                  fav={fav}
+                  favLoading={favLoading}
+                  favResume={favResume}
+                  error={error}
+                  goLogin={goLogin}
+                />
               )}
             </Col>
           </Row>

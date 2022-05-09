@@ -103,7 +103,9 @@ const Info = ({ match }) => {
         setSend(res.data)
         setSendLoading(false)
       }
-    } catch (error) {}
+    } catch (error) {
+      setSendLoading(false)
+    }
   }
 
   const favJob = () => {
@@ -116,7 +118,7 @@ const Info = ({ match }) => {
       message.error(error)
     }
   }
-  const favJobMethod = async (fav, jobId) => {
+  const favJobMethod = async (fav: boolean, jobId: string) => {
     try {
       const res = await resumeFavJob(fav, jobId)
       if (res.success) {

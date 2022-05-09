@@ -3,6 +3,7 @@ import { message, Tag, Card, Row, Col, Button } from 'antd'
 import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
 import FormMessage from '../common/FormMessage'
 import { history } from 'umi'
+import { replaceEnter } from '../common/Common'
 
 const JobInfo = ({
   job,
@@ -18,9 +19,10 @@ const JobInfo = ({
   goLogin,
 }) => {
   useEffect(() => {
-    const desc = job.description.replace(/\n/g, '<br />')
-    const span = document.querySelector('#description')
-    span.innerHTML = desc
+    // const desc = job.description.replace(/\n/g, '<br />')
+    // const span = document.querySelector('#description')
+    // span.innerHTML = desc
+    replaceEnter(job.description, '#description')
   }, [])
 
   const favAndSend = () => (
@@ -136,7 +138,7 @@ const JobInfo = ({
               </Row>
             </Col>
             <Col xs={{ span: 24 }} sm={{ span: 12 }}>
-              {!job.auditAt && (
+              {job.auditAt && (
                 <Row>
                   <Col>
                     <Tag color="volcano">审核时间</Tag>
