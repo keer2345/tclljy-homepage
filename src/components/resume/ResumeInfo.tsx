@@ -9,9 +9,10 @@ const ResumeInfo = ({
   resume,
   userinfo,
   from = 'list',
-  send = false,
   fav = false,
+  send = false,
   favLoading = true,
+  sendLoading = true,
   favResume,
   error,
   goLogin,
@@ -156,7 +157,7 @@ const ResumeInfo = ({
 
       <Card size="small" bordered={false} title="联系方式" type="inner">
         <Row gutter={[6, 6]}>
-          <Col span={24}>（求职者投递该职位后，企业才可查看联系方式）</Col>
+          <Col span={24}>（求职者投递您企业的职位后，才可查看联系方式）</Col>
           <Col xs={{ span: 24 }} sm={{ span: 12 }}>
             <Row>
               <Col>

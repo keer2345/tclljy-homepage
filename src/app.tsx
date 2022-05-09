@@ -23,7 +23,8 @@ export async function getInitialState(): Promise<{
   // fetchUserInfo?: () => Promise<User.UserInfo | undefined>
 }> {
   const fetchUserInfo = async () => {
-    console.log('init...')
+    // console.log('init...')
+
     // try {
     //   const res = await getUserInfo()
     // } catch (error) {

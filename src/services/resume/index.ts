@@ -36,3 +36,13 @@ export async function firmFavJob(
     { method: 'POST' },
   )
 }
+
+// 该简历是否投递指定的企业职位
+export async function fetchFirmSended(firmid: string, resumeid: string) {
+  return request<API.RespResult>(
+    '/api/send/firm/status/' + firmid + '/' + resumeid,
+    {
+      method: 'GET',
+    },
+  )
+}

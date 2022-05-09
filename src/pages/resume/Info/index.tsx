@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
-import { fetchFirmFavJob, fetchResume, firmFavJob } from '@/services/resume'
+import {
+  fetchFirmFavJob,
+  fetchFirmSended,
+  fetchResume,
+  firmFavJob,
+} from '@/services/resume'
 
 import { getUser } from '@/components/common/Common'
 import { history } from 'umi'
-import { resolveConfig } from 'prettier'
 import ResumeInfo from '@/components/resume/ResumeInfo'
 
 const Info = ({ match }) => {
@@ -16,6 +20,8 @@ const Info = ({ match }) => {
 
   const [fav, setFav] = useState(false)
   const [favLoading, setFavLoading] = useState(true)
+  const [send, setSend] = useState(false)
+  const [sendLoading, setSendLoading] = useState(true)
 
   useEffect(() => {
     const id = match.params.id
@@ -30,13 +36,16 @@ const Info = ({ match }) => {
           userid = res.id
           if (res.firm > 0) {
             getFavStatus(id, res.firm)
+            getSendStatus(res.firm, id)
           } else {
             setFavLoading(false)
+            setSendLoading(false)
           }
         }
       })
     } else {
       setFavLoading(false)
+      setSendLoading(false)
     }
     getResume(userid, id)
   }, [])
@@ -77,6 +86,19 @@ const Info = ({ match }) => {
       }
     } catch (error) {
       setFavLoading(false)
+    }
+  }
+
+  //判断投递
+  const getSendStatus = async (jobid: string, resumeid: string) => {
+    try {
+      const res = await fetchFirmSended(jobid, resumeid)
+      if (res.success) {
+        setSend(res.data)
+        setSendLoading(false)
+      }
+    } catch (error) {
+      setSendLoading(false)
     }
   }
 
@@ -137,7 +159,9 @@ const Info = ({ match }) => {
                   userinfo={userinfo}
                   from={'list'}
                   fav={fav}
+                  send={send}
                   favLoading={favLoading}
+                  sendLoading={favLoading}
                   favResume={favResume}
                   error={error}
                   goLogin={goLogin}

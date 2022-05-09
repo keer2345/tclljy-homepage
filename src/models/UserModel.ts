@@ -41,7 +41,7 @@ const UserModel: UserModelType = {
     // 启用 immer 之后
     save(state, action) {
       // state.name = action.payload
-      state.userinfo = { bbb: 'bbbccc' }
+      // state.userinfo = { bbb: 'bbbccc' }
     },
   },
   subscriptions: {
