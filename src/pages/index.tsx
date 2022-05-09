@@ -38,7 +38,7 @@ export default function IndexPage() {
         </Col>
         <Col>　</Col>
         <Col>
-          <Link href="#" className="title-link">
+          <Link href="/job" className="title-link">
             更多职位...&nbsp;
           </Link>
         </Col>
@@ -54,7 +54,7 @@ export default function IndexPage() {
         </Col>
         <Col>　</Col>
         <Col>
-          <Link href="#" className="title-link">
+          <Link href="/resume" className="title-link">
             更多简历...&nbsp;
           </Link>
         </Col>
