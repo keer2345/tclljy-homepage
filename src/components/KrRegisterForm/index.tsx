@@ -126,7 +126,7 @@ const KrRegisterForm = () => {
       <Row justify="center">
         <Col>
           <Typography>
-            <Title>注　册</Title>
+            <Title level={2}>注　册</Title>
           </Typography>
         </Col>
       </Row>
