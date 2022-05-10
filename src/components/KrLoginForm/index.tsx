@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { history } from 'umi'
-import { message, Tabs, Space, Alert, Input } from 'antd'
+import { message, Tabs, Space, Alert, Input, Divider } from 'antd'
 import {
   MobileOutlined,
   AlipayCircleOutlined,

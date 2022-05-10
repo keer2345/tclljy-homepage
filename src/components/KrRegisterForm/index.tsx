@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, message, Input, Form, Row, Col, Checkbox, Button } from 'antd'
+import {
+  Alert,
+  message,
+  Input,
+  Form,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  Typography,
+} from 'antd'
 import { getCaptchaCode, getUserInfo, register } from '@/services/user'
 import ProForm, { LoginForm } from '@ant-design/pro-form'
 
 import { history } from 'umi'
-
+const { Title } = Typography
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
+    xs: { span: 22, offset: 0 },
     sm: { span: 8 },
   },
   wrapperCol: {
-    xs: { span: 24 },
+    xs: { span: 22, offset: 0 },
     sm: { span: 8 },
   },
 }
@@ -19,12 +29,12 @@ const formItemLayout = {
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
-      span: 24,
-      offset: 0,
+      span: 22,
+      offset: 8,
     },
     sm: {
-      span: 16,
-      offset: 8,
+      span: 22,
+      offset: 12,
     },
   },
 }
@@ -111,7 +121,7 @@ const KrRegisterForm = () => {
 
   return (
     <>
-      <LoginForm
+      {/* <LoginForm
         logo=""
         title="注　册"
         subTitle=" "
@@ -135,7 +145,44 @@ const KrRegisterForm = () => {
         }}
       >
         {!success && msg && <RegisterMessage content={msg || '注册失败'} />}
-      </LoginForm>
+      </LoginForm> */}
+      <Row>
+        <Col>&nbsp;</Col>
+      </Row>
+      <Row justify="center">
+        <Col>
+          <Typography>
+            <Title>注　册</Title>
+          </Typography>
+        </Col>
+      </Row>
+      {!success && msg && (
+        <Row justify="center">
+          <Col
+            xs={{ span: 0.5 }}
+            sm={{ span: 4 }}
+            md={{ span: 6 }}
+            lg={{ span: 8 }}
+            xl={{ span: 9 }}
+          ></Col>
+          <Col
+            xs={{ span: 23 }}
+            sm={{ span: 16 }}
+            md={{ span: 12 }}
+            lg={{ span: 8 }}
+            xl={{ span: 6 }}
+          >
+            <RegisterMessage content={msg || '注册失败'} />
+          </Col>
+          <Col
+            xs={{ span: 0.5 }}
+            sm={{ span: 4 }}
+            md={{ span: 6 }}
+            lg={{ span: 8 }}
+            xl={{ span: 9 }}
+          ></Col>
+        </Row>
+      )}
       <Form
         {...formItemLayout}
         form={form}
@@ -144,8 +191,7 @@ const KrRegisterForm = () => {
           await handleSubmit(values as User.RegisterParams)
         }}
         initialValues={{
-          residence: ['zhejiang', 'hangzhou', 'xihu'],
-          prefix: '86',
+          agreement: true,
         }}
         size={'large'}
         scrollToFirstError
@@ -260,9 +306,10 @@ const KrRegisterForm = () => {
             同意本网站的 <a href="#">协议</a>
           </Checkbox>
         </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            注册
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注　册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Button>
         </Form.Item>
       </Form>
