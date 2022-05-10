@@ -106,6 +106,7 @@ const KrLoginForm = () => {
         title="登　录"
         subTitle=" "
         initialValues={{ autoLogin: false }}
+        scrollToFirstError
         actions={
           <Space
           // style={{
