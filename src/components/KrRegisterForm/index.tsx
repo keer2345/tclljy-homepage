@@ -11,7 +11,6 @@ import {
   Typography,
 } from 'antd'
 import { getCaptchaCode, getUserInfo, register } from '@/services/user'
-import ProForm, { LoginForm } from '@ant-design/pro-form'
 
 import { history } from 'umi'
 const { Title } = Typography
@@ -121,31 +120,6 @@ const KrRegisterForm = () => {
 
   return (
     <>
-      {/* <LoginForm
-        logo=""
-        title="注　册"
-        subTitle=" "
-        submitter={{
-          submitButtonProps: {},
-          // 完全自定义整个区域
-          render: (props, doms) => {
-            return [
-              <button
-                type="button"
-                key="rest"
-                onClick={() => props.form?.resetFields()}
-              ></button>,
-              <button
-                type="button"
-                key="submit"
-                onClick={() => props.form?.submit?.()}
-              ></button>,
-            ]
-          },
-        }}
-      >
-        {!success && msg && <RegisterMessage content={msg || '注册失败'} />}
-      </LoginForm> */}
       <Row>
         <Col>&nbsp;</Col>
       </Row>
