@@ -1,41 +1,18 @@
 import { UmiComponentProps } from '@/common/type'
 import React, { useEffect, useState } from 'react'
-import {
-  message,
-  Dropdown,
-  Layout,
-  Menu,
-  Row,
-  Col,
-  Avatar,
-  Image,
-  Button,
-} from 'antd'
-import {
-  Link,
-  history,
-  UserModelState,
-  ConnectProps,
-  Loading,
-  connect,
-} from 'umi'
+import { message, Layout, Menu, Row, Col } from 'antd'
+import { Link, history, UserModelState, Loading, connect } from 'umi'
 import './index.less'
 
 import {
   HomeOutlined,
-  AppstoreOutlined,
-  CloudOutlined,
   SettingOutlined,
-  ProfileOutlined,
   PoweroffOutlined,
-  UserOutlined,
-  ColumnHeightOutlined,
 } from '@ant-design/icons'
 import { getUserInfo, logout } from '@/services/user'
+import KrMenu from '@/components/KrMenu'
 
 const { Header, Content, Footer } = Layout
-
-// const { SubMenu } = Menu
 
 interface LayoutProps extends UmiComponentProps {}
 
@@ -47,10 +24,6 @@ const menuData = [
 ]
 
 const BaseLayout = (props: LayoutProps) => {
-  // console.log('props:', props)
-  // const { userinfo } = props.user
-  // console.log('name:', userinfo)
-
   const [userInfo, setUserInfo] = useState<User.UserInfo>({})
   const [refresh, setRefresh] = useState(0)
 
@@ -149,31 +122,8 @@ const BaseLayout = (props: LayoutProps) => {
 
   return (
     <Layout className="layout">
-      <Header className="header">
-        <Link to="/">
-          <div className="logo" />
-        </Link>
+      {/* <Header className="header">
         <Row>
-          <Col span={14}>
-            <Menu
-              className="menu"
-              // theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={['1']}
-            >
-              {menuData.map((menu) => (
-                <Menu.Item key={`/${menu.route}`}>
-                  <Link to={menu.route} className="menu-item">
-                    {menu.click ? (
-                      <strong>{menu.name}</strong>
-                    ) : (
-                      <span>{menu.name}</span>
-                    )}
-                  </Link>
-                </Menu.Item>
-              ))}
-            </Menu>
-          </Col>
           <Col span={9}>
             {localStorage.getItem('userInfo') ? (
               <Row justify="end">
@@ -226,12 +176,6 @@ const BaseLayout = (props: LayoutProps) => {
                   <Link
                     to="/user/register"
                     className="menu-item"
-                    // onClick={() =>
-                    //   localStorage.setItem(
-                    //     'jumpPath',
-                    //     history.location.pathname,
-                    //   )
-                    // }
                   >
                     <span>注册</span>
                   </Link>
@@ -241,7 +185,7 @@ const BaseLayout = (props: LayoutProps) => {
           </Col>
           <Col span={1}></Col>
         </Row>
-      </Header>
+      </Header> */}
       <Row>
         <Col
           xs={{ span: 0 }}
@@ -259,6 +203,7 @@ const BaseLayout = (props: LayoutProps) => {
           xl={{ span: 20 }}
           xxl={{ span: 16 }}
         >
+          <KrMenu />
           <Content>
             <div className="site_layout_content">{props.children}</div>
           </Content>
@@ -277,8 +222,14 @@ const BaseLayout = (props: LayoutProps) => {
         <Row justify="center">
           <Col>同城蓝领家园 ©{year()} 柳州同城人力资源有限公司</Col>
         </Row>
-        <Row justify="center">
-          <Col>桂ICP备2021008076号</Col>
+        <Row>&nbsp;</Row>
+        <Row justify="center" align="middle">
+          <Col>
+            <Link to="/">
+              <div className="logo" />
+            </Link>
+          </Col>
+          <Col>&nbsp;&nbsp;桂ICP备2021008076号</Col>
         </Row>
       </Footer>
     </Layout>
