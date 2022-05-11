@@ -83,7 +83,7 @@ const KrLoginForm = () => {
         const { redirect } = query as { redirect: string }
         const jumpPath = localStorage.getItem('jumpPath')
         localStorage.removeItem('jumpPath')
-        if (jumpPath) {
+        if (jumpPath && jumpPath != '/user/login') {
           history.push(jumpPath)
         } else {
           history.push(redirect || '/')

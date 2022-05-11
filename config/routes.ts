@@ -8,6 +8,7 @@ export default [
       { path: '/', component: '@/pages/index' },
       // user
       { path: '/user/login', component: '@/pages/user/Login' },
+      { path: '/user/logout', component: '@/pages/user/Logout' },
       { path: '/user/register', component: '@/pages/user/Register' },
       { path: '/user/account', component: '@/pages/user/Account' },
       { path: '/user/setting', component: '@/pages/user/Setting' },

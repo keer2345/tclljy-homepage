@@ -11,6 +11,10 @@ const menuData = [
   { id: '4', route: '/company', name: '找企业' },
   { id: '5', route: '/about', name: '关于我们' },
 ]
+const menuLogin = [
+  { route: '/user/login', name: '登录' },
+  { route: '/user/register', name: '注册' },
+]
 
 const KrMenu = () => {
   console.log('his:', history.location.pathname.split('/')[1])
@@ -34,18 +38,13 @@ const KrMenu = () => {
     setDefaultActive(index)
   }, [history.location.pathname])
 
-  const setHistoryPath = (id: string) => {
-    // setDefaultActive(id)
-    console.log('jump to:', history.location.pathname)
-    // localStorage.setItem('jumpPath', history.location.pathname)
-  }
   return (
-    <Row justify="start">
-      <Col>
+    <Row justify="space-between">
+      {/* <Col>
         <Link to="/">
           <div className="logo" />
         </Link>
-      </Col>
+      </Col> */}
       <Col>
         <Menu
           theme="light"
@@ -56,10 +55,25 @@ const KrMenu = () => {
           {menuData.map((item) => (
             <Menu.Item index={item.id}>
               <Link to={item.route}>{item.name}</Link>
-              {/* <Link to={item.route}>{item.name}</Link> */}
             </Menu.Item>
           ))}
         </Menu>
+      </Col>
+      <Col>
+        <Row justify="end">
+          <Menu
+            theme="light"
+            defaultActive="0"
+            mode="horizontal"
+            className="el-menu-demo"
+          >
+            {menuLogin.map((item) => (
+              <Menu.Item index="1">
+                <Link to={item.route}>{item.name}</Link>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Row>
       </Col>
     </Row>
   )
