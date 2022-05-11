@@ -16,16 +16,9 @@ const { Header, Content, Footer } = Layout
 
 interface LayoutProps extends UmiComponentProps {}
 
-const menuData = [
-  { route: '/', name: '首页', click: true },
-  { route: '/job', name: '找工作', click: false },
-  { route: '/resume', name: '招人才', click: false },
-  { route: '/company', name: '找企业', click: false },
-]
-
 const BaseLayout = (props: LayoutProps) => {
   const [userInfo, setUserInfo] = useState<User.UserInfo>({})
-  const [refresh, setRefresh] = useState(0)
+  // const [refresh, setRefresh] = useState(0)
 
   const getUser = async () => {
     try {
@@ -73,7 +66,8 @@ const BaseLayout = (props: LayoutProps) => {
     } else {
       localStorage.clear()
     }
-  }, [refresh])
+  }, [])
+  // }, [refresh])
 
   const exit = async () => {
     try {
@@ -82,7 +76,7 @@ const BaseLayout = (props: LayoutProps) => {
       if (res.success) {
         message.success('已退出登录！')
         localStorage.clear()
-        setRefresh(refresh + 1)
+        // setRefresh(refresh + 1)
         history.push('/')
       }
     } catch (error) {
@@ -122,70 +116,6 @@ const BaseLayout = (props: LayoutProps) => {
 
   return (
     <Layout className="layout">
-      {/* <Header className="header">
-        <Row>
-          <Col span={9}>
-            {localStorage.getItem('userInfo') ? (
-              <Row justify="end">
-                <Col span={24}>
-                  <Row justify="end">
-                    <Dropdown overlay={menu}>
-                      <a
-                        className="ant-dropdown-link"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <span style={{ color: '#fff' }}>
-                          {userInfo.avatar || userInfo.avatarWx ? (
-                            <Avatar
-                              src={
-                                <Image
-                                  src={userInfo.avatar || userInfo.avatarWx}
-                                  preview={false}
-                                />
-                              }
-                            />
-                          ) : (
-                            <Avatar icon={<UserOutlined />} />
-                          )}
-                          　{userInfo.username} <strong>　控制台</strong>
-                        </span>
-                      </a>
-                    </Dropdown>
-                  </Row>
-                </Col>
-              </Row>
-            ) : (
-              <Row justify="end">
-                <Col span={19}></Col>
-                <Col span={2}>
-                  <Link
-                    to="/user/login"
-                    className="menu-item"
-                    onClick={() =>
-                      localStorage.setItem(
-                        'jumpPath',
-                        history.location.pathname,
-                      )
-                    }
-                  >
-                    <span>登录</span>
-                  </Link>
-                </Col>
-                <Col span={1}></Col>
-                <Col span={2}>
-                  <Link
-                    to="/user/register"
-                    className="menu-item"
-                  >
-                    <span>注册</span>
-                  </Link>
-                </Col>
-              </Row>
-            )}
-          </Col>
-          <Col span={1}></Col>
-        </Row>
-      </Header> */}
       <Row>
         <Col
           xs={{ span: 0 }}
@@ -203,7 +133,7 @@ const BaseLayout = (props: LayoutProps) => {
           xl={{ span: 20 }}
           xxl={{ span: 16 }}
         >
-          <KrMenu />
+          <KrMenu userInfo={JSON.parse(localStorage.getItem('userInfo'))} />
           <Content>
             <div className="site_layout_content">{props.children}</div>
           </Content>
