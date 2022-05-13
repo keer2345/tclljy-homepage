@@ -144,12 +144,20 @@ const ResumeInfo = ({
               </Col>
             </Row>
           </Col>
-          <Col span={24}>
+          <Col xs={{ span: 24 }} sm={{ span: 12 }}>
             <Row>
               <Col>
                 <Tag color="orange">专　　业</Tag>
               </Col>
               <Col>{resume.profession || '无（未填）'}</Col>
+            </Row>
+          </Col>
+          <Col xs={{ span: 24 }} sm={{ span: 12 }}>
+            <Row>
+              <Col>
+                <Tag color="orange">年　　龄</Tag>
+              </Col>
+              <Col>{resume.age} 岁</Col>
             </Row>
           </Col>
         </Row>

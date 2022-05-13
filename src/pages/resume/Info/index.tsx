@@ -124,6 +124,8 @@ const Info = ({ match }) => {
         result['strongs'] = result.strongs.sort(
           (a: any, b: any) => a.sort - b.sort,
         )
+        result['age'] =
+          new Date().getFullYear() - new Date(result.birthday).getFullYear()
         setResume(result)
         setResumeLoading(false)
       }
