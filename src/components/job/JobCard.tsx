@@ -56,9 +56,11 @@ const JobCard = ({ item }) => {
               <Row justify="end">
                 <Col>
                   {item.firm.region &&
-                    item.firm.city.forShort + '·' + item.firm.region.forShort}
+                    item.firm.city.forShort + ' · ' + item.firm.region.forShort}
                   {!item.firm.region &&
-                    item.firm.province.forShort + '·' + item.firm.city.forShort}
+                    item.firm.province.forShort +
+                      ' · ' +
+                      item.firm.city.forShort}
                   &nbsp; &nbsp;
                 </Col>
               </Row>

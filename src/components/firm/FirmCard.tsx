@@ -52,9 +52,9 @@ const FirmCard = ({ item }) => {
               <Row justify="end">
                 <Col>
                   {item.region &&
-                    item.city.forShort + '·' + item.region.forShort}
+                    item.city.forShort + ' · ' + item.region.forShort}
                   {!item.region &&
-                    item.province.forShort + '·' + item.city.forShort}
+                    item.province.forShort + ' · ' + item.city.forShort}
                   &nbsp; &nbsp;
                 </Col>
               </Row>
