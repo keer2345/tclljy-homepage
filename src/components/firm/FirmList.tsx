@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, message, Pagination, Button } from 'antd'
-import { fetchResumeList } from '@/services/resume'
-import ResumeCard from './ResumeCard'
+import { Button, Row, message, Pagination, Card, Col } from 'antd'
+import { fetchFirmList } from '@/services/firm'
 import KrLoading from '../common/KrLoading'
+import FirmCard from './FirmCard'
 
 const { Meta } = Card
 
-const ResumeList = ({
-  from,
-  search = '',
-  categoryId = '0',
-  expSort = '1',
-  eduSort = '1',
-}: any) => {
+const FirmList = ({ from, search }) => {
   const [loading, setLoading] = useState(true)
-  const [resumeList, setResumeList] = useState([])
+  const [firmList, setFirmList] = useState([])
   const [params, setParams] = useState<{ [key: string]: any }>()
   const [pageSize, setPageSize] = useState(20)
   const [currentPage, setCurrentPage] = useState(0)
@@ -34,7 +28,7 @@ const ResumeList = ({
   useEffect(() => {
     let pageSize = 20
     if (from === 'top') {
-      pageSize = 12
+      pageSize = 6
     } else if (from === 'list') {
       pageSize = 18
     }
@@ -45,71 +39,31 @@ const ResumeList = ({
       enable: 1,
       audit: 1,
       name: search,
-      jobCategoryId: categoryId,
-      expSort: expSort,
-      eduSort: eduSort,
     })
-  }, [search, categoryId, expSort, eduSort])
+  }, [search])
 
   useEffect(() => {
     if (params) {
       setLoading(true)
       setPageSize(params.pageSize)
-      getResumeList(params)
+      getFirmList(params)
     }
   }, [params])
 
-  const loadDataPagination = (page: number) => {
-    setParams({ ...params, currentPage: page - 1 })
-  }
-
-  const getResumeList = async (params: { [key: string]: any }) => {
+  const getFirmList = async (params: { [key: string]: any }) => {
     try {
-      const res = await fetchResumeList(params)
+      const res = await fetchFirmList(params)
       if (res.success) {
-        let contents = res.data.contents
-        for (var index in contents) {
-          contents[index]['categories'] = contents[index].categories.sort(
-            (a: any, b: any) => a.sort - b.sort,
-          )
-          if (contents[index].otherJob) {
-            contents[index]['categories'].find(
-              (item: any) => item.name == '其他',
-            ).name = '其他 (' + contents[index].otherJob + ')'
-          }
-          contents[index].age =
-            new Date().getFullYear() -
-            new Date(contents[index].birthday).getFullYear()
-        }
-
         setLoading(false)
-        setResumeList(contents)
+        setFirmList(res.data.contents)
         setCurrentPage(res.data.currentPage + 1)
         setTotalPages(res.data.totalPages)
         setTotalItems(res.data.totalItems)
       }
     } catch (error) {
-      message.error('加载简历信息失败，服务器连接异常')
+      message.error('加载职位信息失败，服务器连接异常')
     }
   }
-
-  const resumeLists =
-    totalItems > 0 ? (
-      resumeList.map((item) => <ResumeCard item={item} />)
-    ) : (
-      <Col
-        xs={{ span: 24 }}
-        sm={{ span: 12 }}
-        md={{ span: 12 }}
-        lg={{ span: 8 }}
-        xl={{ span: 8 }}
-        xxl={{ span: 8 }}
-      >
-        <Card style={{ width: 300, marginTop: 16 }} loading={loading}>
-          <Meta title="暂无简历" description="未查询到符合条件的简历" />
-        </Card>
-      </Col>
-    )
 
   const pagination = () => (
     <Row justify="end">
@@ -125,6 +79,28 @@ const ResumeList = ({
       />
     </Row>
   )
+
+  const loadDataPagination = (page: number) => {
+    setParams({ ...params, currentPage: page - 1 })
+  }
+
+  const firmLists =
+    totalItems > 0 ? (
+      firmList.map((item) => <FirmCard item={item} />)
+    ) : (
+      <Col
+        xs={{ span: 24 }}
+        sm={{ span: 12 }}
+        md={{ span: 12 }}
+        lg={{ span: 8 }}
+        xl={{ span: 8 }}
+        xxl={{ span: 8 }}
+      >
+        <Card style={{ width: 300, marginTop: 16 }} loading={loading}>
+          <Meta title="暂无职位" description="未查询到符合条件的职位" />
+        </Card>
+      </Col>
+    )
 
   return (
     <div className="site-card-border-less-wrapper">
@@ -149,8 +125,9 @@ const ResumeList = ({
             { xs: 3, sm: 3 },
           ]}
         >
-          {resumeLists}
+          {firmLists}
         </Row>
+
         {from != 'top' && (
           <>
             <Row>　</Row>
@@ -162,4 +139,4 @@ const ResumeList = ({
   )
 }
 
-export default ResumeList
+export default FirmList

@@ -1,7 +1,8 @@
 import React from 'react'
-import { Tag, Card, Row, Col } from 'antd'
+import { Tag, Card, Row, Col, Avatar } from 'antd'
 import { Link, history } from 'umi'
 import './ResumeCard.css'
+import { UserOutlined } from '@ant-design/icons'
 
 const ResumeCard = ({ item }) => {
   const url = '/resume/info/' + item.id
@@ -15,17 +16,31 @@ const ResumeCard = ({ item }) => {
       xl={{ span: 8 }}
       xxl={{ span: 8 }}
     >
+      {item.avatar}
       <Card
         size="small"
         title={
-          <Link to={url}>
-            {item.gender != '2' && (
-              <span style={{ color: '#0081ff' }}>{item.name} 先生</span>
+          <>
+            {item.user.avatarWx && (
+              <Avatar shape="square" size="small" src={item.user.avatarWx} />
             )}
-            {item.gender == '2' && (
-              <span style={{ color: 'purple' }}>{item.name} 女士</span>
+            {!item.user.avatarWx && (
+              <Avatar
+                shape="square"
+                size="small"
+                style={{ backgroundColor: '#9bd1ff' }}
+                icon={<UserOutlined />}
+              />
             )}
-          </Link>
+            <Link to={url}>
+              {item.gender != '2' && (
+                <span style={{ color: '#0081ff' }}>&nbsp;{item.name} 先生</span>
+              )}
+              {item.gender == '2' && (
+                <span style={{ color: 'purple' }}>&nbsp;{item.name} 女士</span>
+              )}
+            </Link>
+          </>
         }
         extra={<span className="extra">{item.age}岁</span>}
         hoverable={true}

@@ -7,6 +7,7 @@ import JobCategory from '@/components/job/JobCategory'
 import JobList from '@/components/job/JobList'
 import ResumeList from '@/components/resume/ResumeList'
 import { useState } from 'react'
+import FirmList from '@/components/firm/FirmList'
 
 const { Text, Link } = Typography
 
@@ -14,29 +15,10 @@ export default function IndexPage() {
   return (
     <>
       <KrCarouselImage />
-      {/* <Card size="middle" bordered={false} className="card">
-        <Row justify="end">
-          <Col span={14} offset={4}>
-            <KrSearch />
-          </Col>
-          <Col span={24} offset={0}>
-            <Row justify="end">
-              <KrLoginNav />
-            </Row>
-          </Col>
-        </Row>
-        <Row>　</Row>
-        <Row><JobCategory from="top" /></Row>
-      </Card> */}
+
       <KrLoginNav />
       <Row>　</Row>
       <Row justify="end">
-        {/* <Col>
-          <Link href="#" className="title-link">
-            &nbsp;最新职位
-          </Link>
-        </Col> */}
-        {/* <Col>　</Col> */}
         <Col>
           <Link href="/job" className="title-link">
             更多职位...&nbsp;
@@ -47,12 +29,15 @@ export default function IndexPage() {
       <JobList from="top" />
 
       <Row justify="end">
-        {/* <Col>
-          <Link href="#" className="title-link">
-            &nbsp;最新简历
+        <Col>
+          <Link href="/company" className="title-link">
+            更多企业...&nbsp;
           </Link>
         </Col>
-        <Col>　</Col> */}
+      </Row>
+      <FirmList from="top" />
+
+      <Row justify="end">
         <Col>
           <Link href="/resume" className="title-link">
             更多简历...&nbsp;

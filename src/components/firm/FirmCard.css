@@ -1,10 +1,13 @@
 
+
 .site-col-border-less-wrapper {
   padding-bottom: 16px;
 }
 .extra{
-  color:;
   color:tomato;
+}
+.extra-gray{
+  color:#ccc;
 }
 .row-bottom{
   margin-bottom: 3px;

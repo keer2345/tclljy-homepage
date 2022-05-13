@@ -22,11 +22,7 @@ const menuLogin = [
   { route: '/user/login', name: '登录' },
   { route: '/user/register', name: '注册' },
 ]
-// const menuAccount2 = [
-//   { id: '2', route: '/user/account', name: '我的主页' },
-//   { id: '3', route: '/user/setting', name: '账户设置' },
-//   { id: '4', route: '/user/logout', name: '退出' },
-// ]
+
 const menuAccount = (
   <AntMenu>
     <AntMenu.Item key={'account'} icon={<HomeOutlined />}>
@@ -49,7 +45,6 @@ const menuAccount = (
 )
 
 const KrMenu = ({ userInfo }) => {
-  console.log('his:', history.location.pathname.split('/')[1])
   const [defaultActive, setDefaultActive] = useState('1')
   const [currentRoute, setCurrentRoute] = useState('/')
 

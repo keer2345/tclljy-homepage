@@ -10,9 +10,6 @@ const All = () => {
   const [categoryId, setCategoryId] = useState('')
   const [categoryName, setCategoryName] = useState('')
 
-  //   // 后取地址栏传过来的 cid
-  //   const cid = window.location.search.split('=')[1]
-
   useEffect(() => {
     if (categoryId === '') {
       setSearchValue('')

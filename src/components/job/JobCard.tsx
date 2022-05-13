@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tag, Card, Row, Col } from 'antd'
+import { Tag, Card, Row, Col, Avatar } from 'antd'
 import './JobCard.css'
 import { history, Link } from 'umi'
 
@@ -8,10 +8,6 @@ const JobCard = ({ item }) => {
   return (
     <Col
       className="site-col-border-less-wrapper"
-      // xs={{ span: 24 }}
-      // sm={{ span: 12 }}
-      // md={{ span: 8 }}
-
       xs={{ span: 24 }}
       sm={{ span: 12 }}
       md={{ span: 12 }}
@@ -21,7 +17,18 @@ const JobCard = ({ item }) => {
     >
       <Card
         size="small"
-        title={<Link to={url}>{item.name}</Link>}
+        title={
+          <>
+            <Avatar
+              shape="square"
+              size="small"
+              style={{ color: 'tomato', backgroundColor: '#fde3cf' }}
+            >
+              职
+            </Avatar>
+            <Link to={url}>&nbsp;{item.name}</Link>
+          </>
+        }
         extra={
           <span className="extra">
             {item.mianyi ? '待遇面议' : item.minSalary + ' ~ ' + item.maxSalary}
@@ -37,7 +44,7 @@ const JobCard = ({ item }) => {
             <Col span={16}>
               <Row justify="start">
                 <Col>
-                  &nbsp;·
+                  &nbsp;&nbsp;
                   {item.firm.name.length >= 20
                     ? item.firm.name.substr(0, 19) + '...'
                     : item.firm.name}

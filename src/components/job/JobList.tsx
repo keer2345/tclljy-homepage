@@ -89,9 +89,30 @@ const JobList = ({ from, search, categoryId }: any) => {
       </Col>
     )
 
+  const pagination = () => (
+    <Row justify="end">
+      <Pagination
+        defaultCurrent={1}
+        current={currentPage}
+        pageSize={pageSize}
+        total={totalItems}
+        hideOnSinglePage
+        showSizeChanger={false}
+        itemRender={itemRender}
+        onChange={loadDataPagination}
+      />
+    </Row>
+  )
+
   return (
     <div className="site-card-border-less-wrapper">
       <div className="site-card-wrapper">
+        {from != 'top' && (
+          <>
+            {pagination()}
+            <Row>　</Row>
+          </>
+        )}
         {loading && (
           <>
             <Row justify="center">
@@ -108,21 +129,11 @@ const JobList = ({ from, search, categoryId }: any) => {
         >
           {jobLists}
         </Row>
+
         {from != 'top' && (
           <>
             <Row>　</Row>
-            <Row justify="center">
-              <Pagination
-                defaultCurrent={1}
-                current={currentPage}
-                pageSize={pageSize}
-                total={totalItems}
-                hideOnSinglePage
-                showSizeChanger={false}
-                itemRender={itemRender}
-                onChange={loadDataPagination}
-              />
-            </Row>
+            {pagination()}
           </>
         )}
       </div>
