@@ -1,45 +1,66 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'umi'
-import { Button } from 'antd'
+import ProCard from '@ant-design/pro-card'
+import { Row, Col } from 'antd'
+import { history } from 'umi'
+import './index.css'
 
 const KrLoginNav = () => {
-  const [login, setLogin] = useState(false)
-  useEffect(() => {
-    if (localStorage.getItem('userInfo')) {
-      setLogin(true)
-    }
-  }, [])
   return (
     <>
-      {!login ? (
-        <div>
-          发布招聘求职信息，请先
-          <Button type="link">
-            <Link to="/user/login">登录</Link>
-          </Button>
-          或
-          <Button type="link">
-            <Link to="/user/register">注册</Link>
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <Button type="link">
-            <Link to="/user/login">
-              <Button type="primary" shape="round">
-                发布职位
-              </Button>
-            </Link>
-          </Button>
-          <Button type="link">
-            <Link to="/user/register">
-              <Button type="primary" shape="round">
-                发布简历
-              </Button>
-            </Link>
-          </Button>
-        </div>
-      )}
+      {/* <ProCard style={{ marginTop: 8 }} gutter={8} ghost> */}
+      <Row style={{ marginTop: 8 }} gutter={8}>
+        <Col xs={{ span: 12 }} sm={{ span: 12 }} md={{ span: 6 }}>
+          <ProCard
+            layout="center"
+            hoverable
+            bordered
+            style={{ background: '#4492d2' }}
+            onClick={() => history.push('/job')}
+          >
+            <span className="font-size">职位浏览</span>
+          </ProCard>
+        </Col>
+        <Col xs={{ span: 12 }} sm={{ span: 12 }} md={{ span: 6 }}>
+          <ProCard
+            layout="center"
+            style={{ background: '#5ab5e6' }}
+            hoverable
+            bordered
+            onClick={() => history.push('/resume')}
+          >
+            <span className="font-size">求职简历</span>
+          </ProCard>
+        </Col>
+        <Col xs={{ span: 12 }} sm={{ span: 12 }} md={{ span: 6 }}>
+          <ProCard
+            layout="center"
+            style={{ background: '#4496d2' }}
+            hoverable
+            bordered
+            onClick={() => history.push('/company')}
+          >
+            <span className="font-size">企业列表</span>
+          </ProCard>
+        </Col>
+        <Col xs={{ span: 12 }} sm={{ span: 12 }} md={{ span: 6 }}>
+          <ProCard
+            layout="center"
+            style={{ background: '#5ab5e6' }}
+            hoverable
+            bordered
+            onClick={() => {
+              if (localStorage.getItem('userInfo')) {
+                history.push('#')
+              } else {
+                history.push('/user/login')
+              }
+            }}
+          >
+            <span className="font-size">发布信息</span>
+          </ProCard>
+        </Col>
+      </Row>
+      {/* </ProCard> */}
     </>
   )
 }
