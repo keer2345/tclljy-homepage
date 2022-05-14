@@ -7,3 +7,9 @@ export async function fetchFirmList(params?: { [key: string]: any }) {
     params,
   })
 }
+
+export async function fetchFirm(userid: string, firmid: string) {
+  return request<API.RespResult>('/api/firm/info/' + userid + '/' + firmid, {
+    method: 'GET',
+  })
+}

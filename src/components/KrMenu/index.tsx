@@ -16,7 +16,7 @@ const menuData = [
   { id: '2', route: '/job', name: '找工作' },
   { id: '3', route: '/resume', name: '招人才' },
   { id: '4', route: '/company', name: '找企业' },
-  { id: '5', route: '/about', name: '关于我们' },
+  // { id: '5', route: '/about', name: '关于我们' },
 ]
 const menuLogin = [
   { route: '/user/login', name: '登录' },

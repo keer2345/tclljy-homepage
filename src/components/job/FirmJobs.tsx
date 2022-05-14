@@ -1,9 +1,20 @@
 import React from 'react'
 import { List, Tag, Card, Row, Col, Button, Link } from 'antd'
+import { history } from 'umi'
 
-const FirmJobs = ({ firmJobsList, firmJobsCount }) => {
+const FirmJobs = ({ firmJobsList, firmJobsCount, firmid }) => {
   return (
-    <Card title="企业职位" extra={'更多 ( ' + firmJobsCount + ' )'}>
+    <Card
+      title="企业职位"
+      extra={
+        <Button
+          type="link"
+          onClick={() => history.push('/company/info/' + firmid + '#jobs')}
+        >
+          更多 ( {firmJobsCount} )
+        </Button>
+      }
+    >
       <List
         itemLayout="horizontal"
         dataSource={firmJobsList}

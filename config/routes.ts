@@ -20,6 +20,7 @@ export default [
       { path: '/resume/info/:id', component: '@/pages/resume/Info/index' },
 
       { path: '/company', component: '@/pages/firm/All' },
+      { path: '/company/info/:id', component: '@/pages/firm/Info/index' },
     ],
   },
   {

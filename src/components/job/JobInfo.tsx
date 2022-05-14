@@ -115,7 +115,11 @@ const JobInfo = ({
     >
       {favAndSend()}
       <Card size="small" bordered={false} title="所属企业" type="inner">
-        <Button size="large" type="link">
+        <Button
+          size="large"
+          type="link"
+          onClick={() => history.push('/company/info/' + job.firm.id)}
+        >
           {job.firm.name}
         </Button>
         <Tag color="green" icon={<CrownOutlined />}>
@@ -224,12 +228,12 @@ const JobInfo = ({
               </Col>
               {!job.firm.region && (
                 <Col>
-                  {job.firm.province.name}·{job.firm.city.name}
+                  {job.firm.province.name} · {job.firm.city.name}
                 </Col>
               )}
               {job.firm.region && (
                 <Col>
-                  {job.firm.province.name}·{job.firm.city.name}·
+                  {job.firm.province.name} · {job.firm.city.name} ·{' '}
                   {job.firm.region.name}
                 </Col>
               )}

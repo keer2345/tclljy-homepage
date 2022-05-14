@@ -279,6 +279,7 @@ const Info = ({ match }) => {
                 <FirmJobs
                   firmJobsList={firmJobsList}
                   firmJobsCount={firmJobsCount}
+                  firmid={job.firm.id}
                 />
               )}
             </Col>

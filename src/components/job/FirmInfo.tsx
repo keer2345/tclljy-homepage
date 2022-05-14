@@ -1,12 +1,18 @@
 import React from 'react'
 import { List, Tag, Card, Row, Col, Button } from 'antd'
+import { history } from 'umi'
 
 const FirmInfo = ({ job }) => {
   return (
     <Card title="企业信息" style={{ color: '#999999' }}>
       <Row justify="start">
         <Col>
-          <Button type="link">{job.firm.name}</Button>
+          <Button
+            type="link"
+            onClick={() => history.push('/company/info/' + job.firm.id)}
+          >
+            {job.firm.name}
+          </Button>
         </Col>
       </Row>
       <Row gutter={[2, 2]}>
