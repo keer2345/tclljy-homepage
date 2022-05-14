@@ -4,25 +4,28 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, Card, Tag, Button } from 'antd'
 import ResumeList from '@/components/resume/ResumeList'
 import './index.css'
+import { spellNamePath } from '@ant-design/pro-table/lib/utils/cellRenderToFromItem'
 
 const All = () => {
   const [searchValue, setSearchValue] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [categoryName, setCategoryName] = useState('')
+  // const [categoryComponent,setCategoryComponent] = useState()
+
   return (
     <>
       <Row justify="center">
-        <Col span={4}></Col>
-        <Col span={12}>
+        <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 5 }}></Col>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 14 }}>
           <Card className="card" bordered>
             <KrSearch
-              search="resume"
+              search="job"
               value={searchValue}
               changeSearchValue={setSearchValue}
             />
           </Card>
         </Col>
-        <Col span={3}></Col>
+        <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 5 }}></Col>
       </Row>
       <Row justify="start">
         <Col>
@@ -39,7 +42,13 @@ const All = () => {
         {categoryId && (
           <Col>
             期望职位：
-            <Tag closable onClose={(e) => setCategoryId('')}>
+            <Tag
+              closable
+              onClose={(e) => {
+                setCategoryId('')
+              }}
+              onClick={(e) => setCategoryId('')}
+            >
               {categoryName}
             </Tag>
           </Col>
@@ -47,7 +56,11 @@ const All = () => {
         {searchValue && (
           <Col>
             简历名称：
-            <Tag closable onClose={(e) => setSearchValue('')}>
+            <Tag
+              closable
+              onClose={(e) => setSearchValue('')}
+              onClick={(e) => setSearchValue('')}
+            >
               {searchValue}
             </Tag>
           </Col>
@@ -55,8 +68,13 @@ const All = () => {
         {categoryId && searchValue && (
           <Col>
             <Tag
+              color="magenta"
               closable
               onClose={(e) => {
+                setCategoryId('')
+                setSearchValue('')
+              }}
+              onClick={(e) => {
                 setCategoryId('')
                 setSearchValue('')
               }}

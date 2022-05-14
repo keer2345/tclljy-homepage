@@ -10,17 +10,17 @@ const All = () => {
   const [categoryId, setCategoryId] = useState('')
   const [categoryName, setCategoryName] = useState('')
 
-  useEffect(() => {
-    if (categoryId === '') {
-      setSearchValue('')
-    }
-  }, [categoryId])
+  // useEffect(() => {
+  //   if (categoryId === '') {
+  //     setSearchValue('')
+  //   }
+  // }, [categoryId])
 
   return (
     <>
       <Row justify="center">
-        <Col span={4}></Col>
-        <Col span={12}>
+        <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 5 }}></Col>
+        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 14 }}>
           <Card className="card" bordered>
             <KrSearch
               search="job"
@@ -29,7 +29,7 @@ const All = () => {
             />
           </Card>
         </Col>
-        <Col span={3}></Col>
+        <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 5 }}></Col>
       </Row>
       <Row justify="start">
         <Col>
@@ -46,7 +46,11 @@ const All = () => {
         {categoryId && (
           <Col>
             职位类别：
-            <Tag closable onClose={(e) => setCategoryId('')}>
+            <Tag
+              closable
+              onClose={(e) => setCategoryId('')}
+              onClick={(e) => setCategoryId('')}
+            >
               {categoryName}
             </Tag>
           </Col>
@@ -54,7 +58,11 @@ const All = () => {
         {searchValue && (
           <Col>
             职位名称：
-            <Tag closable onClose={(e) => setSearchValue('')}>
+            <Tag
+              closable
+              onClose={(e) => setSearchValue('')}
+              onClick={(e) => setSearchValue('')}
+            >
               {searchValue}
             </Tag>
           </Col>
@@ -62,8 +70,13 @@ const All = () => {
         {categoryId && searchValue && (
           <Col>
             <Tag
+              color="magenta"
               closable
               onClose={(e) => {
+                setCategoryId('')
+                setSearchValue('')
+              }}
+              onClick={(e) => {
                 setCategoryId('')
                 setSearchValue('')
               }}

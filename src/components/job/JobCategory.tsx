@@ -35,6 +35,7 @@ const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
   const onClickTag = (jobCategoryId) => {
     setJobCategoryId(jobCategoryId)
     changeCategoryId(jobCategoryId)
+
     if (jobCategoryId != '') {
       changeCategoryName(
         jobCategory.find((item) => item.id === jobCategoryId).name,
