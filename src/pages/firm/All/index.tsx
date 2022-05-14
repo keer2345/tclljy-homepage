@@ -3,6 +3,7 @@ import './index.css'
 
 import { Row, Col, Card, Tag, Button } from 'antd'
 import KrSearch from '@/components/KrSearch'
+import FirmList from '@/components/firm/FirmList'
 
 const All = () => {
   const [searchValue, setSearchValue] = useState('')
@@ -14,7 +15,7 @@ const All = () => {
         <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 14 }}>
           <Card className="card" bordered>
             <KrSearch
-              search="job"
+              search="firm"
               value={searchValue}
               changeSearchValue={setSearchValue}
             />
@@ -41,6 +42,7 @@ const All = () => {
         {searchValue && (
           <Col>
             <Tag
+              color="magenta"
               closable
               onClose={(e) => {
                 setSearchValue('')
@@ -54,6 +56,7 @@ const All = () => {
           </Col>
         )}
       </Row>
+      <FirmList from="list" search={searchValue} />
     </>
   )
 }
