@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
+import {
+  Button,
+  message,
+  Tag,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Modal,
+  Input,
+} from 'antd'
 import { getUser } from '@/components/common/Common'
 import { fetchFirm } from '@/services/firm'
 import FirmInfo from '@/components/firm/FirmInfo'
 import { history } from 'umi'
+import JobList from '@/components/job/JobList'
 
 const Info = ({ match }) => {
   const [firmId, setFirmId] = useState('')
@@ -61,6 +72,17 @@ const Info = ({ match }) => {
         </Col>
       </Row>
       <Row>
+        <Col span={24}>
+          <Button type="link" onClick={() => history.push('/')}>
+            首页
+          </Button>
+          /
+          <Button type="link" onClick={() => history.push('/company')}>
+            企业列表
+          </Button>
+        </Col>
+      </Row>
+      <Row>
         {firmLoading && (
           <Col span={24}>
             <Card title="企业详情" loading={firmLoading}></Card>
@@ -77,8 +99,18 @@ const Info = ({ match }) => {
           </Col>
         )}
       </Row>
+
+      <Row>&nbsp;</Row>
+      <Row>&nbsp;</Row>
       <Row>
-        <Col span={24}></Col>
+        <Col span={24}>
+          <Typography>
+            <Typography.Title level={4}>该企业发布的职位：</Typography.Title>
+          </Typography>
+        </Col>
+        <Col span={24}>
+          <JobList from="list" firmid={firm.id} />
+        </Col>
       </Row>
     </>
   )

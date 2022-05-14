@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
+import {
+  Button,
+  message,
+  Tag,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Modal,
+  Input,
+} from 'antd'
 import {
   fetchFirmFavJob,
   fetchFirmSended,
@@ -145,6 +155,17 @@ const Info = ({ match }) => {
         </Col>
       </Row>
 
+      <Row>
+        <Col span={24}>
+          <Button type="link" onClick={() => history.push('/')}>
+            首页
+          </Button>
+          /
+          <Button type="link" onClick={() => history.push('/resume')}>
+            简历列表
+          </Button>
+        </Col>
+      </Row>
       <Row gutter={[12, 12]}>
         <Col
           xs={{ span: 24 }}

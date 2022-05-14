@@ -10,7 +10,12 @@ const All = () => {
   const [searchValue, setSearchValue] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [categoryName, setCategoryName] = useState('')
-  // const [categoryComponent,setCategoryComponent] = useState()
+  const [clearFlag, setClearFlag] = useState(0)
+
+  const clearCategory = () => {
+    setCategoryId('')
+    setClearFlag(clearFlag + 1)
+  }
 
   return (
     <>
@@ -33,6 +38,7 @@ const All = () => {
             from="list"
             changeCategoryId={setCategoryId}
             changeCategoryName={setCategoryName}
+            clearFlag={clearFlag}
           />
         </Col>
       </Row>
@@ -44,10 +50,8 @@ const All = () => {
             期望职位：
             <Tag
               closable
-              onClose={(e) => {
-                setCategoryId('')
-              }}
-              onClick={(e) => setCategoryId('')}
+              onClose={(e) => clearCategory()}
+              onClick={(e) => clearCategory()}
             >
               {categoryName}
             </Tag>
@@ -71,11 +75,11 @@ const All = () => {
               color="magenta"
               closable
               onClose={(e) => {
-                setCategoryId('')
+                clearCategory()
                 setSearchValue('')
               }}
               onClick={(e) => {
-                setCategoryId('')
+                clearCategory()
                 setSearchValue('')
               }}
             >

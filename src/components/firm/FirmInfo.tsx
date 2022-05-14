@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { message, Tag, Card, Row, Col, Button } from 'antd'
 import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
+import { replaceEnter } from '../common/Common'
 
 const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
+  useEffect(() => {
+    replaceEnter(firm.remark, '#remark')
+  }, [])
   return (
     <Card
       size="default"
@@ -51,6 +55,13 @@ const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
         </Card>
       )}
 
+      <Card size="small" bordered={false} title="企业介绍" type="inner">
+        <Row gutter={[6, 6]}>
+          <Col xs={{ span: 24 }}>
+            <span id="remark"></span>
+          </Col>
+        </Row>
+      </Card>
       <Card size="small" bordered={false} title="联系方式" type="inner">
         <Row gutter={[6, 6]}>
           <Col xs={{ span: 24 }} sm={{ span: 12 }}>

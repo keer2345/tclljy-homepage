@@ -4,9 +4,18 @@ import { Tag, Divider, Button } from 'antd'
 import './JobCategory.css'
 import { history } from 'umi'
 
-const JobCategory = ({ from, changeCategoryId, changeCategoryName }) => {
+const JobCategory = ({
+  from,
+  changeCategoryId,
+  changeCategoryName,
+  clearFlag,
+}) => {
   const [jobCategory, setJobCategory] = useState([])
   const [jobCategoryId, setJobCategoryId] = useState('')
+
+  useEffect(() => {
+    setJobCategoryId('')
+  }, [clearFlag])
 
   const colors =
     from === 'top'

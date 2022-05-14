@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { message, Tag, Card, Row, Col, Typography, Modal, Input } from 'antd'
+import {
+  Button,
+  message,
+  Tag,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Modal,
+  Input,
+} from 'antd'
 import {
   fetchJob,
   fetchJobList,
@@ -236,6 +246,17 @@ const Info = ({ match }) => {
           <Typography>
             <Typography.Title level={3}>职位详情</Typography.Title>
           </Typography>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Button type="link" onClick={() => history.push('/')}>
+            首页
+          </Button>
+          /
+          <Button type="link" onClick={() => history.push('/job')}>
+            职位列表
+          </Button>
         </Col>
       </Row>
       <Row gutter={[12, 12]}>

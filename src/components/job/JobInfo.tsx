@@ -19,9 +19,6 @@ const JobInfo = ({
   goLogin,
 }) => {
   useEffect(() => {
-    // const desc = job.description.replace(/\n/g, '<br />')
-    // const span = document.querySelector('#description')
-    // span.innerHTML = desc
     replaceEnter(job.description, '#description')
   }, [])
 
@@ -180,6 +177,18 @@ const JobInfo = ({
                 <Tag color="purple">职位类别</Tag>
               </Col>
               <Col>{job.jobCategory.name}</Col>
+            </Row>
+          </Col>
+          <Col xs={{ span: 24 }} sm={{ span: 12 }}>
+            <Row>
+              <Col>
+                <Tag color="purple">工资待遇</Tag>
+              </Col>
+              <Col>
+                {job.mianyi
+                  ? '待遇面议'
+                  : job.minSalary + ' ~ ' + job.maxSalary + ' 元'}
+              </Col>
             </Row>
           </Col>
         </Row>
