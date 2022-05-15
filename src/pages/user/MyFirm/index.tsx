@@ -5,14 +5,32 @@ import { Row, Col, Card, message } from 'antd'
 import KrCarouselImage from '@/components/KrCarouselImage'
 import ProCard from '@ant-design/pro-card'
 import './index.css'
-import { fetchFirm } from '@/services/firm'
+import {
+  fetchFirm,
+  fetchFirmIndustry,
+  fetchFirmNature,
+  fetchFirmScale,
+} from '@/services/firm'
 import FirmInfo from '@/components/firm/FirmInfo'
+import ProForm, { ProFormText, ProFormRadio } from '@ant-design/pro-form'
+import FirmForm from './FirmForm'
 
 const MyFirm = () => {
   const [userinfo, setUserinfo] = useState({})
   const [firm, setFirm] = useState({})
   const [tag, setTag] = useState(1)
+  const [editTitle, setEditTitle] = useState('')
   const [firmLoading, setFirmLoading] = useState(true)
+
+  const formItemLayout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 16 },
+  }
+  useEffect(() => {
+    getFirmNature()
+    getFirmScale()
+    getFirmIndustry()
+  }, [])
 
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
@@ -27,8 +45,14 @@ const MyFirm = () => {
         setUserinfo(res)
         if (res.firm > 0) {
           getFirm(res.id, res.firm)
+          if (tag == '2') {
+            setEditTitle('编辑企业信息')
+          }
         } else {
           setFirmLoading(false)
+          if (tag == '2') {
+            setEditTitle('添加企业信息')
+          }
         }
       })
     }
@@ -47,9 +71,34 @@ const MyFirm = () => {
     }
   }
 
+  const getFirmNature = async () => {
+    try {
+      const resNature = await fetchFirmNature({ enable: 1 })
+      console.log('nature', resNature.data)
+    } catch (error) {
+      message.error('加载企业性质失败')
+    }
+  }
+  const getFirmScale = async () => {
+    try {
+      const resNature = await fetchFirmScale({ enable: 1 })
+      console.log('sacale', resNature.data)
+    } catch (error) {
+      message.error('加载企业性质失败')
+    }
+  }
+  const getFirmIndustry = async () => {
+    try {
+      const resNature = await fetchFirmIndustry({ enable: 1 })
+      console.log('industry', resNature.data)
+    } catch (error) {
+      message.error('加载企业性质失败')
+    }
+  }
+
   return (
     <>
-      <KrCarouselImage />
+      {/* <KrCarouselImage /> */}
 
       <ProCard direction="column" ghost gutter={[0, 8]}>
         <ProCard layout="left" bordered>
@@ -108,19 +157,30 @@ const MyFirm = () => {
           </Col>
         </Row>
       </Card>
-      {tag == 1 && firmLoading && (
-        <Col span={24}>
-          <Card title="企业详情" loading={firmLoading}></Card>
-        </Col>
-      )}
 
-      {tag == 1 && !firmLoading && (
-        <Col span={24}>
-          <FirmInfo firm={firm} userinfo={userinfo} from="admin" />
-        </Col>
+      <Row>
+        {tag == 1 && firmLoading && (
+          <Col span={24}>
+            <Card title="企业详情" loading={firmLoading}></Card>
+          </Col>
+        )}
+
+        {tag == 1 && !firmLoading && (
+          <Col span={24}>
+            <FirmInfo firm={firm} userinfo={userinfo} from="admin" />
+          </Col>
+        )}
+      </Row>
+
+      {!firmLoading && tag == 2 && (
+        <Row>
+          <Col span={24}>
+            <Card title={editTitle}>
+              <FirmForm formItemLayout={formItemLayout} firm={firm} />
+            </Card>
+          </Col>
+        </Row>
       )}
-      {tag == 2 && userinfo.firm > '0' && <Card title="添加企业"></Card>}
-      {tag == 2 && userinfo.firm == '0' && <Card title="编辑企业"></Card>}
     </>
   )
 }
