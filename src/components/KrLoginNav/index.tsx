@@ -50,7 +50,7 @@ const KrLoginNav = () => {
             bordered
             onClick={() => {
               if (localStorage.getItem('userInfo')) {
-                history.push('#')
+                history.push('/user/account')
               } else {
                 history.push('/user/login')
               }
