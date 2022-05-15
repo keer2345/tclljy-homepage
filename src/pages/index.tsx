@@ -26,7 +26,7 @@ export default function IndexPage() {
         </Col>
       </Row>
 
-      <JobList from="top" />
+      <JobList from="top" firmid="-99" />
 
       <Row justify="end">
         <Col>

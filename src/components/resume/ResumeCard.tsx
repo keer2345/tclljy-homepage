@@ -67,9 +67,9 @@ const ResumeCard = ({ item }) => {
             {item.categories.length != 0
               ? item.categories.map((category, i, item) => {
                   if (i + 1 === item.length) {
-                    return <span>{category.name}</span>
+                    return <span key={category.id}>{category.name}</span>
                   } else {
-                    return <span>{category.name}、</span>
+                    return <span key={category.id}>{category.name}、</span>
                   }
                 })
               : '（未填）'}

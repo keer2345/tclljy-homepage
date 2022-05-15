@@ -88,7 +88,12 @@ const All = () => {
         )}
       </Row>
 
-      <JobList from="list" search={searchValue} categoryId={categoryId} />
+      <JobList
+        from="list"
+        search={searchValue}
+        categoryId={categoryId}
+        firmid="-99"
+      />
     </>
   )
 }

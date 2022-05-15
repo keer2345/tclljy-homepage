@@ -6,7 +6,7 @@ import FirmCard from './FirmCard'
 
 const { Meta } = Card
 
-const FirmList = ({ from, search }) => {
+const FirmList = ({ from = 'list', search = '' }) => {
   const [loading, setLoading] = useState(true)
   const [firmList, setFirmList] = useState([])
   const [params, setParams] = useState<{ [key: string]: any }>()
@@ -86,7 +86,7 @@ const FirmList = ({ from, search }) => {
 
   const firmLists =
     totalItems > 0 ? (
-      firmList.map((item) => <FirmCard item={item} />)
+      firmList.map((item) => <FirmCard key={item.id} item={item} />)
     ) : (
       <Col
         xs={{ span: 24 }}

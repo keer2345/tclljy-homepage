@@ -19,8 +19,8 @@ const menuData = [
   // { id: '5', route: '/about', name: '关于我们' },
 ]
 const menuLogin = [
-  { route: '/user/login', name: '登录' },
-  { route: '/user/register', name: '注册' },
+  { id: '1', route: '/user/login', name: '登录' },
+  { id: '2', route: '/user/register', name: '注册' },
 ]
 
 const menuAccount = (
@@ -82,7 +82,7 @@ const KrMenu = ({ userInfo }) => {
               className="el-menu-demo"
             >
               {menuData.map((item) => (
-                <Menu.Item index={item.id}>
+                <Menu.Item key={item.id} index={item.id}>
                   <Link to={item.route}>{item.name}</Link>
                 </Menu.Item>
               ))}
@@ -100,21 +100,11 @@ const KrMenu = ({ userInfo }) => {
           >
             {!localStorage.getItem('userInfo') &&
               menuLogin.map((item) => (
-                <Menu.Item index="1">
+                <Menu.Item key={item.id} index="1">
                   <Link to={item.route}>{item.name}</Link>
                 </Menu.Item>
               ))}
             {localStorage.getItem('userInfo') && (
-              // <Menu.SubMenu
-              //   index="1"
-              //   title={JSON.parse(localStorage.getItem('userInfo')).username}
-              // >
-              //   {menuAccount.map((item) => (
-              //     <Menu.Item index={item.id}>
-              //       <Link to={item.route}>{item.name}</Link>
-              //     </Menu.Item>
-              //   ))}
-              // </Menu.SubMenu>
               <Menu.Item>
                 <Dropdown overlay={menuAccount}>
                   <a

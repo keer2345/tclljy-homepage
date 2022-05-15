@@ -7,12 +7,7 @@ import KrLoading from '../common/KrLoading'
 
 const { Meta } = Card
 
-const JobList = ({
-  from,
-  search = '',
-  categoryId = '',
-  firmid = '-99',
-}: any) => {
+const JobList = ({ from, search = '', categoryId = '', firmid = '0' }: any) => {
   const [loading, setLoading] = useState(true)
   const [jobList, setJobList] = useState([])
   const [params, setParams] = useState<{ [key: string]: any }>()
@@ -20,7 +15,6 @@ const JobList = ({
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
   const [totalItems, setTotalItems] = useState(0)
-  console.log('firmid:', firmid)
   const itemRender = (current: number, type: string, originalElement: any) => {
     if (type === 'prev') {
       return <a>上一页</a>
@@ -50,8 +44,7 @@ const JobList = ({
   }, [search, categoryId, firmid])
 
   useEffect(() => {
-    if (params) {
-      console.log('vovo')
+    if (params && params.firmId != '0') {
       setLoading(true)
       setPageSize(params.pageSize)
       getJobList(params)
@@ -79,7 +72,7 @@ const JobList = ({
 
   const jobLists =
     totalItems > 0 ? (
-      jobList.map((item) => <JobCard item={item} />)
+      jobList.map((item) => <JobCard key={item.id} item={item} />)
     ) : (
       <Col
         xs={{ span: 24 }}

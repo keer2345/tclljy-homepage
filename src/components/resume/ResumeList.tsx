@@ -95,7 +95,7 @@ const ResumeList = ({
 
   const resumeLists =
     totalItems > 0 ? (
-      resumeList.map((item) => <ResumeCard item={item} />)
+      resumeList.map((item) => <ResumeCard key={item.id} item={item} />)
     ) : (
       <Col
         xs={{ span: 24 }}
