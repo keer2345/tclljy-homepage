@@ -1,7 +1,7 @@
 import KrCarouselImage from '@/components/KrCarouselImage'
 import React, { useEffect, useState } from 'react'
 import ProCard from '@ant-design/pro-card'
-import { Avatar, Image } from 'antd'
+import { Avatar, Image, message } from 'antd'
 import { Link, history } from 'umi'
 import {
   HomeOutlined,
@@ -13,9 +13,12 @@ import {
   UserOutlined,
   ColumnHeightOutlined,
 } from '@ant-design/icons'
+import { getUser } from '@/components/common/Common'
+import FormMessage from '@/components/common/FormMessage'
 
 const Account = () => {
   const [userInfo, setUserInfo] = useState(0)
+  const [error, setError] = useState()
 
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
@@ -24,6 +27,10 @@ const Account = () => {
       const { redirect } = query as { redirect: string }
       history.push(redirect || '/')
       return
+    } else {
+      getUser().then((res) => {
+        setUserInfo(res)
+      })
     }
   }, [])
 
@@ -33,6 +40,14 @@ const Account = () => {
 
   const cardClick = (route: string) => {
     history.push(route)
+  }
+
+  const cardClick2 = (route: string) => {
+    if (userInfo.level == '1' || userInfo.firm == '0') {
+      message.error('您还没有入驻企业，或还未审核通过，不能操作该功能！')
+    } else {
+      history.push(route)
+    }
   }
 
   return (
@@ -70,21 +85,43 @@ const Account = () => {
           headerBordered
         >
           <>
-            {userInfo.level && userInfo.level >= 2 ? (
-              <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
-                <ProCard layout="center" bordered hoverable>
-                  我的企业
+            {userInfo.firm && userInfo.firm >= 1 ? (
+              <>
+                <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
+                  <ProCard
+                    layout="center"
+                    bordered
+                    hoverable
+                    onClick={() => cardClick('/user/company')}
+                  >
+                    我的企业
+                  </ProCard>
+                  <ProCard
+                    layout="center"
+                    bordered
+                    hoverable
+                    onClick={() => cardClick2('/user/job')}
+                  >
+                    我的职位
+                  </ProCard>
+                  <ProCard
+                    layout="center"
+                    bordered
+                    hoverable
+                    onClick={() => cardClick2('/user/sendResume')}
+                  >
+                    投递给我的简历
+                  </ProCard>
+                  <ProCard
+                    layout="center"
+                    bordered
+                    hoverable
+                    onClick={() => cardClick2('/user/favResume')}
+                  >
+                    我收藏的简历
+                  </ProCard>
                 </ProCard>
-                <ProCard layout="center" bordered hoverable>
-                  我的职位
-                </ProCard>
-                <ProCard layout="center" bordered hoverable>
-                  投递给我的简历
-                </ProCard>
-                <ProCard layout="center" bordered hoverable>
-                  我收藏的简历
-                </ProCard>
-              </ProCard>
+              </>
             ) : (
               <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
                 <ProCard
@@ -98,6 +135,7 @@ const Account = () => {
                   layout="center"
                   bordered
                   hoverable
+                  onClick={() => cardClick('/user/company')}
                 >
                   企业入驻
                 </ProCard>
