@@ -79,7 +79,7 @@ const ResumeInfo = ({
       bordered={false}
     >
       {favResumeCard()}
-      {(userinfo.resume == resume.id || from == 'audit') && (
+      {(from == 'admin' || from == 'audit') && (
         <Card size="small" bordered={false} title="审核信息" type="inner">
           <Row gutter={[6, 6]}>
             <Col xs={{ span: 24 }} sm={{ span: 12 }}>

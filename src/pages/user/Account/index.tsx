@@ -17,8 +17,7 @@ import { getUser } from '@/components/common/Common'
 import FormMessage from '@/components/common/FormMessage'
 
 const Account = () => {
-  const [userInfo, setUserInfo] = useState(0)
-  const [error, setError] = useState()
+  const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {

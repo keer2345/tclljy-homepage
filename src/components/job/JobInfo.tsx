@@ -123,7 +123,7 @@ const JobInfo = ({
           已认证
         </Tag>
       </Card>
-      {(userinfo.firm == job.firm.id || from == 'audit') && (
+      {(from == 'admin' || from == 'audit') && (
         <Card size="small" bordered={false} title="审核信息" type="inner">
           <Row gutter={[6, 6]}>
             <Col xs={{ span: 24 }} sm={{ span: 12 }}>

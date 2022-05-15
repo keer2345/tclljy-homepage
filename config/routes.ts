@@ -13,6 +13,8 @@ export default [
       { path: '/user/account', component: '@/pages/user/Account' },
       { path: '/user/setting', component: '@/pages/user/Setting' },
 
+      { path: '/user/company', component: '@/pages/user/MyFirm' },
+
       { path: '/job', component: '@/pages/job/All' },
       { path: '/job/info/:id', component: '@/pages/job/Info/index' },
 
