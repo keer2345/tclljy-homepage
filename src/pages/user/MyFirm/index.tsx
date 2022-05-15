@@ -21,6 +21,9 @@ const MyFirm = () => {
   const [tag, setTag] = useState(1)
   const [editTitle, setEditTitle] = useState('')
   const [firmLoading, setFirmLoading] = useState(true)
+  const [firmNature, setFirmNature] = useState({})
+  const [firmScale, setFirmScale] = useState({})
+  const [firmIndustry, setFirmIndustry] = useState({})
 
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -73,24 +76,45 @@ const MyFirm = () => {
 
   const getFirmNature = async () => {
     try {
-      const resNature = await fetchFirmNature({ enable: 1 })
-      console.log('nature', resNature.data)
+      const res = await fetchFirmNature({ enable: 1 })
+      if (res.success) {
+        const result = res.data
+        let array = []
+        result.map((item) => {
+          array.push({ value: item.id, label: item.name })
+        })
+        setFirmNature(array)
+      }
     } catch (error) {
       message.error('加载企业性质失败')
     }
   }
   const getFirmScale = async () => {
     try {
-      const resNature = await fetchFirmScale({ enable: 1 })
-      console.log('sacale', resNature.data)
+      const res = await fetchFirmScale({ enable: 1 })
+      if (res.success) {
+        const result = res.data
+        let array = []
+        result.map((item) => {
+          array.push({ value: item.id, label: item.name })
+        })
+        setFirmScale(array)
+      }
     } catch (error) {
       message.error('加载企业性质失败')
     }
   }
   const getFirmIndustry = async () => {
     try {
-      const resNature = await fetchFirmIndustry({ enable: 1 })
-      console.log('industry', resNature.data)
+      const res = await fetchFirmIndustry({ enable: 1 })
+      if (res.success) {
+        const result = res.data
+        let array = []
+        result.map((item) => {
+          array.push({ value: item.id, label: item.name })
+        })
+        setFirmIndustry(array)
+      }
     } catch (error) {
       message.error('加载企业性质失败')
     }
@@ -176,7 +200,13 @@ const MyFirm = () => {
         <Row>
           <Col span={24}>
             <Card title={editTitle}>
-              <FirmForm formItemLayout={formItemLayout} firm={firm} />
+              <FirmForm
+                formItemLayout={formItemLayout}
+                firm={firm}
+                firmNature={firmNature}
+                firmScale={firmScale}
+                firmIndustry={firmIndustry}
+              />
             </Card>
           </Col>
         </Row>
