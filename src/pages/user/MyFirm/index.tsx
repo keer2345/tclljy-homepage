@@ -32,7 +32,7 @@ const MyFirm = () => {
         }
       })
     }
-  }, [])
+  }, [tag])
 
   const getFirm = async (userid: string, firmid: string) => {
     try {
@@ -119,7 +119,8 @@ const MyFirm = () => {
           <FirmInfo firm={firm} userinfo={userinfo} from="admin" />
         </Col>
       )}
-      {tag == 2 && <Card title="编辑企业"></Card>}
+      {tag == 2 && userinfo.firm > '0' && <Card title="添加企业"></Card>}
+      {tag == 2 && userinfo.firm == '0' && <Card title="编辑企业"></Card>}
     </>
   )
 }
