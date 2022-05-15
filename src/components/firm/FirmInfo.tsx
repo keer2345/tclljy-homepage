@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { message, Tag, Card, Row, Col, Button } from 'antd'
+import { message, Image, Tag, Card, Row, Col, Button } from 'antd'
 import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
 import { replaceEnter } from '../common/Common'
 
@@ -124,7 +124,7 @@ const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
 
       <Card size="small" bordered={false} title="企业信息" type="inner">
         <Row gutter={[6, 6]}>
-          {(userinfo.firm == firm.id || from == 'audit') && (
+          {(from == 'admin' || from == 'audit') && (
             <Col span={24}>
               <Row>
                 <Col>
@@ -158,6 +158,24 @@ const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
               <Col>{firm.industry.name}</Col>
             </Row>
           </Col>
+          {(from == 'admin' || from == 'audit') && (
+            <>
+              <Col span={24}>
+                <Tag color="cyan">营业执照照片</Tag>
+              </Col>
+              <Col span={24}>
+                {firm.codeImage && (
+                  <Image
+                    width={200}
+                    src={
+                      'http://www.tclljy.com/api/file/images/' + firm.codeImage
+                    }
+                  />
+                )}
+                {!firm.codeImage && '（未上传营业执照照片）'}
+              </Col>
+            </>
+          )}
         </Row>
       </Card>
 
