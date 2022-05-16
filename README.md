@@ -3,6 +3,8 @@
 ## Getting Started
 - [umijs+dva](https://chengsong.info/2021/11/19/umijs+dva%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/)
 
+- [Ant Design4.x rule验证规则的两种写法（函数与正则表达式）](https://blog.csdn.net/weixin_43207103/article/details/108434242)
+
 ### Dva
 - [12 步 30 分钟，完成用户管理的 CURD 应用](https://github.com/sorrycc/blog/issues/18)
 

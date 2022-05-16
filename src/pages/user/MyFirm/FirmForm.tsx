@@ -3,7 +3,10 @@ import ProForm, {
   ProFormText,
   ProFormRadio,
   ProFormSelect,
+  ProFormTextArea,
 } from '@ant-design/pro-form'
+import { CheckOutlined } from '@ant-design/icons'
+import { checkTel } from '@/components/common/CheckRules'
 
 const FirmForm = ({
   formItemLayout,
@@ -21,6 +24,7 @@ const FirmForm = ({
       industry: { id: values.firmIndustry },
     })
   }
+
   return (
     <ProForm
       {...formItemLayout}
@@ -36,10 +40,9 @@ const FirmForm = ({
       }}
     >
       <ProFormText
-        width="md"
+        width="lg"
         name="name"
         label="企业名称"
-        tooltip="企业名称不能超过30个字"
         placeholder="请输入企业名称"
         rules={[
           {
@@ -51,22 +54,83 @@ const FirmForm = ({
         ]}
       />
       <ProFormSelect
-        width="md"
+        width="lg"
         label="企业性质"
         name="firmNature"
         options={firmNature}
       />
       <ProFormSelect
-        width="md"
+        width="lg"
         label="企业规模"
         name="firmScale"
         options={firmScale}
       />
       <ProFormSelect
-        width="md"
+        width="lg"
         label="所属行业"
         name="firmIndustry"
         options={firmIndustry}
+      />
+      <ProFormText
+        width="lg"
+        name="code"
+        label="信用代码"
+        placeholder="请输入统一社会信用代码"
+        rules={[
+          {
+            required: true,
+            min: 15,
+            max: 18,
+            message: '统一信用代码为15到18位！',
+          },
+        ]}
+      />
+      <ProFormTextArea
+        width="lg"
+        name="remark"
+        label="企业介绍"
+        rules={[{ required: true, message: '企业介绍不能为空！' }]}
+      />
+      <ProFormText
+        width="lg"
+        name="contactPerson"
+        label="联系人"
+        placeholder="请输入联系人"
+        rules={[
+          {
+            required: true,
+            message: '请输入联系人！',
+          },
+          {
+            max: 10,
+            message: '联系人不能超过10个字！',
+          },
+        ]}
+      />
+      <ProFormText
+        width="lg"
+        name="contactTel"
+        label="联系电话"
+        placeholder="请输入联系电话"
+        rules={[
+          {
+            required: true,
+            message: '请输入正确的电话号码！',
+          },
+          {
+            min: 7,
+            message: '电话号码需大于 7 位！',
+          },
+          {
+            validator: checkTel,
+          },
+        ]}
+      />
+      <ProFormText
+        width="lg"
+        name="address"
+        label="详细地址"
+        placeholder="请输入详细地址"
       />
     </ProForm>
   )

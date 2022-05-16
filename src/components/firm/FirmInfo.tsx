@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { message, Image, Tag, Card, Row, Col, Button } from 'antd'
-import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
 import { replaceEnter } from '../common/Common'
 
-const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
+const FirmInfo = ({ firm, userinfo, from = 'list' }) => {
   useEffect(() => {
     replaceEnter(firm.remark, '#remark')
   }, [])
@@ -82,14 +81,7 @@ const FirmInfo = ({ firm, userinfo, from = 'list', seeJobs = { seeJobs } }) => {
               )}
               {userinfo.firm != firm.id && from != 'audit' && (
                 <Col>
-                  <Button
-                    type="link"
-                    size="small"
-                    icon={<SendOutlined />}
-                    onClick={seeJobs}
-                  >
-                    可在该启发发布的职位详情中查看
-                  </Button>
+                  <a href="#jobs">可在该启发发布的职位详情中查看</a>
                 </Col>
               )}
             </Row>

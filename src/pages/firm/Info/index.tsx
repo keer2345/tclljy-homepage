@@ -57,10 +57,6 @@ const Info = ({ match }) => {
     }
   }
 
-  const seeJobs = () => {
-    history.push('#jobs')
-  }
-
   return (
     <>
       <Row>&nbsp;</Row>
@@ -90,12 +86,7 @@ const Info = ({ match }) => {
         )}
         {!firmLoading && (
           <Col span={24}>
-            <FirmInfo
-              firm={firm}
-              userinfo={userinfo}
-              from="list"
-              seeJobs={seeJobs}
-            />
+            <FirmInfo firm={firm} userinfo={userinfo} from="list" />
           </Col>
         )}
       </Row>
@@ -105,7 +96,9 @@ const Info = ({ match }) => {
       <Row>
         <Col span={24}>
           <Typography>
-            <Typography.Title level={4}>该企业发布的职位：</Typography.Title>
+            <Typography.Title level={4}>
+              <p id="jobs">该企业发布的职位：</p>
+            </Typography.Title>
           </Typography>
         </Col>
         <Col span={24}>
