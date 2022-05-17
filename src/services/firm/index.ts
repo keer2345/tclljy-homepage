@@ -14,27 +14,3 @@ export async function fetchFirm(userid: string, firmid: string) {
     method: 'GET',
   })
 }
-
-// 获取企业性质
-export async function fetchFirmNature(params?: { [key: string]: any }) {
-  return request<API.RespResult>('/api/firmNature', {
-    method: 'GET',
-    params,
-  })
-}
-
-// 获取企业规模
-export async function fetchFirmScale(params?: { [key: string]: any }) {
-  return request<API.RespResult>('/api/firmScale', {
-    method: 'GET',
-    params,
-  })
-}
-
-// 获取企业行业
-export async function fetchFirmIndustry(params?: { [key: string]: any }) {
-  return request<API.RespResult>('/api/firmIndustry', {
-    method: 'GET',
-    params,
-  })
-}

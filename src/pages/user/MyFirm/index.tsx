@@ -1,8 +1,11 @@
 import {
+  getArea,
   getArray,
+  getClass,
   getFirmIndustry,
   getFirmNature,
   getFirmScale,
+  getRespToArrary,
   getUser,
 } from '@/components/common/Common'
 import React, { useEffect, useState } from 'react'
@@ -11,12 +14,7 @@ import { Row, Col, Card, message } from 'antd'
 import KrCarouselImage from '@/components/KrCarouselImage'
 import ProCard from '@ant-design/pro-card'
 import './index.css'
-import {
-  fetchFirm,
-  fetchFirmIndustry,
-  fetchFirmNature,
-  fetchFirmScale,
-} from '@/services/firm'
+import { fetchFirm } from '@/services/firm'
 import FirmInfo from '@/components/firm/FirmInfo'
 import ProForm, { ProFormText, ProFormRadio } from '@ant-design/pro-form'
 import FirmForm from './FirmForm'
@@ -30,15 +28,46 @@ const MyFirm = () => {
   const [firmNature, setFirmNature] = useState([])
   const [firmScale, setFirmScale] = useState([])
   const [firmIndustry, setFirmIndustry] = useState([])
+  const [provinces, setProvinces] = useState([])
+  const [cities, setCities] = useState([])
+  const [regions, setRegions] = useState([])
 
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
   }
+
   useEffect(() => {
-    getFirmNature(1).then((res) => setFirmNature(res))
-    getFirmScale(1).then((res) => setFirmScale(res))
-    getFirmIndustry(1).then((res) => setFirmIndustry(res))
+    getRespToArrary('/api/firmNature', '加载企业性质失败', 1, {
+      enable: 1,
+    }).then((res) => setFirmNature(res))
+    getRespToArrary('/api/firmScale', '加载企业规模失败', 1, {
+      enable: 1,
+    }).then((res) => setFirmScale(res))
+    getRespToArrary('/api/firmIndustry', '加载企业所属行业失败', 1, {
+      enable: 1,
+    }).then((res) => setFirmIndustry(res))
+    getRespToArrary('/api/area', '加载地区列表失败', 1, {
+      enable: 1,
+      level: 1,
+      parentId: 0,
+    }).then((res) => setProvinces(res))
+    getUser().then((user) => {
+      if (user.firm > 0) {
+        fetchFirm(user.id, user.firm).then((firm) => {
+          getRespToArrary('/api/area', '加载地区列表失败', 1, {
+            enable: 1,
+            level: 2,
+            parentId: firm.data.province.id,
+          }).then((res) => setCities(res))
+          getRespToArrary('/api/area', '加载地区列表失败', 1, {
+            enable: 1,
+            level: 3,
+            parentId: firm.data.city.id,
+          }).then((res) => setRegions(res))
+        })
+      }
+    })
   }, [])
 
   useEffect(() => {
@@ -166,6 +195,9 @@ const MyFirm = () => {
                 firmNature={firmNature}
                 firmScale={firmScale}
                 firmIndustry={firmIndustry}
+                provinces={provinces}
+                cities={cities}
+                regions={regions}
               />
             </Card>
           </Col>

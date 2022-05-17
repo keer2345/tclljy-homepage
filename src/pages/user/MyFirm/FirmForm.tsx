@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProForm, {
   ProFormText,
   ProFormRadio,
   ProFormSelect,
   ProFormTextArea,
+  ProFormCascader,
 } from '@ant-design/pro-form'
 import { CheckOutlined } from '@ant-design/icons'
 import { checkTel } from '@/components/common/CheckRules'
 import { message, Row, Col, Space } from 'antd'
+import { getRespToArrary } from '@/components/common/Common'
 
 const FirmForm = ({
   formItemLayout,
@@ -15,7 +17,13 @@ const FirmForm = ({
   firmNature,
   firmScale,
   firmIndustry,
+  provinces,
+  cities,
+  regions,
 }) => {
+  const [city, setCity] = useState(cities)
+  const [region, setRegion] = useState(regions)
+
   const handleSubmit = async (values) => {
     console.log('values:', {
       ...firm,
@@ -23,6 +31,7 @@ const FirmForm = ({
       nature: { id: values.firmNature },
       scale: { id: values.firmScale },
       industry: { id: values.firmIndustry },
+      province: { id: values.firmProvince },
     })
   }
 
@@ -35,6 +44,9 @@ const FirmForm = ({
         firmNature: firm.nature.id,
         firmScale: firm.scale.id,
         firmIndustry: firm.industry.id,
+        firmProvince: firm.province.id,
+        firmCity: firm.city.id,
+        firmRegion: firm.region.id,
       }}
       submitter={{
         render: (props, doms) => {
@@ -70,18 +82,21 @@ const FirmForm = ({
         label="企业性质"
         name="firmNature"
         options={firmNature}
+        rules={[{ required: true, message: '请选择企业性质！' }]}
       />
       <ProFormSelect
         width="lg"
         label="企业规模"
         name="firmScale"
         options={firmScale}
+        rules={[{ required: true, message: '请选择企业规模！' }]}
       />
       <ProFormSelect
         width="lg"
         label="所属行业"
         name="firmIndustry"
         options={firmIndustry}
+        rules={[{ required: true, message: '请选择所属行业！' }]}
       />
       <ProFormText
         width="lg"
@@ -97,12 +112,55 @@ const FirmForm = ({
           },
         ]}
       />
+
+      <ProFormSelect
+        width="lg"
+        label="所在省区"
+        name="firmProvince"
+        placeholder="请选择省区"
+        options={provinces}
+        rules={[{ required: true, message: '请选择所属省区！' }]}
+        onChange={(value) => {
+          setCity([])
+          getRespToArrary('/api/area', '加载城市列表失败', 1, {
+            enable: 1,
+            level: 2,
+            parentId: value,
+          }).then((res) => setCity(res))
+        }}
+      />
+
+      <ProFormSelect
+        width="lg"
+        label="所在城市"
+        name="firmCity"
+        placeholder="请选择城市"
+        options={city}
+        rules={[{ required: true, message: '请选择所属城市！' }]}
+        onChange={(value) => {
+          getRespToArrary('/api/area', '加载区县列表失败', 1, {
+            enable: 1,
+            level: 3,
+            parentId: value,
+          }).then((res) => setRegion(res))
+        }}
+      />
+
+      <ProFormSelect
+        width="lg"
+        label="所在区县"
+        name="firmRegion"
+        placeholder="请选择区县"
+        options={region}
+        rules={[{ required: true, message: '请选择所属区县！' }]}
+      />
       <ProFormTextArea
         width="lg"
         name="remark"
         label="企业介绍"
         rules={[{ required: true, message: '企业介绍不能为空！' }]}
       />
+
       <ProFormText
         width="lg"
         name="contactPerson"
@@ -119,6 +177,7 @@ const FirmForm = ({
           },
         ]}
       />
+
       <ProFormText
         width="lg"
         name="contactTel"
