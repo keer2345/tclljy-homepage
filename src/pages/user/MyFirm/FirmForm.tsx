@@ -7,6 +7,7 @@ import ProForm, {
 } from '@ant-design/pro-form'
 import { CheckOutlined } from '@ant-design/icons'
 import { checkTel } from '@/components/common/CheckRules'
+import { message, Row, Col, Space } from 'antd'
 
 const FirmForm = ({
   formItemLayout,
@@ -34,6 +35,17 @@ const FirmForm = ({
         firmNature: firm.nature.id,
         firmScale: firm.scale.id,
         firmIndustry: firm.industry.id,
+      }}
+      submitter={{
+        render: (props, doms) => {
+          return (
+            <Row>
+              <Col span={14} offset={8}>
+                <Space>{doms}</Space>
+              </Col>
+            </Row>
+          )
+        },
       }}
       onFinish={async (values) => {
         await handleSubmit(values)

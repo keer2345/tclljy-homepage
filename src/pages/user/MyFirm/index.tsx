@@ -1,4 +1,10 @@
-import { getUser } from '@/components/common/Common'
+import {
+  getArray,
+  getFirmIndustry,
+  getFirmNature,
+  getFirmScale,
+  getUser,
+} from '@/components/common/Common'
 import React, { useEffect, useState } from 'react'
 import { Link, history } from 'umi'
 import { Row, Col, Card, message } from 'antd'
@@ -21,18 +27,18 @@ const MyFirm = () => {
   const [tag, setTag] = useState(1)
   const [editTitle, setEditTitle] = useState('')
   const [firmLoading, setFirmLoading] = useState(true)
-  const [firmNature, setFirmNature] = useState({})
-  const [firmScale, setFirmScale] = useState({})
-  const [firmIndustry, setFirmIndustry] = useState({})
+  const [firmNature, setFirmNature] = useState([])
+  const [firmScale, setFirmScale] = useState([])
+  const [firmIndustry, setFirmIndustry] = useState([])
 
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
   }
   useEffect(() => {
-    getFirmNature()
-    getFirmScale()
-    getFirmIndustry()
+    getFirmNature(1).then((res) => setFirmNature(res))
+    getFirmScale(1).then((res) => setFirmScale(res))
+    getFirmIndustry(1).then((res) => setFirmIndustry(res))
   }, [])
 
   useEffect(() => {
@@ -71,52 +77,6 @@ const MyFirm = () => {
     } catch (error) {
       setFirmLoading(false)
       message.error(error.data.msg || '加载职位详情失败，服务器连接异常')
-    }
-  }
-
-  const getFirmNature = async () => {
-    try {
-      const res = await fetchFirmNature({ enable: 1 })
-      if (res.success) {
-        const result = res.data
-        let array = []
-        result.map((item) => {
-          array.push({ value: item.id, label: item.name })
-        })
-        setFirmNature(array)
-      }
-    } catch (error) {
-      message.error('加载企业性质失败')
-    }
-  }
-  const getFirmScale = async () => {
-    try {
-      const res = await fetchFirmScale({ enable: 1 })
-      if (res.success) {
-        const result = res.data
-        let array = []
-        result.map((item) => {
-          array.push({ value: item.id, label: item.name })
-        })
-        setFirmScale(array)
-      }
-    } catch (error) {
-      message.error('加载企业性质失败')
-    }
-  }
-  const getFirmIndustry = async () => {
-    try {
-      const res = await fetchFirmIndustry({ enable: 1 })
-      if (res.success) {
-        const result = res.data
-        let array = []
-        result.map((item) => {
-          array.push({ value: item.id, label: item.name })
-        })
-        setFirmIndustry(array)
-      }
-    } catch (error) {
-      message.error('加载企业性质失败')
     }
   }
 
