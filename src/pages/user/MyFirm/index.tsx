@@ -208,6 +208,7 @@ const MyFirm = () => {
                 provinces={provinces}
                 cities={cities}
                 regions={regions}
+                setTag={setTag}
               />
             </Card>
           </Col>

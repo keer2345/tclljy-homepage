@@ -10,6 +10,8 @@ import { CheckOutlined } from '@ant-design/icons'
 import { checkTel } from '@/components/common/CheckRules'
 import { message, Row, Col, Space } from 'antd'
 import { getRespToArrary } from '@/components/common/Common'
+import FormMessage from '@/components/common/FormMessage'
+import { requestPromise } from '@/services/request'
 
 const FirmForm = ({
   formItemLayout,
@@ -20,36 +22,45 @@ const FirmForm = ({
   provinces,
   cities,
   regions,
+  setTag,
 }) => {
   const [firmNew, setFirmNew] = useState(firm)
   const [city, setCity] = useState(cities)
   const [region, setRegion] = useState(regions)
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const [updateState, setUpdateState] = useState<API.RespResult>({})
 
   const handleSubmit = async (values) => {
-    console.log('values:', {
+    const data = {
       ...firmNew,
       ...values,
       nature: { id: values.firmNature },
       scale: { id: values.firmScale },
       industry: { id: values.firmIndustry },
       province: { id: values.firmProvince },
-    })
+      city: { id: values.firmCity },
+      region: { id: values.firmRegion },
+    }
+    console.log('values:', data)
+    setSubmitLoading(true)
+    updateFirm(data)
   }
 
-  const regionComponent = (region) => {
-    console.log('region:')
-    return (
-      <ProFormSelect
-        width="lg"
-        label="所在区县"
-        name="firmRegion"
-        placeholder="请选择区县"
-        options={region}
-        rules={[{ required: true, message: '请选择所属区县！' }]}
-      />
-    )
+  const updateFirm = async (data) => {
+    try {
+      const res = await requestPromise('/api/firm', {}, data, 'POST')
+      if (res.success) {
+        message.success('提交成功！')
+        setTag(1)
+      }
+    } catch (error) {
+      setSubmitLoading(false)
+      message.error(error.data.msg || '操作失败！')
+      setUpdateState(error.data)
+    }
   }
 
+  const { success, msg } = updateState
   return (
     <ProForm
       {...formItemLayout}
@@ -60,8 +71,8 @@ const FirmForm = ({
         firmScale: firmNew.scale.id,
         firmIndustry: firmNew.industry.id,
         firmProvince: firmNew.province.id,
-        // firmCity: firmNew.city.id,
-        // firmRegion: firmNew.region.id,
+        firmCity: firmNew.city.id,
+        firmRegion: firmNew.region.id,
       }}
       submitter={{
         render: (props, doms) => {
@@ -75,9 +86,39 @@ const FirmForm = ({
         },
       }}
       onFinish={async (values) => {
-        await handleSubmit(values)
+        if (!submitLoading) {
+          await handleSubmit(values)
+        }
+      }}
+      onReset={async () => {
+        setFirmNew({ ...firmNew, city: firm.city, region: firm.region })
+        getRespToArrary('/api/area', '加载城市列表失败', 1, {
+          enable: 1,
+          level: 2,
+          parentId: firm.province.id,
+        }).then((res) => {
+          setCity(res)
+        })
+        getRespToArrary('/api/area', '加载城市列表失败', 1, {
+          enable: 1,
+          level: 3,
+          parentId: firm.city.id,
+        }).then((res) => {
+          setRegion(res)
+        })
       }}
     >
+      {!success && msg && (
+        <Row>
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            sm={{ span: 24, offset: 0 }}
+            md={{ span: 10, offset: 6 }}
+          >
+            <FormMessage content={msg || '提交失败！'} />
+          </Col>
+        </Row>
+      )}
       <ProFormText
         width="lg"
         name="name"
@@ -136,7 +177,7 @@ const FirmForm = ({
         options={provinces}
         rules={[{ required: true, message: '请选择所属省区！' }]}
         onChange={(value) => {
-          setFirmNew({ ...firmNew, city: { id: '440100' } })
+          setFirmNew({ ...firmNew, city: { id: '' }, region: { id: '' } })
           getRespToArrary('/api/area', '加载城市列表失败', 1, {
             enable: 1,
             level: 2,
@@ -146,6 +187,7 @@ const FirmForm = ({
       />
 
       <ProFormSelect
+        id="firmCitySelect"
         width="lg"
         label="所在城市"
         name="firmCity"
@@ -162,16 +204,15 @@ const FirmForm = ({
         }}
       />
 
-      {regionComponent(region)}
-
-      {/* <ProFormSelect
+      <ProFormSelect
         width="lg"
         label="所在区县"
         name="firmRegion"
         placeholder="请选择区县"
         options={region}
         rules={[{ required: true, message: '请选择所属区县！' }]}
-      /> */}
+      />
+
       <ProFormTextArea
         width="lg"
         name="remark"

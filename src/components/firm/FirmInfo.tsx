@@ -4,8 +4,9 @@ import { replaceEnter } from '../common/Common'
 
 const FirmInfo = ({ firm, userinfo, from = 'list' }) => {
   useEffect(() => {
+    console.log('remark...')
     replaceEnter(firm.remark, '#remark')
-  }, [])
+  }, [firm])
   return (
     <Card
       size="default"
