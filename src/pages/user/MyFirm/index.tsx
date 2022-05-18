@@ -31,6 +31,7 @@ const MyFirm = () => {
   const [provinces, setProvinces] = useState([])
   const [cities, setCities] = useState([])
   const [regions, setRegions] = useState([])
+  const [areaLoading, setAreaLoading] = useState(true)
 
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -59,12 +60,17 @@ const MyFirm = () => {
             enable: 1,
             level: 2,
             parentId: firm.data.province.id,
-          }).then((res) => setCities(res))
-          getRespToArrary('/api/area', '加载地区列表失败', 1, {
-            enable: 1,
-            level: 3,
-            parentId: firm.data.city.id,
-          }).then((res) => setRegions(res))
+          }).then((res) => {
+            setCities(res)
+            getRespToArrary('/api/area', '加载地区列表失败', 1, {
+              enable: 1,
+              level: 3,
+              parentId: firm.data.city.id,
+            }).then((res) => {
+              setRegions(res)
+              setAreaLoading(false)
+            })
+          })
         })
       }
     })
@@ -162,7 +168,11 @@ const MyFirm = () => {
                 style={{ background: '#5ab5e6' }}
                 hoverable
                 bordered
-                onClick={() => setTag(2)}
+                onClick={() => {
+                  if (!areaLoading) {
+                    setTag(2)
+                  }
+                }}
               >
                 <span className="font-size">编辑企业</span>
               </ProCard>

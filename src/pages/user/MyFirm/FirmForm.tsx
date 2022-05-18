@@ -21,12 +21,13 @@ const FirmForm = ({
   cities,
   regions,
 }) => {
+  const [firmNew, setFirmNew] = useState(firm)
   const [city, setCity] = useState(cities)
   const [region, setRegion] = useState(regions)
 
   const handleSubmit = async (values) => {
     console.log('values:', {
-      ...firm,
+      ...firmNew,
       ...values,
       nature: { id: values.firmNature },
       scale: { id: values.firmScale },
@@ -35,18 +36,32 @@ const FirmForm = ({
     })
   }
 
+  const regionComponent = (region) => {
+    console.log('region:')
+    return (
+      <ProFormSelect
+        width="lg"
+        label="所在区县"
+        name="firmRegion"
+        placeholder="请选择区县"
+        options={region}
+        rules={[{ required: true, message: '请选择所属区县！' }]}
+      />
+    )
+  }
+
   return (
     <ProForm
       {...formItemLayout}
       layout={'horizontal'}
       initialValues={{
-        ...firm,
-        firmNature: firm.nature.id,
-        firmScale: firm.scale.id,
-        firmIndustry: firm.industry.id,
-        firmProvince: firm.province.id,
-        firmCity: firm.city.id,
-        firmRegion: firm.region.id,
+        ...firmNew,
+        firmNature: firmNew.nature.id,
+        firmScale: firmNew.scale.id,
+        firmIndustry: firmNew.industry.id,
+        firmProvince: firmNew.province.id,
+        // firmCity: firmNew.city.id,
+        // firmRegion: firmNew.region.id,
       }}
       submitter={{
         render: (props, doms) => {
@@ -121,7 +136,7 @@ const FirmForm = ({
         options={provinces}
         rules={[{ required: true, message: '请选择所属省区！' }]}
         onChange={(value) => {
-          setCity([])
+          setFirmNew({ ...firmNew, city: { id: '440100' } })
           getRespToArrary('/api/area', '加载城市列表失败', 1, {
             enable: 1,
             level: 2,
@@ -138,6 +153,7 @@ const FirmForm = ({
         options={city}
         rules={[{ required: true, message: '请选择所属城市！' }]}
         onChange={(value) => {
+          setFirmNew({ ...firmNew, region: { id: '' } })
           getRespToArrary('/api/area', '加载区县列表失败', 1, {
             enable: 1,
             level: 3,
@@ -146,14 +162,16 @@ const FirmForm = ({
         }}
       />
 
-      <ProFormSelect
+      {regionComponent(region)}
+
+      {/* <ProFormSelect
         width="lg"
         label="所在区县"
         name="firmRegion"
         placeholder="请选择区县"
         options={region}
         rules={[{ required: true, message: '请选择所属区县！' }]}
-      />
+      /> */}
       <ProFormTextArea
         width="lg"
         name="remark"
