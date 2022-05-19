@@ -39,7 +39,6 @@ const FirmForm = ({
       city: { id: values.firmCity },
       region: { id: values.firmRegion },
     }
-    console.log('values:', data)
     setSubmitLoading(true)
     updateFirm(data)
   }

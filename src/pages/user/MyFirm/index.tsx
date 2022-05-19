@@ -79,7 +79,6 @@ const MyFirm = () => {
       setFirmLoading(true)
       getUser().then((res) => {
         setUserinfo(res)
-        console.log('res.firm:', res.firm)
         if (res.firm > 0) {
           getFirm(res.id, res.firm)
           if (tag == '2') {
