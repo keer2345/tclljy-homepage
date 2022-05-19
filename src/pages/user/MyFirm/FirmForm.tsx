@@ -63,15 +63,19 @@ const FirmForm = ({
     <ProForm
       {...formItemLayout}
       layout={'horizontal'}
-      initialValues={{
-        ...firmNew,
-        firmNature: firmNew.nature.id,
-        firmScale: firmNew.scale.id,
-        firmIndustry: firmNew.industry.id,
-        firmProvince: firmNew.province.id,
-        firmCity: firmNew.city.id,
-        firmRegion: firmNew.region.id,
-      }}
+      initialValues={
+        firm.id
+          ? {
+              ...firmNew,
+              firmNature: firmNew.nature.id,
+              firmScale: firmNew.scale.id,
+              firmIndustry: firmNew.industry.id,
+              firmProvince: firmNew.province.id,
+              firmCity: firmNew.city.id,
+              firmRegion: firmNew.region.id,
+            }
+          : { ...firmNew }
+      }
       submitter={{
         render: (props, doms) => {
           return (
@@ -90,20 +94,22 @@ const FirmForm = ({
       }}
       onReset={async () => {
         setFirmNew({ ...firmNew, city: firm.city, region: firm.region })
-        getRespToArrary('/api/area', '加载城市列表失败', 1, {
-          enable: 1,
-          level: 2,
-          parentId: firm.province.id,
-        }).then((res) => {
-          setCity(res)
-        })
-        getRespToArrary('/api/area', '加载城市列表失败', 1, {
-          enable: 1,
-          level: 3,
-          parentId: firm.city.id,
-        }).then((res) => {
-          setRegion(res)
-        })
+        if (firmNew.id) {
+          getRespToArrary('/api/area', '加载城市列表失败', 1, {
+            enable: 1,
+            level: 2,
+            parentId: firm.province.id,
+          }).then((res) => {
+            setCity(res)
+          })
+          getRespToArrary('/api/area', '加载城市列表失败', 1, {
+            enable: 1,
+            level: 3,
+            parentId: firm.city.id,
+          }).then((res) => {
+            setRegion(res)
+          })
+        }
       }}
     >
       {!success && msg && (
@@ -120,7 +126,7 @@ const FirmForm = ({
       <ProFormText
         width="lg"
         name="name"
-        label="企业名称（修改后需重新审核）"
+        label={firm.id ? '企业名称（修改后需重新审核）' : '企业名称'}
         placeholder="请输入企业名称"
         rules={[
           {
@@ -155,7 +161,7 @@ const FirmForm = ({
       <ProFormText
         width="lg"
         name="code"
-        label="信用代码（修改后需重新审核）"
+        label={firm.id ? '信用代码（修改后需重新审核）' : '信用代码'}
         placeholder="请输入统一社会信用代码"
         rules={[
           {

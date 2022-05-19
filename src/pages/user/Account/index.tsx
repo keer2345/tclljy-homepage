@@ -84,62 +84,40 @@ const Account = () => {
           headerBordered
         >
           <>
-            {userInfo.firm && userInfo.firm >= 1 ? (
-              <>
-                <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
-                  <ProCard
-                    layout="center"
-                    bordered
-                    hoverable
-                    onClick={() => cardClick('/user/company')}
-                  >
-                    我的企业
-                  </ProCard>
-                  <ProCard
-                    layout="center"
-                    bordered
-                    hoverable
-                    onClick={() => cardClick2('/user/job')}
-                  >
-                    我的职位
-                  </ProCard>
-                  <ProCard
-                    layout="center"
-                    bordered
-                    hoverable
-                    onClick={() => cardClick2('/user/sendResume')}
-                  >
-                    投递给我的简历
-                  </ProCard>
-                  <ProCard
-                    layout="center"
-                    bordered
-                    hoverable
-                    onClick={() => cardClick2('/user/favResume')}
-                  >
-                    我收藏的简历
-                  </ProCard>
-                </ProCard>
-              </>
-            ) : (
-              <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
-                <ProCard
-                  colSpan={{
-                    xs: '50px',
-                    sm: '100px',
-                    md: '200px',
-                    lg: '300px',
-                    xl: '400px',
-                  }}
-                  layout="center"
-                  bordered
-                  hoverable
-                  onClick={() => cardClick('/user/company')}
-                >
-                  企业入驻
-                </ProCard>
+            <ProCard style={{ marginTop: 8 }} gutter={8} title="企业服务">
+              <ProCard
+                layout="center"
+                bordered
+                hoverable
+                onClick={() => cardClick('/user/company')}
+              >
+                {userInfo.firm > '0' ? '我的企业' : '企业入驻'}
               </ProCard>
-            )}
+              <ProCard
+                layout="center"
+                bordered
+                hoverable
+                onClick={() => cardClick2('/user/job')}
+              >
+                我的职位
+              </ProCard>
+              <ProCard
+                layout="center"
+                bordered
+                hoverable
+                onClick={() => cardClick2('/user/sendResume')}
+              >
+                投递给我的简历
+              </ProCard>
+              <ProCard
+                layout="center"
+                bordered
+                hoverable
+                onClick={() => cardClick2('/user/favResume')}
+              >
+                我收藏的简历
+              </ProCard>
+            </ProCard>
 
             <ProCard style={{ marginTop: 8 }} gutter={8} title="个人服务">
               <ProCard layout="center" bordered hoverable>

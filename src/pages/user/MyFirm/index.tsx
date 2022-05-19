@@ -1,22 +1,11 @@
-import {
-  getArea,
-  getArray,
-  getClass,
-  getFirmIndustry,
-  getFirmNature,
-  getFirmScale,
-  getRespToArrary,
-  getUser,
-} from '@/components/common/Common'
+import { getRespToArrary, getUser } from '@/components/common/Common'
 import React, { useEffect, useState } from 'react'
 import { Link, history } from 'umi'
 import { Row, Col, Card, message } from 'antd'
-import KrCarouselImage from '@/components/KrCarouselImage'
 import ProCard from '@ant-design/pro-card'
 import './index.css'
 import { fetchFirm } from '@/services/firm'
 import FirmInfo from '@/components/firm/FirmInfo'
-import ProForm, { ProFormText, ProFormRadio } from '@ant-design/pro-form'
 import FirmForm from './FirmForm'
 
 const MyFirm = () => {
@@ -53,6 +42,8 @@ const MyFirm = () => {
       level: 1,
       parentId: 0,
     }).then((res) => setProvinces(res))
+  }, [])
+  useEffect(() => {
     getUser().then((user) => {
       if (user.firm > 0) {
         fetchFirm(user.id, user.firm).then((firm) => {
@@ -74,7 +65,7 @@ const MyFirm = () => {
         })
       }
     })
-  }, [])
+  }, [firm])
 
   useEffect(() => {
     if (!localStorage.getItem('userInfo')) {
@@ -85,8 +76,10 @@ const MyFirm = () => {
       history.push(redirect || '/')
       return
     } else {
+      setFirmLoading(true)
       getUser().then((res) => {
         setUserinfo(res)
+        console.log('res.firm:', res.firm)
         if (res.firm > 0) {
           getFirm(res.id, res.firm)
           if (tag == '2') {
@@ -117,8 +110,6 @@ const MyFirm = () => {
 
   return (
     <>
-      {/* <KrCarouselImage /> */}
-
       <ProCard direction="column" ghost gutter={[0, 8]}>
         <ProCard layout="left" bordered>
           <Link to="/user/account">返回个人主页</Link>
@@ -188,7 +179,7 @@ const MyFirm = () => {
           </Col>
         )}
 
-        {tag == 1 && !firmLoading && (
+        {tag == 1 && userinfo.firm > 0 && !firmLoading && (
           <Col span={24}>
             <FirmInfo firm={firm} userinfo={userinfo} from="admin" />
           </Col>
