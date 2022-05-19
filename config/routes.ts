@@ -14,6 +14,7 @@ export default [
       { path: '/user/setting', component: '@/pages/user/Setting' },
 
       { path: '/user/company', component: '@/pages/user/MyFirm' },
+      { path: '/user/job', component: '@/pages/user/MyJob' },
 
       { path: '/job', component: '@/pages/job/All' },
       { path: '/job/info/:id', component: '@/pages/job/Info/index' },

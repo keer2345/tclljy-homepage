@@ -135,12 +135,12 @@ const Account = () => {
             </ProCard>
 
             <ProCard style={{ marginTop: 8 }} gutter={8} title="其他服务">
-              <ProCard layout="center" bordered hoverable>
+              {/* <ProCard layout="center" bordered hoverable>
                 浏览记录
               </ProCard>
               <ProCard layout="center" bordered hoverable>
                 意见反馈
-              </ProCard>
+              </ProCard> */}
               <ProCard
                 layout="center"
                 bordered
@@ -149,9 +149,9 @@ const Account = () => {
               >
                 账号设置
               </ProCard>
-              <ProCard layout="center" bordered hoverable>
+              {/* <ProCard layout="center" bordered hoverable>
                 后台管理
-              </ProCard>
+              </ProCard> */}
             </ProCard>
           </>
         </ProCard>
