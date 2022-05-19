@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { message, Image, Tag, Card, Row, Col, Button } from 'antd'
+import { message, Image, Tag, Card, Row, Col, Result } from 'antd'
 import { replaceEnter } from '../common/Common'
 
 const FirmInfo = ({ firm, userinfo, from = 'list' }) => {
   useEffect(() => {
-    console.log('remark...')
     replaceEnter(firm.remark, '#remark')
   }, [firm])
   return (
@@ -41,16 +40,42 @@ const FirmInfo = ({ firm, userinfo, from = 'list' }) => {
                 </Row>
               )}
             </Col>
-            {firm.audit == '2' && (
+            {firm.audit != '1' && (
               <Col span={24}>
                 <Row>
                   <Col>
-                    <Tag color="volcano">驳回原因</Tag>
+                    <Tag color="volcano">
+                      {firm.audit == '0' ? '待审原因' : '驳回原因'}
+                    </Tag>
                   </Col>
                   <Col>{firm.auditReason || '无'}</Col>
                 </Row>
               </Col>
             )}
+            <Col span={24}>
+              <Result
+                status={
+                  firm.audit == '1'
+                    ? 'success'
+                    : firm.audit == '0'
+                    ? 'warning'
+                    : 'error'
+                }
+                title={
+                  firm.audit == '1'
+                    ? '审核通过'
+                    : firm.audit == '0'
+                    ? '待审核'
+                    : '审未通过核'
+                }
+                subTitle={
+                  firm.audit != '1'
+                    ? (firm.audit == '0' ? '待审原因：' : '驳回原因：') +
+                      (firm.auditReason || '无')
+                    : ''
+                }
+              />
+            </Col>
           </Row>
         </Card>
       )}

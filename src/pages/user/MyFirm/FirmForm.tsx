@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ProForm, {
   ProFormText,
-  ProFormRadio,
   ProFormSelect,
   ProFormTextArea,
-  ProFormCascader,
 } from '@ant-design/pro-form'
-import { CheckOutlined } from '@ant-design/icons'
 import { checkTel } from '@/components/common/CheckRules'
-import { message, Row, Col, Space } from 'antd'
+import { message, Row, Col, Space, Popconfirm } from 'antd'
 import { getRespToArrary } from '@/components/common/Common'
 import FormMessage from '@/components/common/FormMessage'
 import { requestPromise } from '@/services/request'
@@ -29,6 +26,7 @@ const FirmForm = ({
   const [region, setRegion] = useState(regions)
   const [submitLoading, setSubmitLoading] = useState(false)
   const [updateState, setUpdateState] = useState<API.RespResult>({})
+  const [confirm, setConfirm] = useState(false)
 
   const handleSubmit = async (values) => {
     const data = {
@@ -122,7 +120,7 @@ const FirmForm = ({
       <ProFormText
         width="lg"
         name="name"
-        label="企业名称"
+        label="企业名称（修改后需重新审核）"
         placeholder="请输入企业名称"
         rules={[
           {
@@ -157,7 +155,7 @@ const FirmForm = ({
       <ProFormText
         width="lg"
         name="code"
-        label="信用代码"
+        label="信用代码（修改后需重新审核）"
         placeholder="请输入统一社会信用代码"
         rules={[
           {
