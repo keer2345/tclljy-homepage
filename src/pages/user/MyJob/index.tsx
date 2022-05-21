@@ -15,6 +15,7 @@ const MyJob = () => {
 
   useEffect(() => {
     getUser().then((user) => {
+      setUserinfo(user)
       if (user.firm > 0) {
         fetchFirm(user.id, user.firm).then((res) => {
           setFirm(res.data)
@@ -32,8 +33,10 @@ const MyJob = () => {
         </ProCard>
       </ProCard>
       <Card title={firm.name} extra={<a href="/user/company">企业信息</a>}>
-        {tag == 1 && <JobList userinfo={userinfo} setTag={setTag} />}
-        {tag == 2 && <JobEdit setTag={setTag} edit="add" />}
+        {tag == 1 && !firmLoading && (
+          <JobList userinfo={userinfo} setTag={setTag} />
+        )}
+        {tag == 2 && <JobEdit firm={firm} setTag={setTag} edit="add" />}
       </Card>
     </>
   )

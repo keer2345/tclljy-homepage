@@ -18,20 +18,36 @@ const JobList = ({ userinfo, setTag }) => {
     setParams({
       ...params,
       pageSize: pageSize,
-      enable: 1,
-      audit: 1,
+      // enable: 1,
+      // audit: 1,
       firmId: userinfo.firm,
-    })
-    fetchJobList(params).then((res) => {
-      setJobLoading(false)
-      setJobList(res.data.contents)
-      console.log('res:', res.data)
-      setCurrentPage(res.data.currentPage + 1)
-      setTotalPages(res.data.totalPages)
-      setTotalItems(res.data.totalItems)
     })
   }, [])
 
+  useEffect(() => {
+    if (params && params.firmId) {
+      console.log('get job')
+      setJobLoading(true)
+      setPageSize(params.pageSize)
+      getJobList(params)
+    }
+  }, [params])
+
+  const getJobList = async (params: { [key: string]: any }) => {
+    try {
+      const res = await fetchJobList(params)
+      console.log(res.data.contents)
+      if (res.success) {
+        setJobLoading(false)
+        setJobList(res.data.contents)
+        setCurrentPage(res.data.currentPage + 1)
+        setTotalPages(res.data.totalPages)
+        setTotalItems(res.data.totalItems)
+      }
+    } catch (error) {
+      message.error('加载职位信息失败，服务器连接异常')
+    }
+  }
   type JobItem = {
     id: number
     name: string
