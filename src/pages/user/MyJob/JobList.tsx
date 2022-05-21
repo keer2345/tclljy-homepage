@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { fetchJobList } from '@/services/job'
-import { Button } from 'antd'
-import { history } from 'umi'
+import { Button, message } from 'antd'
+import { history, request } from 'umi'
 import ProList from '@ant-design/pro-list'
+import { requestPromise } from '@/services/request'
+import ProTable from '@ant-design/pro-table'
 
 const JobList = ({ userinfo, setTag }) => {
   const [jobList, setJobList] = useState([])
   const [jobLoading, setJobLoading] = useState(true)
 
   const [params, setParams] = useState<{ [key: string]: any }>()
-  const [pageSize, setPageSize] = useState(20)
-  const [currentPage, setCurrentPage] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-  const [totalItems, setTotalItems] = useState(0)
+  const [pageSize, setPageSize] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(0)
+  // const [totalPages, setTotalPages] = useState(0)
+  // const [totalItems, setTotalItems] = useState(0)
 
   useEffect(() => {
     setParams({
@@ -24,30 +26,26 @@ const JobList = ({ userinfo, setTag }) => {
     })
   }, [])
 
-  useEffect(() => {
-    if (params && params.firmId) {
-      console.log('get job')
-      setJobLoading(true)
-      setPageSize(params.pageSize)
-      getJobList(params)
-    }
-  }, [params])
+  // useEffect(() => {
+  //   if (param && param.firmId) {
+  //     console.log('get job')
+  //     setJobLoading(true)
+  //     requestPromise('/api/job', param)
+  //       .then((res) => {
+  //         setJobList(res.data.contents)
+  //         setCurrentPage(res.data.currentPage + 1)
+  //         setTotalPages(res.data.totalPages)
+  //         setTotalItems(res.data.totalItems)
+  //       })
+  //       .catch((error) => {
+  //         message.error(error.data.error)
+  //       })
+  //       .finally(() => {
+  //         setJobLoading(false)
+  //       })
+  //   }
+  // }, [param])
 
-  const getJobList = async (params: { [key: string]: any }) => {
-    try {
-      const res = await fetchJobList(params)
-      console.log(res.data.contents)
-      if (res.success) {
-        setJobLoading(false)
-        setJobList(res.data.contents)
-        setCurrentPage(res.data.currentPage + 1)
-        setTotalPages(res.data.totalPages)
-        setTotalItems(res.data.totalItems)
-      }
-    } catch (error) {
-      message.error('加载职位信息失败，服务器连接异常')
-    }
-  }
   type JobItem = {
     id: number
     name: string
@@ -55,10 +53,27 @@ const JobList = ({ userinfo, setTag }) => {
     minSalary: string
     maxSalary: string
   }
+  type GithubIssueItem = {
+    url: string
+    id: number
+    number: number
+    title: string
+    labels: {
+      name: string
+      color: string
+    }[]
+    state: string
+    comments: number
+    created_at: string
+    updated_at: string
+    closed_at?: string
+  }
   return (
-    <ProList<JobItem>
+    // <ProList<GithubIssueItem>
+    <ProTable<JobItem, API.PageParams>
       headerTitle="企业职位列表"
-      loading={jobLoading}
+      rowKey="id"
+      // loading={jobLoading}
       toolBarRender={() => {
         return [
           <Button
@@ -71,6 +86,33 @@ const JobList = ({ userinfo, setTag }) => {
             新建职位
           </Button>,
         ]
+      }}
+      search={{
+        defaultCollapsed: false,
+      }}
+      params={params}
+      request={async (params = { ...params, pageSize, current }) => {
+        const msg = await requestPromise('/api/job', {
+          ...params,
+          currentPage: params.current - 1,
+        })
+
+        // console.log('msg:', msg.data.contents)
+        return {
+          data: msg.data.contents,
+          success: msg.success,
+          total: msg.data.totalItems,
+        }
+      }}
+      pagination={{
+        pageSize: 5,
+      }}
+      showActions="hover"
+      metas={{
+        title: {
+          dataIndex: 'name',
+          title: '职位名称',
+        },
       }}
     />
   )

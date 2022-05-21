@@ -6,4 +6,9 @@ declare namespace API {
     requestId?: string
     success?: boolean
   }
+  type PageParams = {
+    current?: number
+    // currentPage?: number;
+    pageSize?: number
+  }
 }
