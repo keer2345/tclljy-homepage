@@ -31,6 +31,8 @@ const JobEdit = ({ setTag, edit }) => {
     wrapperCol: { span: 16 },
   }
   const [formLayoutType, setFormLayoutType] = useState(LAYOUT_TYPE_HORIZONTAL)
+  const [otherJobDisable, setOtherJobDisable] = useState(true)
+  const [sfmy, setSfmy] = useState(false)
 
   useEffect(() => {
     getRespToArrary('/api/jobCategory', '加载工作类别失败', 1, {
@@ -146,14 +148,23 @@ const JobEdit = ({ setTag, edit }) => {
           name="category"
           options={category}
           rules={[{ required: true, message: '请选择职位类别！' }]}
+          onChange={(value, item) => {
+            if (item.label == '其他') {
+              setOtherJobDisable(false)
+            } else {
+              setOtherJobDisable(true)
+            }
+          }}
         />
 
         <ProFormText
           colProps={{ md: 10 }}
           width="lg"
           name="otherJob"
-          label="&nbsp;&nbsp;&nbsp;其他类别"
+          label="其他类别"
+          tooltip="职位类别选择其他时，才可输入"
           placeholder="可输入自定义的职位类别"
+          disabled={otherJobDisable}
         />
 
         <ProFormTextArea
@@ -188,10 +199,6 @@ const JobEdit = ({ setTag, edit }) => {
           label="专业要求"
           placeholder="请输入专业要求"
         />
-        {/* <Form.Item name="mianyi" label="薪资是否面议" valuePropName="checked">
-          <Switch  />
-        </Form.Item> */}
-
         <ProFormSelect
           colProps={{ md: 8 }}
           width="lg"
@@ -199,6 +206,13 @@ const JobEdit = ({ setTag, edit }) => {
           name="jobMianyi"
           options={yesOrNo}
           rules={[{ required: true, message: '请选择是否面议！' }]}
+          onChange={(value, item) => {
+            if (item.label == '是') {
+              setSfmy(true)
+            } else {
+              setSfmy(false)
+            }
+          }}
         />
         <ProFormDigit
           colProps={{ md: 8 }}
@@ -206,6 +220,8 @@ const JobEdit = ({ setTag, edit }) => {
           name="minSalary"
           label="最小薪资"
           placeholder="请输入最小薪资"
+          disabled={sfmy}
+          rules={[{ required: !sfmy, message: '请输入最小薪资' }]}
         />
         <ProFormDigit
           colProps={{ md: 8 }}
@@ -213,6 +229,8 @@ const JobEdit = ({ setTag, edit }) => {
           name="maxSalary"
           label="最大薪资"
           placeholder="请输入最大薪资"
+          disabled={sfmy}
+          rules={[{ required: !sfmy, message: '请输入最大薪资' }]}
         />
 
         <ProFormText
@@ -254,7 +272,7 @@ const JobEdit = ({ setTag, edit }) => {
           placeholder="请输入工作时间"
           rules={[{ required: true, message: '请输入工作时间' }]}
         />
-        <ProFormText
+        <ProFormDigit
           colProps={{ md: 6 }}
           width="lg"
           name="workHours"
