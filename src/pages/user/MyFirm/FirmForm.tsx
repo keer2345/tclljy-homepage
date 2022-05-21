@@ -5,7 +5,7 @@ import ProForm, {
   ProFormTextArea,
 } from '@ant-design/pro-form'
 import { checkTel } from '@/components/common/CheckRules'
-import { message, Row, Col, Space, Popconfirm } from 'antd'
+import { message, Row, Col, Space } from 'antd'
 import { getRespToArrary } from '@/components/common/Common'
 import FormMessage from '@/components/common/FormMessage'
 import { requestPromise } from '@/services/request'
@@ -26,7 +26,6 @@ const FirmForm = ({
   const [region, setRegion] = useState(regions)
   const [submitLoading, setSubmitLoading] = useState(false)
   const [updateState, setUpdateState] = useState<API.RespResult>({})
-  const [confirm, setConfirm] = useState(false)
 
   const handleSubmit = async (values) => {
     const data = {

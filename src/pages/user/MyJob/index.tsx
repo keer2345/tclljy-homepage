@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import ProCard from '@ant-design/pro-card'
-import { Row, Col, Card, message } from 'antd'
-import { Link, history } from 'umi'
+import { Card } from 'antd'
+import { Link } from 'umi'
 import { getUser } from '@/components/common/Common'
 import { fetchFirm } from '@/services/firm'
+import JobList from './JobList'
+import JobEdit from './JobForm'
 
 const MyJob = () => {
   const [userinfo, setUserinfo] = useState({})
   const [firm, setFirm] = useState({})
   const [firmLoading, setFirmLoading] = useState(true)
-  const [jobLoading, setJobLoading] = useState(true)
+  const [tag, setTag] = useState(1)
 
   useEffect(() => {
     getUser().then((user) => {
@@ -29,10 +31,10 @@ const MyJob = () => {
           <Link to="/user/account">返回个人主页</Link>
         </ProCard>
       </ProCard>
-      <Card
-        title="企业的职位列表"
-        extra={<a href="/user/company">{firm.name}</a>}
-      ></Card>
+      <Card title={firm.name} extra={<a href="/user/company">企业信息</a>}>
+        {tag == 1 && <JobList userinfo={userinfo} setTag={setTag} />}
+        {tag == 2 && <JobEdit setTag={setTag} edit="add" />}
+      </Card>
     </>
   )
 }

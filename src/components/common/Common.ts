@@ -29,7 +29,7 @@ export const replaceEnter = (str: string, innerId) => {
 export const getRespToArrary = async (
   url: string,
   msg: string,
-  convert: number, //是否转换
+  convert: number, // 1-转换
   params?: { [key: string]: any },
 ) => {
   try {
