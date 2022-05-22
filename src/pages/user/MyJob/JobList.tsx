@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { fetchJobList } from '@/services/job'
 import { Button, message } from 'antd'
 import { history, request } from 'umi'
 import ProList from '@ant-design/pro-list'
 import { requestPromise } from '@/services/request'
-import ProTable from '@ant-design/pro-table'
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
+import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons'
 
 const JobList = ({ userinfo, setTag }) => {
   const [jobList, setJobList] = useState([])
@@ -53,42 +54,60 @@ const JobList = ({ userinfo, setTag }) => {
     minSalary: string
     maxSalary: string
   }
-  type GithubIssueItem = {
-    url: string
-    id: number
-    number: number
-    title: string
-    labels: {
-      name: string
-      color: string
-    }[]
-    state: string
-    comments: number
-    created_at: string
-    updated_at: string
-    closed_at?: string
-  }
+
+  const columns: ProColumns<JobItem>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInTable: true,
+    },
+    {
+      title: '职位名称',
+      dataIndex: 'name',
+      valueType: 'text',
+    },
+    {
+      title: '状态',
+      dataIndex: 'enable',
+      valueType: 'text',
+    },
+    {
+      title: '审核',
+      dataIndex: 'audit',
+      valueType: 'text',
+    },
+    { title: '操作', valueType: 'option', key: 'option' },
+  ]
+
+  const actionRef = useRef<ActionType>()
+
   return (
     // <ProList<GithubIssueItem>
     <ProTable<JobItem, API.PageParams>
       headerTitle="企业职位列表"
       rowKey="id"
-      // loading={jobLoading}
-      toolBarRender={() => {
-        return [
-          <Button
-            key="3"
-            type="primary"
-            onClick={() => {
-              setTag(2)
-            }}
-          >
-            新建职位
-          </Button>,
-        ]
-      }}
+      options={false}
+      toolBarRender={() => [
+        <Button
+          key="button"
+          icon={<PlusOutlined />}
+          type="primary"
+          onClick={() => {
+            setTag(2)
+          }}
+        >
+          新建职位
+        </Button>,
+      ]}
+      columns={columns}
+      actionRef={actionRef}
+      cardBordered={false}
+      dateFormatter="string"
       search={{
         defaultCollapsed: false,
+        // labelWidth: 'auto',
       }}
       params={params}
       request={async (params = { ...params, pageSize, current }) => {
@@ -107,7 +126,8 @@ const JobList = ({ userinfo, setTag }) => {
       pagination={{
         pageSize: 5,
       }}
-      showActions="hover"
+      // showActions="hover"
+
       metas={{
         title: {
           dataIndex: 'name',
