@@ -14,39 +14,14 @@ const JobList = ({ userinfo, setTag }) => {
 
   const [params, setParams] = useState<{ [key: string]: any }>()
   const [pageSize, setPageSize] = useState(10)
-  // const [currentPage, setCurrentPage] = useState(0)
-  // const [totalPages, setTotalPages] = useState(0)
-  // const [totalItems, setTotalItems] = useState(0)
 
   useEffect(() => {
     setParams({
       ...params,
       pageSize: pageSize,
-      // enable: 1,
-      // audit: 1,
       firmId: userinfo.firm,
     })
   }, [])
-
-  // useEffect(() => {
-  //   if (param && param.firmId) {
-  //     console.log('get job')
-  //     setJobLoading(true)
-  //     requestPromise('/api/job', param)
-  //       .then((res) => {
-  //         setJobList(res.data.contents)
-  //         setCurrentPage(res.data.currentPage + 1)
-  //         setTotalPages(res.data.totalPages)
-  //         setTotalItems(res.data.totalItems)
-  //       })
-  //       .catch((error) => {
-  //         message.error(error.data.error)
-  //       })
-  //       .finally(() => {
-  //         setJobLoading(false)
-  //       })
-  //   }
-  // }, [param])
 
   type JobItem = {
     id: number
@@ -139,7 +114,6 @@ const JobList = ({ userinfo, setTag }) => {
   const actionRef = useRef<ActionType>()
 
   return (
-    // <ProList<GithubIssueItem>
     <ProTable<JobItem, API.PageParams>
       headerTitle="企业职位列表"
       rowKey="id"
@@ -162,7 +136,6 @@ const JobList = ({ userinfo, setTag }) => {
       dateFormatter="string"
       search={{
         defaultCollapsed: false,
-        // labelWidth: 'auto',
       }}
       params={params}
       request={async (params = { ...params, pageSize, current }) => {
@@ -171,7 +144,6 @@ const JobList = ({ userinfo, setTag }) => {
           currentPage: params.current - 1,
         })
 
-        // console.log('msg:', msg.data.contents)
         return {
           data: msg.data.contents,
           success: msg.success,
@@ -180,14 +152,6 @@ const JobList = ({ userinfo, setTag }) => {
       }}
       pagination={{
         pageSize: 10,
-      }}
-      // showActions="hover"
-
-      metas={{
-        title: {
-          dataIndex: 'name',
-          title: '职位名称',
-        },
       }}
     />
   )
