@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { message, Tag, Card, Row, Col, Button } from 'antd'
+import { message, Tag, Card, Row, Col, Button, Result } from 'antd'
 import { CrownOutlined, SendOutlined, StarOutlined } from '@ant-design/icons'
 import FormMessage from '../common/FormMessage'
 import { history } from 'umi'
@@ -123,7 +123,7 @@ const JobInfo = ({
           已认证
         </Tag>
       </Card>
-      {(from == 'admin' || from == 'audit') && (
+      {(from == 'admin' || from == 'audit' || userinfo.firm == job.firm.id) && (
         <Card size="small" bordered={false} title="审核信息" type="inner">
           <Row gutter={[6, 6]}>
             <Col xs={{ span: 24 }} sm={{ span: 12 }}>
@@ -148,16 +148,53 @@ const JobInfo = ({
                 </Row>
               )}
             </Col>
-            {job.audit == '2' && (
-              <Col span={24}>
+            <Col xs={{ span: 24 }} sm={{ span: 12 }}>
+              <Row>
+                <Col>
+                  <Tag color="volcano">是否在招</Tag>
+                </Col>
+                <Col>
+                  {job.enable == '1' && <Tag color="#00BFFF">在招</Tag>}
+                  {job.enable == '0' && <Tag color="#FF0000">停招</Tag>}
+                </Col>
+              </Row>
+            </Col>
+            {job.audit != '1' && (
+              <Col xs={{ span: 24 }} sm={{ span: 12 }}>
                 <Row>
                   <Col>
-                    <Tag color="volcano">驳回原因</Tag>
+                    <Tag color="volcano">
+                      {job.audit == '0' ? '待审原因' : '驳回原因'}
+                    </Tag>
                   </Col>
                   <Col>{job.auditReason || '无'}</Col>
                 </Row>
               </Col>
             )}
+            <Col span={24}>
+              <Result
+                status={
+                  job.audit == '1'
+                    ? 'success'
+                    : job.audit == '0'
+                    ? 'warning'
+                    : 'error'
+                }
+                title={
+                  job.audit == '1'
+                    ? '审核通过'
+                    : job.audit == '0'
+                    ? '待审核'
+                    : '审未通过核'
+                }
+                subTitle={
+                  job.audit != '1'
+                    ? (job.audit == '0' ? '待审原因：' : '驳回原因：') +
+                      (job.auditReason || '无')
+                    : ''
+                }
+              />
+            </Col>
           </Row>
         </Card>
       )}

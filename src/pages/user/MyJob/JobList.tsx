@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { fetchJobList } from '@/services/job'
 import { Button, message } from 'antd'
-import { history, request } from 'umi'
+import { Link, history, request } from 'umi'
 import ProList from '@ant-design/pro-list'
 import { requestPromise } from '@/services/request'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
@@ -67,6 +67,12 @@ const JobList = ({ userinfo, setTag }) => {
       title: '职位名称',
       dataIndex: 'name',
       valueType: 'text',
+      //       render:(record)=>{
+      // console.log('re',record);
+      //       }
+      render: (dom, record) => (
+        <a onClick={() => history.push('/job/info/' + record.id)}>{dom}</a>
+      ),
     },
     {
       title: '状态',
@@ -78,7 +84,29 @@ const JobList = ({ userinfo, setTag }) => {
       dataIndex: 'audit',
       valueType: 'text',
     },
-    { title: '操作', valueType: 'option', key: 'option' },
+    {
+      title: '操作',
+      valueType: 'option',
+      key: 'option',
+      render: (text, record, _, action) => [
+        <a
+          key="view"
+          onClick={() => {
+            history.push('/job/info/' + record.id)
+          }}
+        >
+          查看
+        </a>,
+        <a
+          key="editable"
+          onClick={() => {
+            console.log('edit')
+          }}
+        >
+          编辑
+        </a>,
+      ],
+    },
   ]
 
   const actionRef = useRef<ActionType>()
