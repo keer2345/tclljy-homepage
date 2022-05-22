@@ -9,13 +9,14 @@ import ProForm, {
 } from '@ant-design/pro-form'
 import FormMessage from '@/components/common/FormMessage'
 import { requestPromise } from '@/services/request'
+import { RollbackOutlined } from '@ant-design/icons'
 
 const LAYOUT_TYPE_HORIZONTAL = 'horizontal'
 const yesOrNo = [
   { value: true, label: '是' },
   { value: false, label: '否' },
 ]
-const JobEdit = ({ firm, setTag, edit }) => {
+const JobEdit = ({ userinfo, firm, setTag, edit, jobid }) => {
   const [jobInfo, setJobInfo] = useState({})
   const [jobLoading, setJobLoading] = useState(true)
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -52,7 +53,19 @@ const JobEdit = ({ firm, setTag, edit }) => {
             enable: 1,
           }).then((res) => {
             setEdu(res)
-            setJobLoading(false)
+            if (edit == 'edit' && jobid != '0') {
+              requestPromise('/api/job/' + jobid, {
+                userid: userinfo.id,
+                channel: 'web',
+              }).then((res) => {
+                setJobInfo(res.data)
+                setOtherJobDisable(res.data.jobCategory.name === '其他')
+                setSfmy(res.data.mianyi)
+                setJobLoading(false)
+              })
+            } else {
+              setJobLoading(false)
+            }
           })
         })
       })
@@ -99,12 +112,13 @@ const JobEdit = ({ firm, setTag, edit }) => {
       extra={
         <Button
           key="1"
+          icon={<RollbackOutlined />}
           type="primary"
           onClick={() => {
             setTag(1)
           }}
         >
-          职位列表
+          返回职位列表
         </Button>
       }
     >
@@ -115,7 +129,18 @@ const JobEdit = ({ firm, setTag, edit }) => {
         rowProps={{
           gutter: [16, formLayoutType === 'inline' ? 16 : 0],
         }}
-        initialValues={{ ...jobInfo }}
+        initialValues={
+          jobInfo.id
+            ? {
+                ...jobInfo,
+                type: jobInfo.jobType.id,
+                category: jobInfo.jobCategory.id,
+                exp: jobInfo.experience.id,
+                edu: jobInfo.educational.id,
+                jobMianyi: jobInfo.mianyi,
+              }
+            : { ...jobInfo }
+        }
         submitter={{
           render: (props, doms) => {
             return (
@@ -132,6 +157,9 @@ const JobEdit = ({ firm, setTag, edit }) => {
             await handleSubmit(values)
           }
         }}
+        // onReset={async () => {
+        //   setSfmy(jobInfo.mianyi)
+        // }}
       >
         {!success && msg && (
           <>

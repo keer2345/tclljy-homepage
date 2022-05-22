@@ -257,6 +257,14 @@ const Info = ({ match }) => {
           <Button type="link" onClick={() => history.push('/job')}>
             职位列表
           </Button>
+          {!jobLoading && userinfo.firm == job.firm.id && (
+            <>
+              /
+              <Button type="link" onClick={() => history.push('/user/job')}>
+                我的职位
+              </Button>
+            </>
+          )}
         </Col>
       </Row>
       <Row gutter={[12, 12]}>

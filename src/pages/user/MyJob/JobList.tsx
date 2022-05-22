@@ -8,7 +8,7 @@ import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons'
 import _ from 'lodash'
 
-const JobList = ({ userinfo, setTag }) => {
+const JobList = ({ userinfo, setTag, setJobid }) => {
   const [jobList, setJobList] = useState([])
   const [jobLoading, setJobLoading] = useState(true)
 
@@ -102,7 +102,8 @@ const JobList = ({ userinfo, setTag }) => {
         <a
           key="editable"
           onClick={() => {
-            console.log('edit')
+            setJobid(record.id)
+            setTag(3)
           }}
         >
           编辑
