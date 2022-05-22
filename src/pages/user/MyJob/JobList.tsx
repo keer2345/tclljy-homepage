@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { fetchJobList } from '@/services/job'
-import { Button, message } from 'antd'
+import { Button, message, Tag } from 'antd'
 import { Link, history, request } from 'umi'
 import ProList from '@ant-design/pro-list'
 import { requestPromise } from '@/services/request'
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table'
 import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons'
+import _ from 'lodash'
 
 const JobList = ({ userinfo, setTag }) => {
   const [jobList, setJobList] = useState([])
   const [jobLoading, setJobLoading] = useState(true)
 
   const [params, setParams] = useState<{ [key: string]: any }>()
-  const [pageSize, setPageSize] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   // const [currentPage, setCurrentPage] = useState(0)
   // const [totalPages, setTotalPages] = useState(0)
   // const [totalItems, setTotalItems] = useState(0)
@@ -55,6 +56,21 @@ const JobList = ({ userinfo, setTag }) => {
     maxSalary: string
   }
 
+  const REQUEST_STATUS_OPTION = [
+    { text: '全部', value: -99, color: '' },
+    { text: '在招', value: 1, color: 'green' },
+    { text: '停招', value: 0, color: 'red' },
+  ]
+  const requestStatusEnum = _.keyBy(REQUEST_STATUS_OPTION, 'value')
+
+  const REQUEST_AUDIT_OPTION = [
+    { text: '全部', value: -99, color: '' },
+    { text: '待审核', value: 0, color: '#FF8C00' },
+    { text: '审核通过', value: 1, color: '#00BFFF' },
+    { text: '审核未通过', value: 2, color: '#FF0000' },
+  ]
+  const requestAuditEnum = _.keyBy(REQUEST_AUDIT_OPTION, 'value')
+
   const columns: ProColumns<JobItem>[] = [
     {
       title: 'ID',
@@ -67,9 +83,7 @@ const JobList = ({ userinfo, setTag }) => {
       title: '职位名称',
       dataIndex: 'name',
       valueType: 'text',
-      //       render:(record)=>{
-      // console.log('re',record);
-      //       }
+      ellipsis: true,
       render: (dom, record) => (
         <a onClick={() => history.push('/job/info/' + record.id)}>{dom}</a>
       ),
@@ -77,12 +91,25 @@ const JobList = ({ userinfo, setTag }) => {
     {
       title: '状态',
       dataIndex: 'enable',
-      valueType: 'text',
+      valueType: 'select',
+      valueEnum: requestStatusEnum,
+      render: (text, { enable }) => {
+        const tagStatus = requestStatusEnum[enable] || {
+          color: '',
+          text: '未知',
+        }
+        return <Tag color={tagStatus.color}>{tagStatus.text}</Tag>
+      },
     },
     {
       title: '审核',
       dataIndex: 'audit',
-      valueType: 'text',
+      valueType: 'select',
+      valueEnum: requestAuditEnum,
+      render: (text, { audit }) => {
+        const tagStatus = requestAuditEnum[audit] || { color: '', text: '未知' }
+        return <Tag color={tagStatus.color}>{tagStatus.text}</Tag>
+      },
     },
     {
       title: '操作',
@@ -152,7 +179,7 @@ const JobList = ({ userinfo, setTag }) => {
         }
       }}
       pagination={{
-        pageSize: 5,
+        pageSize: 10,
       }}
       // showActions="hover"
 
